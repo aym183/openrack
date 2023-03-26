@@ -10,13 +10,9 @@ import SwiftUI
 struct ContentView: View {
     // Addef test comment
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ZStack {
+            Text("Content")
         }
-        .padding()
     }
 }
 
