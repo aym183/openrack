@@ -110,6 +110,8 @@
 			isa = PBXGroup;
 			children = (
 				614EB1BB29D1FCA90028C237 /* project_fonts */,
+				614EB1BE29D21BC90028C237 /* Model */,
+				614EB1BF29D21BD90028C237 /* ViewModel */,
 				614EB17029D09E1F0028C237 /* openrackApp.swift */,
 				614EB17229D09E1F0028C237 /* LoginView.swift */,
 				614EB18029D0A5110028C237 /* SplashScreenView.swift */,
@@ -133,6 +135,20 @@
 			children = (
 			);
 			name = project_fonts;
+			sourceTree = "<group>";
+		};
+		614EB1BE29D21BC90028C237 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		614EB1BF29D21BD90028C237 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

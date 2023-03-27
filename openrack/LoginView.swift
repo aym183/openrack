@@ -12,13 +12,13 @@ struct LoginView: View {
     // Addef test comment
     var body: some View {
         ZStack {
-            Color("Secondary").ignoresSafeArea()
+            Color("Secondary_color").ignoresSafeArea()
             VStack{
                 
                 Text("Openrack")
                     .font(Font.system(size: 70))
                     .fontWeight(.heavy)
-                    .foregroundColor(Color("Primary"))
+                    .foregroundColor(Color("Primary_color"))
                     .multilineTextAlignment(.center)
                     .padding(.top, 100.0)
                     .frame(maxWidth: .infinity)
@@ -52,17 +52,18 @@ struct LoginView: View {
                 )
                 .frame(height: 50)
                 .cornerRadius(50)
+                .padding(.top, 70)
                 .padding(.horizontal)
 
                 
                 Button(action: {
                     // Action to perform when the button is tapped
                 }) {
+                    Image("Facebook_Logo")
                     Text("Sign in with Facebook")
-                    
                 }
                 .frame(width: 360, height: 50)
-                .background(Color("Facebook"))
+                .background(Color("Facebook_color"))
                 .foregroundColor(Color.white)
                 .cornerRadius(50)
                 .padding(.horizontal)
@@ -70,13 +71,18 @@ struct LoginView: View {
                 Button(action: {
                     // Action to perform when the button is tapped
                 }) {
-                    Text("Sign in with Google")
+                    HStack{
+                        Image("Google_Logo")
+                        Text("Sign in with Google")
+                    }
+                    
                 }
                 .frame(width: 360, height: 50)
-                .background(Color("Google"))
+                .background(Color("Google_color"))
                 .foregroundColor(Color.white)
                 .cornerRadius(50)
                 .padding(.horizontal)
+                
                 
                 Button(action: {
                     // Action to perform when the button is tapped
@@ -88,7 +94,7 @@ struct LoginView: View {
                     
                 }
                 .frame(width: 360, height: 50)
-                .background(Color("Primary"))
+                .background(Color("Primary_color"))
                 .foregroundColor(Color.white)
                 .cornerRadius(50)
                 .padding(.horizontal)

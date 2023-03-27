@@ -16,7 +16,7 @@ struct SplashScreenView: View {
             LoginView()
         } else{
             ZStack {
-                Color("Primary").font(.system(size: 20)).ignoresSafeArea()
+                Color("Primary_color").font(.system(size: 20)).ignoresSafeArea()
                 Image("Logo").padding(.horizontal).opacity(opacity)
             }
             .onAppear {
