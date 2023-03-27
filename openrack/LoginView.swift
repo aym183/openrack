@@ -121,11 +121,18 @@ struct LoginView: View {
                 )
                 .cornerRadius(50)
                 .padding(.horizontal)
+                
+                Text("By continuing you agree to our Terms of Service.\nOpenrack services are subject to our Privacy Policy.")
+                    .font(.footnote)
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .padding(.top, 20)
+                    .opacity(0.7)
 
             }
         }
     }
-    
     }
 
 
