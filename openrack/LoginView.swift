@@ -9,7 +9,7 @@ import SwiftUI
 import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
-    // Addef test comment
+    
     var body: some View {
         ZStack {
             Color("Secondary_color").ignoresSafeArea()
@@ -37,8 +37,6 @@ struct LoginView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(Color.black)
                     .multilineTextAlignment(.center)
-                
-                
                 
                 SignInWithAppleButton(
                     
@@ -102,14 +100,10 @@ struct LoginView: View {
                 .cornerRadius(50)
                 .padding(.horizontal)
                 
-                Divider()
-                    .frame(width: 300, height: 3)
-                    .background(.black)
-                    .padding(.top, 5)
-                    .padding(.bottom, 5)
+                Divider().frame(width: 300, height: 3).background(.black).padding(.top, 5).padding(.bottom, 5)
                 
                 Button(action: {
-                    // Action to perform when the button is tapped
+
                 }) {
                     HStack {
                         Image(systemName: "envelope.fill")
@@ -127,11 +121,13 @@ struct LoginView: View {
                 )
                 .cornerRadius(50)
                 .padding(.horizontal)
-                
+
             }
         }
     }
-}
+    
+    }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
