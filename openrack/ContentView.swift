@@ -10,8 +10,28 @@ import SwiftUI
 struct ContentView: View {
     // Addef test comment
     var body: some View {
-        ZStack {
-            Text("Content")
+        VStack {
+            HStack {
+                
+                Image(systemName: "person.circle.fill")
+                    .foregroundColor(.black)
+                    .onTapGesture {
+                        print("Hi")
+                    }
+                
+//                    .font(.sytem(size: ))
+            }
+//            .frame(height: 50, width: )
+            .padding()
+            .background(.thinMaterial)
+            .cornerRadius(10)
+            
+            Spacer()
+            RoundedRectangle(cornerRadius: 50)
+                .frame(height: 60)
+                
+            
+            
         }
     }
 }
