@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		614EB17129D09E1F0028C237 /* openrackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB17029D09E1F0028C237 /* openrackApp.swift */; };
-		614EB17329D09E1F0028C237 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB17229D09E1F0028C237 /* ContentView.swift */; };
+		614EB17329D09E1F0028C237 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB17229D09E1F0028C237 /* LoginView.swift */; };
 		614EB17529D09E200028C237 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 614EB17429D09E200028C237 /* Assets.xcassets */; };
 		614EB17829D09E200028C237 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 614EB17729D09E200028C237 /* Preview Assets.xcassets */; };
 		614EB18129D0A5110028C237 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB18029D0A5110028C237 /* SplashScreenView.swift */; };
@@ -45,7 +45,7 @@
 /* Begin PBXFileReference section */
 		614EB16D29D09E1F0028C237 /* openrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		614EB17029D09E1F0028C237 /* openrackApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = openrackApp.swift; sourceTree = "<group>"; };
-		614EB17229D09E1F0028C237 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		614EB17229D09E1F0028C237 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		614EB17429D09E200028C237 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		614EB17729D09E200028C237 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		614EB18029D0A5110028C237 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
@@ -109,8 +109,9 @@
 		614EB16F29D09E1F0028C237 /* openrack */ = {
 			isa = PBXGroup;
 			children = (
+				614EB1BB29D1FCA90028C237 /* project_fonts */,
 				614EB17029D09E1F0028C237 /* openrackApp.swift */,
-				614EB17229D09E1F0028C237 /* ContentView.swift */,
+				614EB17229D09E1F0028C237 /* LoginView.swift */,
 				614EB18029D0A5110028C237 /* SplashScreenView.swift */,
 				614EB17429D09E200028C237 /* Assets.xcassets */,
 				614EB18229D19C460028C237 /* GoogleService-Info.plist */,
@@ -125,6 +126,13 @@
 				614EB17729D09E200028C237 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		614EB1BB29D1FCA90028C237 /* project_fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = project_fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,7 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				614EB17329D09E1F0028C237 /* ContentView.swift in Sources */,
+				614EB17329D09E1F0028C237 /* LoginView.swift in Sources */,
 				614EB17129D09E1F0028C237 /* openrackApp.swift in Sources */,
 				614EB18129D0A5110028C237 /* SplashScreenView.swift in Sources */,
 			);
