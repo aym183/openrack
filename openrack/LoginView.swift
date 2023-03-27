@@ -20,7 +20,6 @@ struct LoginView: View {
                     .fontWeight(.heavy)
                     .foregroundColor(Color("Primary_color"))
                     .multilineTextAlignment(.center)
-                    .padding(.top, 100.0)
                     .frame(maxWidth: .infinity)
 
                 Text("Buy, Sell, Discover ✨")
@@ -61,6 +60,8 @@ struct LoginView: View {
                 }) {
                     Image("Facebook_Logo")
                     Text("Sign in with Facebook")
+                        .font(.title3)
+                        
                 }
                 .frame(width: 360, height: 50)
                 .background(Color("Facebook_color"))
@@ -74,6 +75,7 @@ struct LoginView: View {
                     HStack{
                         Image("Google_Logo")
                         Text("Sign in with Google")
+                            .font(.title3)
                     }
                     
                 }
@@ -90,6 +92,7 @@ struct LoginView: View {
                     HStack {
                         Image(systemName: "envelope.fill")
                         Text("Sign in with Email")
+                            .font(.title3)
                     }
                     
                 }
@@ -99,16 +102,33 @@ struct LoginView: View {
                 .cornerRadius(50)
                 .padding(.horizontal)
                 
+                Divider()
+                    .frame(width: 300, height: 3)
+                    .background(.black)
+                    .padding(.top, 5)
+                    .padding(.bottom, 5)
                 
+                Button(action: {
+                    // Action to perform when the button is tapped
+                }) {
+                    HStack {
+                        Image(systemName: "envelope.fill")
+                        Text("Login with Email")
+                            .font(.title3)
+                    }
+                    
+                }
+                .frame(width: 360, height: 50)
+                .background(.white)
+                .foregroundColor(.black)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 50)
+                        .stroke(Color.black, lineWidth: 2)
+                )
+                .cornerRadius(50)
+                .padding(.horizontal)
                 
-                     
-                Spacer()
-                    .padding([.top, .leading, .trailing])
-//                Text("Hi")
             }
-            
-//                Spacer()
-            
         }
     }
 }
