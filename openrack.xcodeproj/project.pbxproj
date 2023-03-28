@@ -43,6 +43,7 @@
 		614EB1C229D2F5520028C237 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 614EB1C129D2F5520028C237 /* GoogleSignIn */; };
 		614EB1C429D2F5520028C237 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 614EB1C329D2F5520028C237 /* GoogleSignInSwift */; };
 		614EB1C729D2F75E0028C237 /* Login_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB1C629D2F75E0028C237 /* Login_ViewModel.swift */; };
+		614EB1CA29D2F8340028C237 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB1C929D2F8340028C237 /* Application.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		614EB18229D19C460028C237 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		614EB1C529D2F6F20028C237 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		614EB1C629D2F75E0028C237 /* Login_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login_ViewModel.swift; sourceTree = "<group>"; };
+		614EB1C929D2F8340028C237 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +118,7 @@
 		614EB16F29D09E1F0028C237 /* openrack */ = {
 			isa = PBXGroup;
 			children = (
-				614EB1C529D2F6F20028C237 /* Info.plist */,
+				614EB1C829D2F8170028C237 /* Utilities */,
 				614EB1BB29D1FCA90028C237 /* project_fonts */,
 				614EB1BE29D21BC90028C237 /* Model */,
 				614EB1BF29D21BD90028C237 /* ViewModel */,
@@ -125,6 +127,7 @@
 				614EB18029D0A5110028C237 /* SplashScreenView.swift */,
 				614EB17429D09E200028C237 /* Assets.xcassets */,
 				614EB18229D19C460028C237 /* GoogleService-Info.plist */,
+				614EB1C529D2F6F20028C237 /* Info.plist */,
 				614EB17629D09E200028C237 /* Preview Content */,
 			);
 			path = openrack;
@@ -158,6 +161,14 @@
 				614EB1C629D2F75E0028C237 /* Login_ViewModel.swift */,
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		614EB1C829D2F8170028C237 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				614EB1C929D2F8340028C237 /* Application.swift */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,6 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				614EB1CA29D2F8340028C237 /* Application.swift in Sources */,
 				614EB1C729D2F75E0028C237 /* Login_ViewModel.swift in Sources */,
 				614EB17329D09E1F0028C237 /* LoginView.swift in Sources */,
 				614EB17129D09E1F0028C237 /* openrackApp.swift in Sources */,
