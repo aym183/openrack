@@ -126,9 +126,14 @@ struct LoginView: View {
 
 
 struct BottomSheetView: View {
-    @State var usernameText = ""
+    @State var emailText = ""
     @State var passwordText = ""
     @State private var isOn = false
+    @State private var isPresented = false
+    
+    var isBothTextFieldsEmpty: Bool {
+            return emailText.isEmpty && passwordText.isEmpty
+        }
     
     var body: some View {
         ZStack {
@@ -138,28 +143,74 @@ struct BottomSheetView: View {
                 Text("Sign Up").font(Font.system(size: 30)).fontWeight(.heavy).multilineTextAlignment(.trailing).padding(.top, 50)
                 
                 
-                Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 20)
+                Text("Email").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 20)
                 
                 
-                TextField("", text: $usernameText)
+                TextField("", text: $emailText)
+                    .padding(.top, -5).padding(.horizontal, 8)
                     .frame(width: 360, height: 50).border(Color.black, width: 2)
                     .background(.white)
-                    .padding(.top, -5)
                 
                 Text("Password").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10)
                 
-                TextField("", text: $passwordText)
+                SecureField("", text: $passwordText)
+                    .padding(.top, -5).padding(.horizontal, 8)
                     .frame(width: 360, height: 50).border(Color.black, width: 2)
                     .background(.white)
-                    .padding(.top, -5)
+                    
                 
                 HStack (spacing: 30) {
                     Toggle(isOn: $isOn) {}.frame(width: 50, height: 50)
                     Text("Sign up for email to access sales, exclusive drops & more from Openrack")
                         .font(Font.system(size: 14))
                         .fontWeight(.medium)
-
                 }
+                
+                Spacer()
+                
+                Button(action: {
+                    print(emailText)
+                    print(passwordText)
+                    isPresented.toggle()
+                }) {
+                    HStack {
+                        Text("Next").font(.title3)
+                    }
+                }
+                .frame(width: 360, height: 50)
+                .background(isBothTextFieldsEmpty ? Color.gray : Color("Primary_color"))
+                .foregroundColor(.white)
+                .border(Color.black, width: 2)
+                .padding(.bottom)
+                .sheet(isPresented: $isPresented, content: {
+                    AnotherBottomSheetView()
+                })
+                
+            }
+            .padding(.horizontal)
+            .foregroundColor(.black)
+            
+        }
+    }
+}
+
+
+struct AnotherBottomSheetView: View {
+    @State var usernameText = ""
+    
+    var body: some View {
+        ZStack {
+            Color("Secondary_color").ignoresSafeArea()
+            VStack (alignment: .leading){
+                
+                Text("Create a Username").font(Font.system(size: 30)).fontWeight(.heavy).multilineTextAlignment(.trailing).padding(.top, 50)
+                
+                Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 20)
+                
+                TextField("", text: $usernameText)
+                    .padding(.top, -5).padding(.horizontal, 8)
+                    .frame(width: 360, height: 50).border(Color.black, width: 2)
+                    .background(.white)
                 
      
                 Spacer()
@@ -170,7 +221,7 @@ struct BottomSheetView: View {
                     }
                 }
                 .frame(width: 360, height: 50)
-                .background(Color("Primary_color"))
+                .background(usernameText.isEmpty ? Color.gray : Color("Primary_color"))
                 .foregroundColor(.white)
                 .border(Color.black, width: 2)
                 .padding(.bottom)
