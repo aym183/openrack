@@ -10,6 +10,7 @@ import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
     var signupVM = AuthViewModel()
+    @State var showingBottomSheet = false
     var body: some View {
         ZStack {
             Color("Secondary_color").ignoresSafeArea()
@@ -88,7 +89,7 @@ struct LoginView: View {
                 
                 
                 Button(action: {
-                    // Action to perform when the button is tapped
+                    showingBottomSheet.toggle()
                 }) {
                     HStack {
                         Image(systemName: "envelope.fill")
@@ -102,6 +103,9 @@ struct LoginView: View {
                 .foregroundColor(Color.white)
                 .cornerRadius(50)
                 .padding(.horizontal)
+                .sheet(isPresented: $showingBottomSheet) {
+                    BottomSheetView()
+                }
                 
                 Divider().frame(width: 300, height: 3).background(.black).padding(.top, 5).padding(.bottom, 5)
                 
@@ -139,8 +143,71 @@ struct LoginView: View {
     }
 
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LoginView()
-//    }
-//}
+struct BottomSheetView: View {
+    @State var usernameText = ""
+    @State var passwordText = ""
+    var body: some View {
+        ZStack {
+            Color("Secondary_color").ignoresSafeArea()
+            
+            VStack {
+                
+                Text("Sign Up")
+                    .font(Font.system(size: 30))
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.leading)
+                
+                Text("Username")
+                    .font(Font.system(size: 20))
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.leading)
+                
+                
+                TextField("", text: $usernameText)
+//                    .cornerRadius(50)
+                    .background(.white)
+                    .frame(width: 360, height: 50)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(Color.black, lineWidth: 2)
+                    )
+                    
+                
+                Text("Password")
+                    .font(Font.system(size: 20))
+                    .fontWeight(.semibold)
+                
+                TextField("", text: $passwordText)
+//                    .cornerRadius(50)
+                    .background(.white)
+                    .frame(width: 360, height: 50)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(Color.black, lineWidth: 2)
+                    )
+                
+                Button(action: {}) {
+                    HStack {
+                        Text("Next")
+                            .font(.title3)
+                    }
+                    
+                }
+                .frame(width: 360, height: 50)
+                .background(Color("Primary_color"))
+                .foregroundColor(.white)
+                
+            }
+            .padding(.horizontal)
+            .foregroundColor(.black)
+
+        }
+        }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginView()
+    }
+}
+

@@ -121,8 +121,8 @@
 				614EB1BB29D1FCA90028C237 /* Utility */,
 				614EB1BE29D21BC90028C237 /* Model */,
 				614EB1BF29D21BD90028C237 /* ViewModel */,
+				614EB1D429D356870028C237 /* Views */,
 				614EB17029D09E1F0028C237 /* openrackApp.swift */,
-				614EB17229D09E1F0028C237 /* LoginView.swift */,
 				614EB18029D0A5110028C237 /* SplashScreenView.swift */,
 				614EB17429D09E200028C237 /* Assets.xcassets */,
 				614EB18229D19C460028C237 /* GoogleService-Info.plist */,
@@ -161,6 +161,22 @@
 				614EB1CB29D304370028C237 /* AuthViewModel.swift */,
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		614EB1D429D356870028C237 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				614EB1D529D356A20028C237 /* Auth */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		614EB1D529D356A20028C237 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				614EB17229D09E1F0028C237 /* LoginView.swift */,
+			);
+			name = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
