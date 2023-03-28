@@ -13,7 +13,8 @@ struct SplashScreenView: View {
     
     var body: some View {
         if isActive {
-            LoginView()
+            let viewModel = AuthViewModel()
+            LoginView().environmentObject(viewModel)
         } else{
             ZStack {
                 Color("Primary_color").font(.system(size: 20)).ignoresSafeArea()

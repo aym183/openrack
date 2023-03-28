@@ -12,9 +12,31 @@ import GoogleSignIn
 import GoogleSignInSwift
 
 
-class AuthViewModel {
+class AuthViewModel : ObservableObject {
     
-    func signInWithGoogle() {
+    let auth = Auth.auth()
+    
+    func isSignedIn() -> Bool {
+        return auth.currentUser != nil
+    }
+    
+    func signUpWithEmail(email: String, password: String) {
+        auth.createUser(withEmail: email, password: password) { result, error in
+            guard result != nil, error == nil else {
+                return
+            }
+        }
+    }
+    
+    func signIn(email: String, password: String) {
+        auth.signIn(withEmail: email, password: password) { result, error in
+            guard result != nil, error == nil else {
+                return
+            }
+        }
+    }
+    
+    func signUpWithGoogle() {
 
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
                 
@@ -29,9 +51,5 @@ class AuthViewModel {
              let accessToken = user.accessToken
              let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: accessToken.tokenString)
         }
-    }
-    
-    func signInWithEmail() {
-        
     }
 }
