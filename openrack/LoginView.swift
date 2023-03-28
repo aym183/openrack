@@ -9,7 +9,7 @@ import SwiftUI
 import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
-    
+    var signupVM = AuthViewModel()
     var body: some View {
         ZStack {
             Color("Secondary_color").ignoresSafeArea()
@@ -68,7 +68,10 @@ struct LoginView: View {
                 .padding(.horizontal)
                 
                 Button(action: {
-                    // Action to perform when the button is tapped
+                    DispatchQueue.global().async {
+                        
+                        signupVM.signInWithGoogle()
+                    }
                 }) {
                     HStack{
                         Image("Google_Logo")
@@ -136,8 +139,8 @@ struct LoginView: View {
     }
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//    }
+//}
