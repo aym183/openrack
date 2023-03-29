@@ -9,23 +9,25 @@ import SwiftUI
 
 struct SignInEmailView: View {
     
-    var userDetails:  [String]
+    var userDetails:  Array<Any> 
     var signupVM = AuthViewModel()
     @State var emailText = ""
     @State var passwordText = ""
     @State private var isOn = false
     @State private var isPresented = false
+    @State private var isLogin = false
     
     var isBothTextFieldsEmpty: Bool {
             return emailText.isEmpty && passwordText.isEmpty
     }
     
     var body: some View {
+        NavigationStack {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack (alignment: .leading){
                     
-                    Text(userDetails[0]).font(Font.system(size: 30)).fontWeight(.heavy).multilineTextAlignment(.trailing).padding(.top, 50)
+                    Text(String(describing: userDetails[0])).font(Font.system(size: 30)).fontWeight(.heavy).multilineTextAlignment(.trailing).padding(.top, 50)
                     
                     Text("Email").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 20)
                     
@@ -47,21 +49,33 @@ struct SignInEmailView: View {
                     
                     HStack (spacing: 30) {
                         Toggle(isOn: $isOn) {}.frame(width: 50, height: 50)
-                        Text(userDetails[1])
+                        Text(String(describing: userDetails[1]))
                             .font(Font.system(size: 14))
                             .fontWeight(.medium)
                     }
                     
                     Spacer()
-                    
                     Button(action: {
-                        isPresented.toggle()
-                        signupVM.signUpWithEmail(email: emailText, password: passwordText)
-                        print(userDetails)
+                        if String(describing: userDetails[3]) == "Yes" {
+                            isPresented.toggle()
+                            signupVM.signUpWithEmail(email: emailText, password: passwordText)
+                            print(userDetails)
+                        } else {
+                            // Add navigation here for successful login
+                            signupVM.signIn(email: emailText, password: passwordText)
+                            print(signupVM.isSignedIn())
+                            isPresented.toggle()
+                            
+                        }
+                        
                     }) {
                         HStack {
-                            Text(userDetails[2]).font(.title3)
+                            Text(String(describing: userDetails[2])).font(.title3)
                         }
+                    }
+                    .navigationDestination(isPresented: $isPresented) {
+                        AnyView(_fromValue: userDetails[4])
+                        
                     }
                     .disabled(isBothTextFieldsEmpty)
                     .frame(width: 360, height: 50)
@@ -69,15 +83,17 @@ struct SignInEmailView: View {
                     .foregroundColor(.white)
                     .border(Color.black, width: 2)
                     .padding(.bottom)
-                    .sheet(isPresented: $isPresented, content: {
-                        UserUsername().transition(.move(edge: .leading))
-                    })
+//                    .sheet(isPresented: $isPresented, content: {
+//                        UserUsername().transition(.move(edge: .leading))
+//                    })
+                    
                     
                 }
                 .padding(.horizontal)
                 .foregroundColor(.black)
                 
             }
+        }
     }
 }
 

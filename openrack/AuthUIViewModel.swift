@@ -9,13 +9,13 @@ import Foundation
 
 class AuthUIViewModel {
     
-    func UIDetails(purpose: String) -> [String] {
+    func UIDetails(purpose: String) -> Array<Any> {
         
-        var response: [String]
+        var response: Array<Any>
         if purpose == "Sign In" {
-            response = ["Sign Up", "Sign up for email to access sales, exclusive drops & more from Openrack", "Next", "Yes"]
+            response = ["Sign Up", "Sign up for email to access sales, exclusive drops & more from Openrack", "Next", "Yes", UserUsername()]
         } else {
-            response = ["Login", "Remember Me", "Submit", "No"]
+            response = ["Login", "Remember Me", "Submit", "No", HomePage()]
         }
         return response
     }
