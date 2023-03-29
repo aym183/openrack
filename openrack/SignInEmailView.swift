@@ -27,7 +27,7 @@ struct SignInEmailView: View {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack (alignment: .leading){
                     
-                    Text(String(describing: userDetails[0])).font(Font.system(size: 30)).fontWeight(.heavy).multilineTextAlignment(.trailing).padding(.top, 50)
+                    Text(String(describing: userDetails[0])).font(Font.system(size: 30)).fontWeight(.heavy).multilineTextAlignment(.trailing).padding(.top, 30)
                     
                     Text("Email").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 20)
                     

@@ -13,7 +13,10 @@ struct LandingPage: View {
     var authUIText = AuthUIViewModel()
     @State var showingSignInBottomSheet = false
     @State var showingLoginBottomSheet = false
+    @State private var selectedView: Int = 1
+    
     var body: some View {
+        NavigationStack {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack{
@@ -78,7 +81,9 @@ struct LandingPage: View {
                     )
                     .cornerRadius(50)
                     .padding(.horizontal)
-                    .sheet(isPresented: $showingSignInBottomSheet) { SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Sign In")) }
+                    .navigationDestination(isPresented: $showingSignInBottomSheet) {
+                        SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Sign In"))
+                    }                    
                     
                     Divider().frame(width: 300, height: 3).background(.black).padding(.top, 5).padding(.bottom, 5)
                     
@@ -96,7 +101,10 @@ struct LandingPage: View {
                     )
                     .cornerRadius(50)
                     .padding(.horizontal)
-                    .sheet(isPresented: $showingLoginBottomSheet) { SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Login")) }
+                    .navigationDestination(isPresented: $showingLoginBottomSheet) {
+                        SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Login"))
+                    }
+                    //                    .sheet(isPresented: $showingLoginBottomSheet) { SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Login")) }
                     
                     Text("By continuing you agree to our Terms of Service.\nOpenrack services are subject to our Privacy Policy.")
                         .font(.footnote).fontWeight(.semibold)
@@ -106,6 +114,8 @@ struct LandingPage: View {
                     
                 }
             }
+            
+        }
     }
     }
 
