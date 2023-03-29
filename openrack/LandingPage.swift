@@ -14,11 +14,13 @@ struct LandingPage: View {
     @State var showingSignInBottomSheet = false
     @State var showingLoginBottomSheet = false
     
-    // Add @AppStorage("shouldShowOnboarding") instead of @State to persist not showing onbaording after  user's tried
+    // ------ Add @AppStorage("shouldShowOnboarding") instead of @State to persist not showing onbaording after  user's tried ------
     @State var shouldShowOnboarding: Bool = true
     
     var body: some View {
+        
         NavigationView {
+            
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack{
@@ -122,6 +124,7 @@ struct LandingPage: View {
             }
             
         }
+        // ------ Add to replace loginview ka bs and add bottomcard ? ------
         .fullScreenCover(isPresented: $shouldShowOnboarding , content: {
             OnboardingFlow(shouldShowOnboarding: $shouldShowOnboarding)
         })

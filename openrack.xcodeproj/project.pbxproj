@@ -47,6 +47,7 @@
 		614EB1D729D464F20028C237 /* SignInEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB1D629D464F20028C237 /* SignInEmailView.swift */; };
 		614EB1DB29D4668E0028C237 /* AuthUIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB1DA29D4668E0028C237 /* AuthUIViewModel.swift */; };
 		61A1FDD429D4DEDA006D5E07 /* PageViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDD329D4DEDA006D5E07 /* PageViews.swift */; };
+		61A1FDD629D4E518006D5E07 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61A1FDD529D4E518006D5E07 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		614EB1D629D464F20028C237 /* SignInEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInEmailView.swift; sourceTree = "<group>"; };
 		614EB1DA29D4668E0028C237 /* AuthUIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUIViewModel.swift; sourceTree = "<group>"; };
 		61A1FDD329D4DEDA006D5E07 /* PageViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViews.swift; sourceTree = "<group>"; };
+		61A1FDD529D4E518006D5E07 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +131,6 @@
 				614EB1BF29D21BD90028C237 /* ViewModel */,
 				614EB1D429D356870028C237 /* Views */,
 				614EB17029D09E1F0028C237 /* openrackApp.swift */,
-				614EB18029D0A5110028C237 /* SplashScreenView.swift */,
 				614EB17429D09E200028C237 /* Assets.xcassets */,
 				614EB18229D19C460028C237 /* GoogleService-Info.plist */,
 				614EB1C529D2F6F20028C237 /* Info.plist */,
@@ -173,6 +174,7 @@
 		614EB1D429D356870028C237 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				61A1FDD729D4E751006D5E07 /* Launch Screens */,
 				614EB1D529D356A20028C237 /* Auth */,
 				61A1FDD329D4DEDA006D5E07 /* PageViews.swift */,
 			);
@@ -186,6 +188,15 @@
 				614EB1D629D464F20028C237 /* SignInEmailView.swift */,
 			);
 			name = Auth;
+			sourceTree = "<group>";
+		};
+		61A1FDD729D4E751006D5E07 /* Launch Screens */ = {
+			isa = PBXGroup;
+			children = (
+				614EB18029D0A5110028C237 /* SplashScreenView.swift */,
+				61A1FDD529D4E518006D5E07 /* LaunchScreen.storyboard */,
+			);
+			name = "Launch Screens";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				614EB17829D09E200028C237 /* Preview Assets.xcassets in Resources */,
+				61A1FDD629D4E518006D5E07 /* LaunchScreen.storyboard in Resources */,
 				614EB18329D19C460028C237 /* GoogleService-Info.plist in Resources */,
 				614EB17529D09E200028C237 /* Assets.xcassets in Resources */,
 			);
@@ -433,11 +445,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = openrack/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Openrack;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -462,11 +477,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = openrack/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Openrack;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

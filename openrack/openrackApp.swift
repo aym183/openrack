@@ -14,7 +14,8 @@ struct openrackApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
-            SplashScreenView()
+            let viewModel = AuthViewModel()
+            LandingPage(shouldShowOnboarding: true).environmentObject(viewModel)
         }
     }
 }
