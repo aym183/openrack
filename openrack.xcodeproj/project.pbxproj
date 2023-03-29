@@ -48,6 +48,7 @@
 		614EB1DB29D4668E0028C237 /* AuthUIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB1DA29D4668E0028C237 /* AuthUIViewModel.swift */; };
 		61A1FDD429D4DEDA006D5E07 /* PageViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDD329D4DEDA006D5E07 /* PageViews.swift */; };
 		61A1FDD629D4E518006D5E07 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61A1FDD529D4E518006D5E07 /* LaunchScreen.storyboard */; };
+		61A1FDD929D4F3A3006D5E07 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDD829D4F3A3006D5E07 /* HomePage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		614EB1DA29D4668E0028C237 /* AuthUIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUIViewModel.swift; sourceTree = "<group>"; };
 		61A1FDD329D4DEDA006D5E07 /* PageViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViews.swift; sourceTree = "<group>"; };
 		61A1FDD529D4E518006D5E07 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		61A1FDD829D4F3A3006D5E07 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +179,7 @@
 				61A1FDD729D4E751006D5E07 /* Launch Screens */,
 				614EB1D529D356A20028C237 /* Auth */,
 				61A1FDD329D4DEDA006D5E07 /* PageViews.swift */,
+				61A1FDD829D4F3A3006D5E07 /* HomePage.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				614EB1D729D464F20028C237 /* SignInEmailView.swift in Sources */,
+				61A1FDD929D4F3A3006D5E07 /* HomePage.swift in Sources */,
 				614EB1CE29D325E30028C237 /* Application.swift in Sources */,
 				614EB1CC29D304370028C237 /* AuthViewModel.swift in Sources */,
 				614EB1DB29D4668E0028C237 /* AuthUIViewModel.swift in Sources */,
