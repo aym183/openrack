@@ -14,7 +14,7 @@ struct SplashScreenView: View {
     var body: some View {
         if isActive {
             let viewModel = AuthViewModel()
-            LandingPage().environmentObject(viewModel)
+            LandingPage(shouldShowOnboarding: true).environmentObject(viewModel)
         } else{
             ZStack {
                 Color("Primary_color").font(.system(size: 20)).ignoresSafeArea()

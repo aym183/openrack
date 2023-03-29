@@ -13,25 +13,31 @@ struct LandingPage: View {
     var authUIText = AuthUIViewModel()
     @State var showingSignInBottomSheet = false
     @State var showingLoginBottomSheet = false
-    @State private var selectedView: Int = 1
+    
+    // Add @AppStorage("shouldShowOnboarding") instead of @State to persist not showing onbaording after  user's tried
+    @State var shouldShowOnboarding: Bool = true
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack{
                     
-                    Text("Openrack").font(Font.system(size: 70)).fontWeight(.heavy).font(Font.system(size: 20)).font(.subheadline)
+                    Text("Openrack").font(Font.system(size: 70)).fontWeight(.heavy)
                         .foregroundColor(Color("Primary_color"))
+                        .padding(.top, 80)
                     
                     Text("Buy, Sell, Discover ✨").font(Font.system(size: 20)).font(.subheadline).fontWeight(.semibold)
                         .opacity(0.7)
+                        
                     
-                    Text("A peer-to-peer marketplace to buy & sell fashion in MENA.").font(Font.system(size: 25)).fontWeight(.semibold)
-                        .foregroundColor(Color.black)
-                        .padding(.horizontal, 10.0).padding(.top, 50.0)
-                        .multilineTextAlignment(.center)
+                    Spacer()
                     
+//                    Text("A peer-to-peer marketplace to buy & sell fashion in MENA.").font(Font.system(size: 25)).fontWeight(.semibold)
+//                        .foregroundColor(Color.black)
+//                        .padding(.horizontal, 10.0).padding(.top, 50.0)
+//                        .multilineTextAlignment(.center)
+//
                     
                     SignInWithAppleButton( onRequest: { request in }, onCompletion: { result in } )
                         .frame(height: 50)
@@ -39,7 +45,7 @@ struct LandingPage: View {
                             RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
                         )
                         .cornerRadius(50)
-                        .padding(.top, 70).padding(.horizontal)
+                        .padding(.horizontal)
                     
                     Button(action: {}) {
                         Image("Facebook_Logo")
@@ -108,7 +114,7 @@ struct LandingPage: View {
                     
                     Text("By continuing you agree to our Terms of Service.\nOpenrack services are subject to our Privacy Policy.")
                         .font(.footnote).fontWeight(.semibold)
-                        .padding(.horizontal).padding(.top, 20)
+                        .padding(.horizontal).padding(.top, 20).padding(.bottom, 30)
                         .opacity(0.7)
                         .multilineTextAlignment(.center)
                     
@@ -116,8 +122,32 @@ struct LandingPage: View {
             }
             
         }
+        .fullScreenCover(isPresented: $shouldShowOnboarding , content: {
+            OnboardingFlow(shouldShowOnboarding: $shouldShowOnboarding)
+        })
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     }
+
+struct OnboardingFlow : View {
+    @Binding var shouldShowOnboarding: Bool
+    var body: some View {
+        NavigationView {
+            ZStack {
+                
+                TabView {
+                    PageView()
+                    PageView2()
+                    PageView3(shouldShowOnboarding: $shouldShowOnboarding)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .automatic))
+                .indexViewStyle(.page(backgroundDisplayMode: .always))
+            }
+            .background(Color("Primary_color"))
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

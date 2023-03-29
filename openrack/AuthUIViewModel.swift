@@ -15,7 +15,8 @@ class AuthUIViewModel {
         if purpose == "Sign In" {
             response = ["Sign Up", "Sign up for email to access sales, exclusive drops & more from Openrack", "Next", "Yes", UserUsername()]
         } else {
-            response = ["Login", "Remember Me", "Submit", "No", OnboardingFlow()]
+            // Rename LandingPage to home page
+            response = ["Login", "Remember Me", "Submit", "No", LandingPage()]
         }
         return response
     }
