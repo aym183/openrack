@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-struct HomePage: View {
+struct OnboardingFlow: View {
     var body: some View {
         NavigationView {
             VStack{
-//                NavigationLink(destination: LandingPage()) { /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Content@*/Text("Navigate")/*@END_MENU_TOKEN@*/ }
+                NavigationLink(destination: LandingPage().navigationBarBackButtonHidden(true)){
+                    Text("Content")
+                }
                 Text("HI THERE")
             }
         }
@@ -20,6 +22,6 @@ struct HomePage: View {
 
 struct HomePage_Previews: PreviewProvider {
     static var previews: some View {
-        HomePage()
+        OnboardingFlow()
     }
 }

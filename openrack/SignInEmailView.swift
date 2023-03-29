@@ -74,7 +74,7 @@ struct SignInEmailView: View {
                         }
                     }
                     .navigationDestination(isPresented: $isPresented) {
-                        AnyView(_fromValue: userDetails[4])
+                        AnyView(_fromValue: userDetails[4]).navigationBarBackButtonHidden(true)
                         
                     }
                     .disabled(isBothTextFieldsEmpty)
