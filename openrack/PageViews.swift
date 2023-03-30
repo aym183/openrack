@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
-
 struct PageView: View {
     var body: some View {
         VStack {
@@ -26,7 +23,6 @@ struct PageView: View {
                     Text("⭐️ 4.7")
                         .font(Font.system(size: 20)).fontWeight(.bold)
                         .padding(.top,2)
-                    
                 }
                 
                 VStack{
@@ -40,10 +36,7 @@ struct PageView: View {
                     Text("⭐️ 4.3").font(Font.system(size: 20)).fontWeight(.bold)
                         .padding(.top,5)
                 }
-                
             }
-            
-
         }
         .multilineTextAlignment(.center)
         .foregroundColor(Color("Secondary_color"))
@@ -65,8 +58,6 @@ struct PageView2: View {
                             .padding(.top)
 
         }
-//        .frame(height:1000)
-//        .multilineTextAlignment(.center)
         .foregroundColor(Color("Secondary_color"))
     }
 }
@@ -79,14 +70,6 @@ struct PageView3: View {
                 Text("Let's Get Going!")
                             .font(Font.system(size: 60)).fontWeight(.heavy)
                             .frame(width: 400)
-
-
-//                Button(action: { isTrue.toggle() }) {
-//                    HStack {
-//                        Text("Ready").font(.title3)
-//
-//                    }
-//                }
                 
                 Button(action: { shouldShowOnboarding.toggle() }) { Text("Ready").font(.title3) }
                 .frame(width: 100, height: 50)
@@ -96,7 +79,6 @@ struct PageView3: View {
                 )
                 .cornerRadius(50)
                 .padding(.horizontal)
-//                .navigationDestination(isPresented: $isTrue) { LandingPage().navigationBarBackButtonHidden(true) }
 
             }
             .multilineTextAlignment(.center)
@@ -108,9 +90,3 @@ struct PageView3: View {
         
     }
 }
-
-//struct HomePage_Previews: PreviewProvider {
-//    static var previews: some View {
-//        OnboardingFlow()
-//    }
-//}
