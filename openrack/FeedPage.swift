@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomePage: View {
+struct FeedPage: View {
     var body: some View {
         NavigationStack {
             VStack{
@@ -24,8 +24,8 @@ struct HomePage: View {
         }
 }
 
-struct HomePage_Previews: PreviewProvider {
+struct FeedPage_Previews: PreviewProvider {
     static var previews: some View {
-        HomePage()
+        FeedPage()
     }
 }

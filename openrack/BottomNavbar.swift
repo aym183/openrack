@@ -18,10 +18,10 @@ struct BottomNavbar: View {
     
     var body: some View {
         TabView(selection: $selectedTab){
-             HomePage()
+             FeedPage()
                 .tabItem {
                     Image(systemName: "rectangle.3.offgrid")
-                    Text("Home")
+                    Text("My Feed")
                 }
             
             Text("Hello, World2!")

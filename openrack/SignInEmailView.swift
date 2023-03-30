@@ -168,6 +168,6 @@ struct UserUsername: View {
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInEmailView(userDetails: ["Login", "Remember Me", "Submit", "No", HomePage()])
+        SignInEmailView(userDetails: ["Login", "Remember Me", "Submit", "No", FeedPage()])
     }
 }
