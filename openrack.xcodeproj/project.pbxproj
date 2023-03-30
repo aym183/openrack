@@ -185,6 +185,7 @@
 				61A1FDD329D4DEDA006D5E07 /* PageViews.swift */,
 				61A1FDD829D4F3A3006D5E07 /* HomePage.swift */,
 				61A1FDDA29D5F3EA006D5E07 /* CustomNavbarView.swift */,
+				61A1FDDC29D6002C006D5E07 /* BottomNavbar.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -194,7 +195,6 @@
 			children = (
 				614EB17229D09E1F0028C237 /* LandingPage.swift */,
 				614EB1D629D464F20028C237 /* SignInEmailView.swift */,
-				61A1FDDC29D6002C006D5E07 /* BottomNavbar.swift */,
 			);
 			name = Auth;
 			sourceTree = "<group>";

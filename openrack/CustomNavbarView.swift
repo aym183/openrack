@@ -46,15 +46,8 @@ struct CustomNavbarView: View {
                     .offset(y: 0)
                     .shadow(color: .black, radius: 6, x: 0, y: 0.5)
                     ,alignment: .bottom
-//
             )
         
 
-    }
-}
-
-struct CustomNavbarView_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomNavbarView()
     }
 }

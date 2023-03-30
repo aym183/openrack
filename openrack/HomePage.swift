@@ -18,9 +18,9 @@ struct HomePage: View {
                 }
                 
             }
+            .background(Color("Secondary_color"))
         }
 
-//        .titleTextAttributes([.foregroundColor: UIColor.blue, .font: UIFont.systemFont(ofSize: 24, weight: .bold)])
         }
 }
 
