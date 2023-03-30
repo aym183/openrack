@@ -16,6 +16,8 @@ struct SignInEmailView: View {
     @State private var isOn = false
     @State private var isPresented = false
     @State private var isLogin = false
+    @State var isLoading = false
+    @State var isNavigationBarHidden = false
     
     var isBothTextFieldsEmpty: Bool {
             return emailText.isEmpty && passwordText.isEmpty
@@ -25,6 +27,17 @@ struct SignInEmailView: View {
         NavigationStack {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
+                
+                if isLoading {
+                    VStack {
+                        ProgressView()
+                            .scaleEffect(2.5)
+                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                        
+                        Text("Fun Fact: 2% of all Openrack profits go to charity!").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal)
+                    }
+                }
+                
                 VStack (alignment: .leading){
                     
                     Text(String(describing: userDetails[0])).font(Font.system(size: 30)).fontWeight(.heavy).multilineTextAlignment(.trailing).padding(.top, 30)
@@ -59,13 +72,17 @@ struct SignInEmailView: View {
                         if String(describing: userDetails[3]) == "Yes" {
                             isPresented.toggle()
                             signupVM.signUpWithEmail(email: emailText, password: passwordText)
-                            print(userDetails)
+//                            print(userDetails)
                         } else {
                             // Add navigation here for successful login
+                            withAnimation(.easeIn) {
+                                isNavigationBarHidden.toggle()
+                                isLoading.toggle()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    isPresented.toggle()
+                            }
+                            }
                             signupVM.signIn(email: emailText, password: passwordText)
-                            print(signupVM.isSignedIn())
-                            isPresented.toggle()
-                            
                         }
                         
                     }) {
@@ -74,8 +91,7 @@ struct SignInEmailView: View {
                         }
                     }
                     .navigationDestination(isPresented: $isPresented) {
-                        AnyView(_fromValue: userDetails[4]).navigationBarBackButtonHidden(true)
-                        
+                            AnyView(_fromValue: userDetails[4]).navigationBarBackButtonHidden(true)
                     }
                     .disabled(isBothTextFieldsEmpty)
                     .frame(width: 360, height: 50)
@@ -83,6 +99,8 @@ struct SignInEmailView: View {
                     .foregroundColor(.white)
                     .border(Color.black, width: 2)
                     .padding(.bottom)
+//                    .withAnimation(Animation.easeIn(duration: 0.5))
+                    
 //                    .sheet(isPresented: $isPresented, content: {
 //                        UserUsername().transition(.move(edge: .leading))
 //                    })
@@ -91,9 +109,11 @@ struct SignInEmailView: View {
                 }
                 .padding(.horizontal)
                 .foregroundColor(.black)
-                
+                .opacity(isLoading ? 0 : 1)
             }
         }
+        .navigationBarHidden(isNavigationBarHidden)
+        
     }
 }
 
@@ -139,8 +159,8 @@ struct UserUsername: View {
 }
 
 
-//struct SignInView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SignInEmailView()
-//    }
-//}
+struct SignInView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignInEmailView(userDetails: ["Login", "Remember Me", "Submit", "No", HomePage()])
+    }
+}
