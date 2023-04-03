@@ -51,9 +51,6 @@
 		61A1FDD929D4F3A3006D5E07 /* FeedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDD829D4F3A3006D5E07 /* FeedPage.swift */; };
 		61A1FDDB29D5F3EA006D5E07 /* CustomNavbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDDA29D5F3EA006D5E07 /* CustomNavbarView.swift */; };
 		61A1FDDD29D6002C006D5E07 /* BottomNavbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDDC29D6002C006D5E07 /* BottomNavbar.swift */; };
-		61A1FDE029D60D98006D5E07 /* ExplorePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDDF29D60D98006D5E07 /* ExplorePage.swift */; };
-		61A1FDE229D60DA2006D5E07 /* SellPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDE129D60DA2006D5E07 /* SellPage.swift */; };
-		61A1FDE429D60DB1006D5E07 /* AccountPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDE329D60DB1006D5E07 /* AccountPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,9 +71,6 @@
 		61A1FDD829D4F3A3006D5E07 /* FeedPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPage.swift; sourceTree = "<group>"; };
 		61A1FDDA29D5F3EA006D5E07 /* CustomNavbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavbarView.swift; sourceTree = "<group>"; };
 		61A1FDDC29D6002C006D5E07 /* BottomNavbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavbar.swift; sourceTree = "<group>"; };
-		61A1FDDF29D60D98006D5E07 /* ExplorePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePage.swift; sourceTree = "<group>"; };
-		61A1FDE129D60DA2006D5E07 /* SellPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellPage.swift; sourceTree = "<group>"; };
-		61A1FDE329D60DB1006D5E07 /* AccountPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,9 +212,6 @@
 			isa = PBXGroup;
 			children = (
 				61A1FDD829D4F3A3006D5E07 /* FeedPage.swift */,
-				61A1FDDF29D60D98006D5E07 /* ExplorePage.swift */,
-				61A1FDE129D60DA2006D5E07 /* SellPage.swift */,
-				61A1FDE329D60DB1006D5E07 /* AccountPage.swift */,
 			);
 			name = "Nav Pages";
 			sourceTree = "<group>";
@@ -334,15 +325,12 @@
 			files = (
 				614EB1D729D464F20028C237 /* SignInEmailView.swift in Sources */,
 				61A1FDDB29D5F3EA006D5E07 /* CustomNavbarView.swift in Sources */,
-				61A1FDE429D60DB1006D5E07 /* AccountPage.swift in Sources */,
 				61A1FDDD29D6002C006D5E07 /* BottomNavbar.swift in Sources */,
 				61A1FDD929D4F3A3006D5E07 /* FeedPage.swift in Sources */,
 				614EB1CE29D325E30028C237 /* Application.swift in Sources */,
 				614EB1CC29D304370028C237 /* AuthViewModel.swift in Sources */,
 				614EB1DB29D4668E0028C237 /* AuthUIViewModel.swift in Sources */,
-				61A1FDE229D60DA2006D5E07 /* SellPage.swift in Sources */,
 				614EB17329D09E1F0028C237 /* LandingPage.swift in Sources */,
-				61A1FDE029D60D98006D5E07 /* ExplorePage.swift in Sources */,
 				61A1FDD429D4DEDA006D5E07 /* PageViews.swift in Sources */,
 				614EB17129D09E1F0028C237 /* openrackApp.swift in Sources */,
 				614EB18129D0A5110028C237 /* SplashScreenView.swift in Sources */,
