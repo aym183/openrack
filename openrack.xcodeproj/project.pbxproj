@@ -51,7 +51,23 @@
 		61A1FDD929D4F3A3006D5E07 /* FeedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDD829D4F3A3006D5E07 /* FeedPage.swift */; };
 		61A1FDDB29D5F3EA006D5E07 /* CustomNavbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDDA29D5F3EA006D5E07 /* CustomNavbarView.swift */; };
 		61A1FDDD29D6002C006D5E07 /* BottomNavbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FDDC29D6002C006D5E07 /* BottomNavbar.swift */; };
+		61A1FDF829DCC399006D5E07 /* AmazonIVSPlayer.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A1FDF729DCC399006D5E07 /* AmazonIVSPlayer.xcframework */; };
+		61A1FDF929DCC399006D5E07 /* AmazonIVSPlayer.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61A1FDF729DCC399006D5E07 /* AmazonIVSPlayer.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		61A1FDFA29DCC39A006D5E07 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				61A1FDF929DCC399006D5E07 /* AmazonIVSPlayer.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		614EB16D29D09E1F0028C237 /* openrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +87,7 @@
 		61A1FDD829D4F3A3006D5E07 /* FeedPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPage.swift; sourceTree = "<group>"; };
 		61A1FDDA29D5F3EA006D5E07 /* CustomNavbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavbarView.swift; sourceTree = "<group>"; };
 		61A1FDDC29D6002C006D5E07 /* BottomNavbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavbar.swift; sourceTree = "<group>"; };
+		61A1FDF729DCC399006D5E07 /* AmazonIVSPlayer.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AmazonIVSPlayer.xcframework; path = ../../../Downloads/AmazonIVSPlayer.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +120,7 @@
 				614EB1B229D19CBD0028C237 /* FirebasePerformance in Frameworks */,
 				614EB1AA29D19CBD0028C237 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				614EB1B829D19CBD0028C237 /* FirebaseStorage in Frameworks */,
+				61A1FDF829DCC399006D5E07 /* AmazonIVSPlayer.xcframework in Frameworks */,
 				614EB19C29D19CBC0028C237 /* FirebaseDynamicLinks in Frameworks */,
 				614EB1A029D19CBC0028C237 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				614EB1B029D19CBD0028C237 /* FirebaseMessaging in Frameworks */,
@@ -118,6 +136,7 @@
 			children = (
 				614EB16F29D09E1F0028C237 /* openrack */,
 				614EB16E29D09E1F0028C237 /* Products */,
+				61A1FDF629DCC398006D5E07 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -216,6 +235,14 @@
 			name = "Nav Pages";
 			sourceTree = "<group>";
 		};
+		61A1FDF629DCC398006D5E07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61A1FDF729DCC399006D5E07 /* AmazonIVSPlayer.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -226,6 +253,7 @@
 				614EB16929D09E1F0028C237 /* Sources */,
 				614EB16A29D09E1F0028C237 /* Frameworks */,
 				614EB16B29D09E1F0028C237 /* Resources */,
+				61A1FDFA29DCC39A006D5E07 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
