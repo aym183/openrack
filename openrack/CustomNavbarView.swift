@@ -22,10 +22,6 @@ struct CustomNavbarView: View {
                     Text("Openrack").font(Font.system(size: 30)).fontWeight(.semibold)
                         .foregroundColor(Color("Primary_color")).padding(.vertical)
                         .padding(.leading, 5)
-                    
-//                    Text("Buy, Sell, Discover ✨").font(Font.system(size: 12)).font(.subheadline).fontWeight(.semibold)
-//                        .multilineTextAlignment(.center)
-//                        .opacity(0.7).foregroundColor(Color.black).padding(.leading, 20).padding(.top, -17)
                 }
                 
                 Spacer()
