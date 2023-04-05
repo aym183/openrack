@@ -12,39 +12,48 @@ import AVFoundation
 struct FeedPage: View {
 //    var player = AVPlayer(url: URL(string: "https://stream.mux.com/P00XyP51P6wIgER8mJZiu2nGl6DVvFjjYzG902ZbuOpmQ.m3u8")!)
     @State var showingBottomSheet = false
+    @State var isShowingNextView = false
     var body: some View {
-        VStack {
-            CustomNavbarView()
-            Spacer()
-            ScrollView {
-                // LazyVGrid
-                Text("Hello")
+        NavigationStack {
+            VStack {
+                CustomNavbarView()
+                Spacer()
+                ScrollView {
+                    // LazyVGrid
+                    Text("Hello")
+                }
+                
+                HStack {
+                    Button(action: { showingBottomSheet.toggle() }, label: {
+                        Text("+")
+                            .font(.system(.largeTitle)).frame(width: 50, height: 40)
+                            .foregroundColor(Color.white)
+                            .padding(.bottom, 7)
+                    })
+                    .background(Color("Primary_color"))
+                    .cornerRadius(38.5)
+                    .padding(.bottom)
+                    .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
+                    
+                }
+                
             }
-            
-            HStack {
-                Button(action: { showingBottomSheet.toggle() }, label: {
-                                        Text("+")
-                                        .font(.system(.largeTitle)).frame(width: 50, height: 40)
-                                        .foregroundColor(Color.white)
-                                        .padding(.bottom, 7)
-                                    })
-                                    .background(Color("Primary_color"))
-                                    .cornerRadius(38.5)
-                                    .padding(.bottom)
-                                    .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
-                            
+            .background(Color("Secondary_color"))
+            .sheet(isPresented: $showingBottomSheet) {
+                StreamBottomSheet(showingBottomSheet: $showingBottomSheet, isShowingNextView: $isShowingNextView)
+                    .presentationDetents([.height(200)])
+            }
+            .navigationDestination(isPresented: $isShowingNextView) {
+//                Add form for scheduling stream
             }
         }
-        .background(Color("Secondary_color"))
-        .sheet(isPresented: $showingBottomSheet) {
-            StreamBottomSheet(showingBottomSheet: $showingBottomSheet)
-                .presentationDetents([.height(200)])
-        }
+        
     }
     
 
 struct StreamBottomSheet: View {
     @Binding var showingBottomSheet: Bool
+    @Binding var isShowingNextView: Bool
     var body: some View {
         ZStack{
             Color("Primary_color").ignoresSafeArea()
@@ -59,7 +68,9 @@ struct StreamBottomSheet: View {
                 
                 Divider().frame(width: 400, height: 2).background(.white).padding(.top, 5).padding(.bottom, 15).opacity(0.5)
                 
-                Button(action: { }) {
+                Button(action: {
+                    showingBottomSheet.toggle()
+                    isShowingNextView.toggle() }) {
                     
                     HStack {
                         Image(systemName: "play.fill").font(.system(size: 20)).padding(.trailing, 5)
