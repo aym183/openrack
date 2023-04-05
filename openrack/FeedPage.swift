@@ -44,7 +44,7 @@ struct FeedPage: View {
                     .presentationDetents([.height(200)])
             }
             .navigationDestination(isPresented: $isShowingNextView) {
-//                Add form for scheduling stream
+                ScheduleStream()
             }
         }
         
