@@ -12,12 +12,15 @@ struct ScheduleStream: View {
     @State var streamDescription = ""
     @State var selectedDate = Date()
     @State var selectedTime = Date()
+    var isBothTextFieldsEmpty: Bool {
+        return streamName.isEmpty || streamDescription.isEmpty
+    }
     
     var body: some View {
         ZStack {
             Color("Secondary_color").ignoresSafeArea()
             VStack(alignment: .leading) {
-                Text("Schedule Show").font(Font.system(size: 30)).fontWeight(.bold)
+                Text("Schedule Show").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
                 
                 Text("Show Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                 
@@ -55,12 +58,22 @@ struct ScheduleStream: View {
                     .padding(.leading, 30)
                 }
                 
+                Spacer()
                 
-//                .frame(width: 360, height: 100)
-                
-                
-//                DatePicker("Time", selection: $selectedTime, displayedComponents: .hourAndMinute)
+                Button(action: {}) {
+                    HStack { Text("Submit").font(.title3) }
+                }
+                .disabled(isBothTextFieldsEmpty)
+                .frame(width: 360, height: 50)
+                .background(isBothTextFieldsEmpty ? Color.gray : Color("Primary_color"))
+                .background(Color("Primary_color"))
+                .foregroundColor(.white)
+                .border(Color.black, width: 2)
+                .padding(.vertical)
             }
+        }
+        .onDisappear {
+            FeedPage()
         }
     }
 }

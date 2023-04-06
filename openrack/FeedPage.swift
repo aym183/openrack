@@ -19,7 +19,6 @@ struct FeedPage: View {
                 CustomNavbarView()
                 Spacer()
                 ScrollView {
-                    // LazyVGrid
                     Text("Hello")
                 }
                 
@@ -44,7 +43,7 @@ struct FeedPage: View {
                     .presentationDetents([.height(200)])
             }
             .navigationDestination(isPresented: $isShowingNextView) {
-                ScheduleStream()
+                ScheduleStream().navigationBarHidden(true)
             }
         }
         

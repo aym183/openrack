@@ -20,7 +20,7 @@ struct SignInEmailView: View {
     @State var isNavigationBarHidden = false
     
     var isBothTextFieldsEmpty: Bool {
-            return emailText.isEmpty && passwordText.isEmpty
+            return emailText.isEmpty || passwordText.isEmpty
     }
     
     var body: some View {
