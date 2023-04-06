@@ -13,14 +13,29 @@ struct FeedPage: View {
 //    var player = AVPlayer(url: URL(string: "https://stream.mux.com/P00XyP51P6wIgER8mJZiu2nGl6DVvFjjYzG902ZbuOpmQ.m3u8")!)
     @State var showingBottomSheet = false
     @State var isShowingNextView = false
+    var columns: [GridItem] = [
+        GridItem(.flexible() , spacing: 10, alignment: nil),
+        GridItem(.flexible() , spacing: nil, alignment: nil)
+    ]
     var body: some View {
         NavigationStack {
             VStack {
                 CustomNavbarView()
                 Spacer()
                 ScrollView {
-                    Text("Hello")
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        // Change to length of response array
+                        ForEach(0..<6) { index in
+                            Rectangle()
+                                .frame(height: 200)
+                                .cornerRadius(20.0)
+                        }
+                    }
+                    
                 }
+                .padding(.top)
+                .padding(.horizontal)
+                
                 
                 HStack {
                     Button(action: { showingBottomSheet.toggle() }, label: {
