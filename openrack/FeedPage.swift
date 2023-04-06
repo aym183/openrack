@@ -27,8 +27,9 @@ struct FeedPage: View {
                     LazyVGrid(columns: columns, spacing: 20) {
                         // Change to length of response array
                         ForEach(0..<6) { index in
-                            ZStack{
-                                Color.white
+//                            ZStack{
+//                                Color.white
+                            VStack (alignment: .leading){
                                 VStack (alignment: .leading){
                                     
                                     HStack {
@@ -48,21 +49,23 @@ struct FeedPage: View {
                                     Text("Content").padding(.leading, 3)
                                 }
                                 .padding(.vertical, 10)
-                                .frame(width: 155)
-                                
+                                .frame(width: 165, height: 200)
+                                .background(Color.white)
+                                .cornerRadius(10.0)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
+                                )
+                               
+                                HStack {
+                                    Image(systemName:"person.crop.circle")
+                                    Text("username").padding(.leading, -5)
+                                }
+                                .font(Font.system(size: 15))
                             }
-                            .frame(height: 200)
-                            .cornerRadius(20.0)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 2)
-                            )
                         }
                     }
-                    .padding(.horizontal)
-                    
+                    .padding(.horizontal).padding(.top)
                 }
-                .padding(.top)
-                
                 
                 HStack {
                     Button(action: { showingBottomSheet.toggle() }, label: {
