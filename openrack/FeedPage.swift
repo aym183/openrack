@@ -10,9 +10,10 @@ import AVKit
 import AVFoundation
 
 struct FeedPage: View {
-//    var player = AVPlayer(url: URL(string: "https://stream.mux.com/P00XyP51P6wIgER8mJZiu2nGl6DVvFjjYzG902ZbuOpmQ.m3u8")!)
+    //    var player = AVPlayer(url: URL(string: "https://stream.mux.com/P00XyP51P6wIgER8mJZiu2nGl6DVvFjjYzG902ZbuOpmQ.m3u8")!)
     @State var showingBottomSheet = false
     @State var isShowingNextView = false
+    @State var isBookmarked = false
     var columns: [GridItem] = [
         GridItem(.flexible() , spacing: 10, alignment: nil),
         GridItem(.flexible() , spacing: nil, alignment: nil)
@@ -26,15 +27,41 @@ struct FeedPage: View {
                     LazyVGrid(columns: columns, spacing: 20) {
                         // Change to length of response array
                         ForEach(0..<6) { index in
-                            Rectangle()
-                                .frame(height: 200)
-                                .cornerRadius(20.0)
+                            ZStack{
+                                Color.white
+                                VStack (alignment: .leading){
+                                    
+                                    HStack {
+                                        Image(systemName: "livephoto").foregroundColor(Color.red)
+                                        Text("Live")
+                                            .fontWeight(.semibold).padding(.leading, -6)
+                                        Spacer()
+                                        Button(action: {isBookmarked.toggle()}) {
+                                            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color("Primary_color"))
+                                        }
+                                        
+                                    }
+                                    .padding(.horizontal, 0)
+                                    .frame(width: 155)
+                                    
+                                    Spacer()
+                                    Text("Content").padding(.leading, 3)
+                                }
+                                .padding(.vertical, 10)
+                                .frame(width: 155)
+                                
+                            }
+                            .frame(height: 200)
+                            .cornerRadius(20.0)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 2)
+                            )
                         }
                     }
+                    .padding(.horizontal)
                     
                 }
                 .padding(.top)
-                .padding(.horizontal)
                 
                 
                 HStack {
@@ -48,7 +75,7 @@ struct FeedPage: View {
                     .cornerRadius(38.5)
                     .padding(.bottom,30)
                     .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
-                    
+//
                 }
                 
             }
@@ -60,45 +87,6 @@ struct FeedPage: View {
             .navigationDestination(isPresented: $isShowingNextView) {
                 ScheduleStream().navigationBarHidden(true)
             }
-        }
-        
-    }
-    
-
-struct StreamBottomSheet: View {
-    @Binding var showingBottomSheet: Bool
-    @Binding var isShowingNextView: Bool
-    var body: some View {
-        ZStack{
-            Color("Primary_color").ignoresSafeArea()
-            VStack {
-                HStack {
-                        Text("Add").font(.title2)
-                        Spacer()
-                    Button(action: { showingBottomSheet.toggle() }) { Image(systemName: "xmark").font(.system(size: 20)) }
-                }
-                .foregroundColor(Color.white)
-                .padding(.horizontal, 30)
-                
-                Divider().frame(width: 400, height: 2).background(.white).padding(.top, 5).padding(.bottom, 15).opacity(0.5)
-                
-                Button(action: {
-                    showingBottomSheet.toggle()
-                    isShowingNextView.toggle() }) {
-                    
-                    HStack {
-                        Image(systemName: "play.fill").font(.system(size: 20)).padding(.trailing, 5)
-                        Text("Schedule a Show").font(.title2)
-                    }
-                    
-                }
-                .frame(width: 360, height: 60)
-                .background(.white).foregroundColor(.black)
-                .overlay(RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2))
-                .cornerRadius(50)
-                .padding(.vertical)
-            }
-            
         }
         
     }
@@ -150,7 +138,7 @@ struct StreamBottomSheet: View {
 //            }
 //        }.resume()
 //    }
-}
+
 
 
 
