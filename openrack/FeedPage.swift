@@ -10,12 +10,12 @@ import AVKit
 import AVFoundation
 
 struct FeedPage: View {
-    //    var player = AVPlayer(url: URL(string: "https://stream.mux.com/P00XyP51P6wIgER8mJZiu2nGl6DVvFjjYzG902ZbuOpmQ.m3u8")!)
+        var player = AVPlayer(url: URL(string: "https://stream.mux.com/P00XyP51P6wIgER8mJZiu2nGl6DVvFjjYzG902ZbuOpmQ.m3u8")!)
     @State var showingBottomSheet = false
     @State var isShowingNextView = false
     @State var isBookmarked = false
     var columns: [GridItem] = [
-        GridItem(.flexible() , spacing: 10, alignment: nil),
+        GridItem(.flexible() , spacing: nil, alignment: nil),
         GridItem(.flexible() , spacing: nil, alignment: nil)
     ]
     var body: some View {
@@ -27,48 +27,48 @@ struct FeedPage: View {
                     LazyVGrid(columns: columns, spacing: 20) {
                         // Change to length of response array
                         ForEach(0..<6) { index in
-//                            ZStack{
-//                                Color.white
                             VStack (alignment: .leading){
                                 VStack (alignment: .leading){
-                                    
+
                                     HStack {
                                         Image(systemName: "livephoto").foregroundColor(Color.red)
                                         Text("Live")
-                                            .fontWeight(.semibold).padding(.leading, -6)
+                                            .fontWeight(.semibold).foregroundColor(Color.white).padding(.leading, -6)
                                         Spacer()
                                         Button(action: {isBookmarked.toggle()}) {
-                                            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color("Primary_color"))
+                                            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color.white)
                                         }
-                                        
+
                                     }
-                                    .padding(.horizontal, 0)
-                                    .frame(width: 155)
-                                    
+                                    .padding(.horizontal, 3)
+                                    .frame(width: 170)
+//                                    .background(Color.red)
+
                                     Spacer()
-                                    Text("Content").padding(.leading, 3)
+                                    Text("Jonah is live🔥 The most entertaining show on earth").font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).padding(.horizontal, 5)
                                 }
                                 .padding(.vertical, 10)
-                                .frame(width: 165, height: 200)
-                                .background(Color.white)
+                                .frame(width: 175, height: 260)
+//                                .background(Color.white)
+                                .background(Image("ShowPreview").resizable())
                                 .cornerRadius(10.0)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
                                 )
-                               
+
                                 HStack {
                                     Image(systemName:"person.crop.circle")
-                                    Text("username").padding(.leading, -5)
+                                    Text("username").fontWeight(.medium).padding(.leading, -5)
                                 }
                                 .font(Font.system(size: 15))
                             }
                         }
                     }
-                    .padding(.horizontal).padding(.top)
+                    .padding(.horizontal,5).padding(.top)
                 }
-                
-                HStack {
-                    Button(action: { showingBottomSheet.toggle() }, label: {
+
+
+                Button(action: { showingBottomSheet.toggle() }, label: {
                         Text("+")
                             .font(.system(.largeTitle)).frame(width: 50, height: 40)
                             .foregroundColor(Color.white)
@@ -76,11 +76,9 @@ struct FeedPage: View {
                     })
                     .background(Color("Primary_color"))
                     .cornerRadius(38.5)
-                    .padding(.bottom,30)
+                    .padding(.bottom, -15)
                     .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
-//
-                }
-                
+
             }
             .background(Color("Secondary_color"))
             .sheet(isPresented: $showingBottomSheet) {
@@ -91,6 +89,7 @@ struct FeedPage: View {
                 ScheduleStream().navigationBarHidden(true)
             }
         }
+
         
     }
 }

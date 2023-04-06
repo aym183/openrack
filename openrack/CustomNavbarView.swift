@@ -47,3 +47,9 @@ struct CustomNavbarView: View {
 
     }
 }
+
+struct CustomNavbarView_Previews: PreviewProvider {
+    static var previews: some View {
+        CustomNavbarView()
+    }
+}
