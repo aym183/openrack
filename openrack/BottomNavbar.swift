@@ -25,21 +25,21 @@ struct BottomNavbar: View {
                 }
 
 
-            Text("Hello, World2!")
+            ShowsPage()
                 .tabItem {
                     Image(systemName: "video.fill")
                     Text("My Shows")
                 }
         }
         .accentColor(Color("Primary_color"))
-        .overlay(
-            Rectangle()
-                .frame(height: 0.5)
-                .foregroundColor(.black)
-                .offset(y: -55)
-                .shadow(color: .black, radius: 6, x: 0, y: 0.5)
-                ,alignment: .bottom
-        )
+//        .overlay(
+//            Rectangle()
+//                .frame(height: 0.5)
+//                .foregroundColor(.black)
+//                .offset(y: -55)
+//                .shadow(color: .black, radius: 6, x: 0, y: 0.5)
+//                ,alignment: .bottom
+//        )
     }
 
 }

@@ -72,9 +72,6 @@ struct ScheduleStream: View {
                 .padding(.vertical)
             }
         }
-        .onDisappear {
-            FeedPage()
-        }
     }
 }
 
