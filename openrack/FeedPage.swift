@@ -31,7 +31,7 @@ struct FeedPage: View {
                     })
                     .background(Color("Primary_color"))
                     .cornerRadius(38.5)
-                    .padding(.bottom)
+                    .padding(.bottom,30)
                     .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
                     
                 }

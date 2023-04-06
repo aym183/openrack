@@ -181,6 +181,7 @@
 		614EB1BE29D21BC90028C237 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				614EB1CB29D304370028C237 /* AuthViewModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -188,7 +189,6 @@
 		614EB1BF29D21BD90028C237 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				614EB1CB29D304370028C237 /* AuthViewModel.swift */,
 				614EB1DA29D4668E0028C237 /* AuthUIViewModel.swift */,
 			);
 			name = ViewModel;
