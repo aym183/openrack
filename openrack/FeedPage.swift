@@ -14,6 +14,7 @@ struct FeedPage: View {
     @State var showingBottomSheet = false
     @State var isShowingNextView = false
     @State var isBookmarked = false
+    @State var isShownShow = false
     var columns: [GridItem] = [
         GridItem(.flexible() , spacing: nil, alignment: nil),
         GridItem(.flexible() , spacing: nil, alignment: nil)
@@ -27,41 +28,49 @@ struct FeedPage: View {
                     LazyVGrid(columns: columns, spacing: 20) {
                         // Change to length of response array
                         ForEach(0..<6) { index in
+                            
+                            NavigationStack {
                             VStack (alignment: .leading){
-                                VStack (alignment: .leading){
-
-                                    HStack {
-                                        Image(systemName: "livephoto").foregroundColor(Color.red)
-                                        Text("Live")
-                                            .fontWeight(.semibold).foregroundColor(Color.white).padding(.leading, -6)
-                                        Spacer()
-                                        Button(action: {isBookmarked.toggle()}) {
-                                            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color.white)
+                                Button(action: { isShownShow.toggle() }) {
+                                    VStack (alignment: .leading){
+                                        
+                                        HStack {
+                                            // Use Async Images instead of Image when using url's
+                                            Image(systemName: "livephoto").foregroundColor(Color.red)
+                                            Text("Live")
+                                                .fontWeight(.semibold).foregroundColor(Color.white).padding(.leading, -6)
+                                            Spacer()
+                                            Button(action: {isBookmarked.toggle()}) {
+                                                Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color.white)
+                                            }
+                                            
                                         }
-
+                                        .padding(.horizontal, 3)
+                                        .frame(width: 170)
+                                        //                                    .background(Color.red)
+                                        
+                                        Spacer()
+                                        Text("Jonah is live🔥 The most entertaining show on earth").font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).multilineTextAlignment(.leading).padding(.horizontal, 5)
                                     }
-                                    .padding(.horizontal, 3)
-                                    .frame(width: 170)
-//                                    .background(Color.red)
-
-                                    Spacer()
-                                    Text("Jonah is live🔥 The most entertaining show on earth").font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).padding(.horizontal, 5)
-                                }
-                                .padding(.vertical, 10)
-                                .frame(width: 175, height: 260)
-//                                .background(Color.white)
-                                .background(Image("ShowPreview").resizable())
-                                .cornerRadius(10.0)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
-                                )
-
+                                    .padding(.vertical, 10)
+                                    .frame(width: 175, height: 260)
+                                    .background(Image("ShowPreview").resizable())
+                                    .cornerRadius(10.0)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
+                                    )
+                                } //Button
                                 HStack {
                                     Image(systemName:"person.crop.circle")
                                     Text("username").fontWeight(.medium).padding(.leading, -5)
                                 }
                                 .font(Font.system(size: 15))
                             }
+                        }
+                        .navigationDestination(isPresented: $isShownShow) {
+                            ViewerShow().navigationBarHidden(true)
+                            }
+                        
                         }
                     }
                     .padding(.horizontal,5).padding(.top)
