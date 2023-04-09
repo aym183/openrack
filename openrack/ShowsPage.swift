@@ -13,6 +13,7 @@ struct ShowsPage: View {
     ]
     var body: some View {
         ZStack {
+            // Added test
             Color("Secondary_color").ignoresSafeArea()
             VStack (alignment: .leading) {
                 Text("Shows").font(Font.system(size: 30)).fontWeight(.bold).padding(.vertical, 20)
