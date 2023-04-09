@@ -14,9 +14,15 @@ struct ViewerShow: View {
     let playerController = AVPlayerViewController()
     
     var body: some View {
-        VideoPlayer (player: player)
-            .ignoresSafeArea()
-            .overlay( VStack {
+        ZStack {
+            VideoPlayer (player: player)
+                .ignoresSafeArea()
+                .disabled(true)
+                .onAppear() { player.play() }
+//                .allowsHitTesting(false)
+                          
+            
+            VStack {
                 
                 HStack {
                     Image(systemName: "person.circle").font(Font.system(size: 25))
@@ -41,12 +47,14 @@ struct ViewerShow: View {
                 .fontWeight(.semibold)
                 
                 HStack {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color("Primary_color"))
-                        .frame(width: 50, height: 20)
-                        .overlay(
-                            Text("Follow").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
-                        )
+                    Button(action: {}) {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color("Primary_color"))
+                            .frame(width: 50, height: 20)
+                            .overlay(
+                                Text("Follow").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
+                            )
+                    }
                     Spacer()
                 }
                     
@@ -55,23 +63,27 @@ struct ViewerShow: View {
                 HStack {
                         Spacer()
                         VStack {
-                            Circle()
-                                .fill(Color("Primary_color"))
-                                .frame(height: 50)
-                                .opacity(0.7)
-                                .overlay(
-                                    Image(systemName: "link").font(Font.system(size: 20)).foregroundColor(.white)
-                                )
+                            Button(action: {}) {
+                                Circle()
+                                    .fill(Color("Primary_color"))
+                                    .frame(height: 50)
+                                    .opacity(0.7)
+                                    .overlay(
+                                        Image(systemName: "link").font(Font.system(size: 20)).foregroundColor(.white)
+                                    )
+                            }
                             
                             Text("Share").font(Font.system(size: 15)).fontWeight(.semibold)
                             
-                            Circle()
-                                .fill(Color("Primary_color"))
-                                .frame(height: 50)
-                                .opacity(0.7)
-                                .overlay(
-                                    Image(systemName: "creditcard.fill").font(Font.system(size: 20)).foregroundColor(.white)
-                                )
+                            Button(action: {}) {
+                                Circle()
+                                    .fill(Color("Primary_color"))
+                                    .frame(height: 50)
+                                    .opacity(0.7)
+                                    .overlay(
+                                        Image(systemName: "creditcard.fill").font(Font.system(size: 20)).foregroundColor(.white)
+                                    )
+                            }
                         
                             Text("Pay").font(Font.system(size: 15)).fontWeight(.semibold)
                         }
@@ -80,10 +92,10 @@ struct ViewerShow: View {
                     }
                     
                     
-                    Button(action: {}) {
+                    Button(action: { }) {
                         Text("Buy It Now")
                             .font(.title3).fontWeight(.medium)
-                            .frame(width: 300, height: 40)
+                            .frame(width: 300, height: 50)
                             .background(.white).foregroundColor(.black)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
@@ -93,10 +105,10 @@ struct ViewerShow: View {
                     }
                     
             }
-            .frame(width: 370, height: 750))
-            .disabled(true)
-            .onAppear() { player.play() }
-
+            
+            .frame(width: 370, height: 750)
+        }
+       
     }
 }
 
