@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6129AD8E29E2DAE200A4D5DE /* ShowsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6129AD8D29E2DAE200A4D5DE /* ShowsPage.swift */; };
 		614EB17129D09E1F0028C237 /* openrackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB17029D09E1F0028C237 /* openrackApp.swift */; };
 		614EB17329D09E1F0028C237 /* LandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614EB17229D09E1F0028C237 /* LandingPage.swift */; };
 		614EB17529D09E200028C237 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 614EB17429D09E200028C237 /* Assets.xcassets */; };
@@ -70,6 +71,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6129AD8D29E2DAE200A4D5DE /* ShowsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsPage.swift; sourceTree = "<group>"; };
 		614EB16D29D09E1F0028C237 /* openrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		614EB17029D09E1F0028C237 /* openrackApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = openrackApp.swift; sourceTree = "<group>"; };
 		614EB17229D09E1F0028C237 /* LandingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPage.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				61A1FDD829D4F3A3006D5E07 /* FeedPage.swift */,
 				61A1FE5729DE24EF006D5E07 /* ScheduleStream.swift */,
 				61A1FE5929DE365F006D5E07 /* TagView.swift */,
+				6129AD8D29E2DAE200A4D5DE /* ShowsPage.swift */,
 			);
 			name = "Nav Pages";
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				61A1FE5F29DF62BC006D5E07 /* StreamBottomSheet.swift in Sources */,
 				614EB17329D09E1F0028C237 /* LandingPage.swift in Sources */,
 				61A1FE5829DE24EF006D5E07 /* ScheduleStream.swift in Sources */,
+				6129AD8E29E2DAE200A4D5DE /* ShowsPage.swift in Sources */,
 				61A1FDD429D4DEDA006D5E07 /* PageViews.swift in Sources */,
 				614EB17129D09E1F0028C237 /* openrackApp.swift in Sources */,
 				614EB18129D0A5110028C237 /* SplashScreenView.swift in Sources */,
