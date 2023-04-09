@@ -7,8 +7,20 @@
 
 import SwiftUI
 import _AuthenticationServices_SwiftUI
+import Firebase
 
 struct LandingPage: View {
+    var body: some View {
+        if Auth.auth().currentUser == nil {
+            BottomNavbar()
+        } else {
+            LandingContent()
+        }
+//        .navigationViewStyle(StackNavigationViewStyle())
+    }
+    }
+
+struct LandingContent: View {
     var signupVM = AuthViewModel()
     var authUIText = AuthUIViewModel()
     @State var showingSignInBottomSheet = false
@@ -16,11 +28,8 @@ struct LandingPage: View {
     @State var signedIn = false
     // ------ Add @AppStorage("shouldShowOnboarding") instead of @State to persist not showing onbaording after  user's tried ------
     @AppStorage("shouldShowOnboarding") var shouldShowOnboarding: Bool = true
-    
     var body: some View {
-        
         NavigationStack {
-            
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack{
@@ -91,7 +100,7 @@ struct LandingPage: View {
                     .padding(.horizontal)
                     .navigationDestination(isPresented: $showingSignInBottomSheet) {
                         SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Sign In"))
-                    }                    
+                    }
                     
                     Divider().frame(width: 300, height: 3).background(.black).padding(.top, 5).padding(.bottom, 5)
                     
@@ -128,10 +137,8 @@ struct LandingPage: View {
         .fullScreenCover(isPresented: $shouldShowOnboarding , content: {
             OnboardingFlow(shouldShowOnboarding: $shouldShowOnboarding)
         })
-//        .navigationViewStyle(StackNavigationViewStyle())
     }
-    }
-
+}
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         LandingPage()

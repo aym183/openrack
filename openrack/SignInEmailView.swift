@@ -6,10 +6,9 @@
 //
 
 import SwiftUI
-
 struct SignInEmailView: View {
     
-    var userDetails:  Array<Any> 
+    var userDetails:  Array<Any>
     var signupVM = AuthViewModel()
     @State var emailText = ""
     @State var passwordText = ""
@@ -84,9 +83,11 @@ struct SignInEmailView: View {
                         withAnimation(.easeIn) {
                             if String(describing: userDetails[3]) == "Yes" {
                                 signupVM.signUpWithEmail(email: emailText, password: passwordText, username: usernameText)
+                                
                             } else {
                                     signupVM.signIn(email: emailText, password: passwordText)
                                 }
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
                             isNavigationBarHidden.toggle()
                             isLoading.toggle()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {

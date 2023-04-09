@@ -26,19 +26,20 @@ class AuthViewModel : ObservableObject {
             if error != nil {
                 print(error!.localizedDescription)
             } else {
+                print("Successful auth")
+                self.signedIn.toggle()
                 CreateDB().addUser(email: email, username: username)
             }
         }
     }
     
     func signIn(email: String, password: String) {
-        auth.signIn(withEmail: email, password: password) { [weak self] result, error in
-            guard result != nil, error == nil else {
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self?.signedIn = true
+        auth.signIn(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                    print("Successful auth")
+                    self.signedIn.toggle()
             }
         }
     }
