@@ -10,6 +10,7 @@ struct ShowsPage: View {
     var columns: [GridItem] = [
         GridItem(.flexible() , spacing: nil, alignment: nil)
     ]
+    @State var streamStarted = false
     var body: some View {
         ZStack {
             Color("Secondary_color").ignoresSafeArea()
@@ -56,13 +57,16 @@ struct ShowsPage: View {
                                 Spacer ()
 
                                 HStack {
-                                    Button(action: {}) {
+                                    Button(action: { streamStarted.toggle() }) {
                                         RoundedRectangle(cornerRadius: 20)
                                             .fill(.black)
                                             .frame(width: 95, height: 30)
                                             .overlay(
                                                 Text("Start Streaming").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
                                             )
+                                    }
+                                    .navigationDestination(isPresented: $streamStarted) {
+                                        CreatorShow().navigationBarHidden(true)
                                     }
 
                                     Button(action: {}) {
