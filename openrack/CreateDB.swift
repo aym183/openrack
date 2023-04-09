@@ -12,7 +12,7 @@ import Foundation
 class CreateDB : ObservableObject {
     var miscData = TimeData()
     
-    func addUser(email: String) {
+    func addUser(email: String, username: String) {
         let randomID = miscData.getRandomID()
         let db = Firestore.firestore()
         let ref = db.collection("users")
@@ -20,7 +20,7 @@ class CreateDB : ObservableObject {
             "date_created": miscData.getPresentDateTime(),
             "last_updated": miscData.getPresentDateTime(),
             "email": email,
-            "username": ""
+            "username": username
         ]
         
         ref.addDocument(data: data) { error in

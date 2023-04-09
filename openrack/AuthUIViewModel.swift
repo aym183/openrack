@@ -13,10 +13,10 @@ class AuthUIViewModel {
         
         var response: Array<Any>
         if purpose == "Sign In" {
-            response = ["Sign Up", "Sign up for email to access sales, exclusive drops & more from Openrack", "Next", "Yes", UserUsername()]
+            response = ["Sign Up", "Sign up for email to access sales, exclusive drops & more from Openrack", "Next", "Yes"]
         } else {
             // Rename LandingPage to home page
-            response = ["Login", "Remember Me", "Submit", "No", BottomNavbar()]
+            response = ["Login", "Remember Me", "Submit", "No"]
         }
         return response
     }

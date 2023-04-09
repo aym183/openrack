@@ -13,6 +13,7 @@ struct SignInEmailView: View {
     var signupVM = AuthViewModel()
     @State var emailText = ""
     @State var passwordText = ""
+    @State var usernameText = ""
     @State private var isOn = false
     @State private var isPresented = false
     @State private var isLogin = false
@@ -51,6 +52,17 @@ struct SignInEmailView: View {
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                     
+                    if String(describing: userDetails[3]) == "Yes" {
+                        Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                        
+                        TextField("", text: $usernameText)
+                            .padding(.horizontal, 8)
+                            .frame(width: 360, height: 50).border(Color.black, width: 2)
+                            .background(.white)
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
+                    }
+                    
                     Text("Password").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
                     SecureField("", text: $passwordText)
@@ -69,20 +81,17 @@ struct SignInEmailView: View {
                     
                     Spacer()
                     Button(action: {
-                        if String(describing: userDetails[3]) == "Yes" {
-                            isPresented.toggle()
-                            signupVM.signUpWithEmail(email: emailText, password: passwordText)
-//                            print(userDetails)
-                        } else {
-                            // Add navigation here for successful login
-                            withAnimation(.easeIn) {
-                                isNavigationBarHidden.toggle()
-                                isLoading.toggle()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                    isPresented.toggle()
-                            }
-                            }
-                            signupVM.signIn(email: emailText, password: passwordText)
+                        withAnimation(.easeIn) {
+                            if String(describing: userDetails[3]) == "Yes" {
+                                signupVM.signUpWithEmail(email: emailText, password: passwordText, username: usernameText)
+                            } else {
+                                    signupVM.signIn(email: emailText, password: passwordText)
+                                }
+                            isNavigationBarHidden.toggle()
+                            isLoading.toggle()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                isPresented.toggle()
+                        }
                         }
                         
                     }) {
@@ -92,9 +101,8 @@ struct SignInEmailView: View {
                     }
                     .navigationDestination(isPresented: $isPresented) {
                         withAnimation(.easeIn(duration: 2)) {
-                            AnyView(_fromValue: userDetails[4])
+                            BottomNavbar()
                             .navigationBarBackButtonHidden(true)
-//                            .transition(.slide)
                         }
                     }
                     
@@ -123,49 +131,6 @@ struct SignInEmailView: View {
         
     }
 }
-
-struct UserUsername: View {
-    @State var usernameText = ""
-
-    var body: some View {
-        ZStack {
-            Color("Secondary_color").ignoresSafeArea()
-            VStack (alignment: .leading){
-                
-                Text("Create a Username").font(Font.system(size: 30)).fontWeight(.heavy).multilineTextAlignment(.trailing).padding(.top, 50)
-                
-                Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 20)
-                
-                TextField("", text: $usernameText)
-                    .padding(.top, -5).padding(.horizontal, 8)
-                    .frame(width: 360, height: 50).border(Color.black, width: 2)
-                    .background(.white)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                
-                Spacer()
-                
-                Button(action: {}) {
-                    HStack {
-                        Text("Next").font(.title3)
-                    }
-                }
-                .disabled(usernameText.isEmpty)
-                .frame(width: 360, height: 50)
-                .background(usernameText.isEmpty ? Color.gray : Color("Primary_color"))
-                .foregroundColor(.white)
-                .border(Color.black, width: 2)
-                .padding(.bottom)
-                
-            }
-            .padding(.horizontal)
-            .foregroundColor(.black)
-            
-        }
-    }
-}
-
-
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
         SignInEmailView(userDetails: ["Login", "Remember Me", "Submit", "No", FeedPage()])

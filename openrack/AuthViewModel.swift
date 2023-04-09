@@ -21,12 +21,12 @@ class AuthViewModel : ObservableObject {
         return auth.currentUser != nil
     }
     
-    func signUpWithEmail(email: String, password: String) {
+    func signUpWithEmail(email: String, password: String, username: String) {
         auth.createUser(withEmail: email, password: password) { result, error in
             if error != nil {
                 print(error!.localizedDescription)
             } else {
-                CreateDB().addUser(email: email)
+                CreateDB().addUser(email: email, username: username)
             }
         }
     }
