@@ -54,7 +54,6 @@
 		61A1FE5829DE24EF006D5E07 /* ScheduleStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FE5729DE24EF006D5E07 /* ScheduleStream.swift */; };
 		61A1FE5A29DE365F006D5E07 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FE5929DE365F006D5E07 /* TagView.swift */; };
 		61A1FE5F29DF62BC006D5E07 /* StreamBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FE5E29DF62BC006D5E07 /* StreamBottomSheet.swift */; };
-		61A1FE6129DF7ECA006D5E07 /* ShowsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1FE6029DF7ECA006D5E07 /* ShowsPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -91,7 +90,6 @@
 		61A1FE5729DE24EF006D5E07 /* ScheduleStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleStream.swift; sourceTree = "<group>"; };
 		61A1FE5929DE365F006D5E07 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		61A1FE5E29DF62BC006D5E07 /* StreamBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamBottomSheet.swift; sourceTree = "<group>"; };
-		61A1FE6029DF7ECA006D5E07 /* ShowsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,7 +234,6 @@
 				61A1FDD829D4F3A3006D5E07 /* FeedPage.swift */,
 				61A1FE5729DE24EF006D5E07 /* ScheduleStream.swift */,
 				61A1FE5929DE365F006D5E07 /* TagView.swift */,
-				61A1FE6029DF7ECA006D5E07 /* ShowsPage.swift */,
 			);
 			name = "Nav Pages";
 			sourceTree = "<group>";
@@ -360,7 +357,6 @@
 				61A1FE5F29DF62BC006D5E07 /* StreamBottomSheet.swift in Sources */,
 				614EB17329D09E1F0028C237 /* LandingPage.swift in Sources */,
 				61A1FE5829DE24EF006D5E07 /* ScheduleStream.swift in Sources */,
-				61A1FE6129DF7ECA006D5E07 /* ShowsPage.swift in Sources */,
 				61A1FDD429D4DEDA006D5E07 /* PageViews.swift in Sources */,
 				614EB17129D09E1F0028C237 /* openrackApp.swift in Sources */,
 				614EB18129D0A5110028C237 /* SplashScreenView.swift in Sources */,
