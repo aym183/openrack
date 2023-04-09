@@ -23,8 +23,10 @@ class AuthViewModel : ObservableObject {
     
     func signUpWithEmail(email: String, password: String) {
         auth.createUser(withEmail: email, password: password) { result, error in
-            guard result != nil, error == nil else {
-                return
+            if error != nil {
+                print(error!.localizedDescription)
+            } else {
+                CreateDB().addUser(email: email)
             }
         }
     }

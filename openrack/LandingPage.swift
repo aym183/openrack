@@ -13,7 +13,7 @@ struct LandingPage: View {
     var authUIText = AuthUIViewModel()
     @State var showingSignInBottomSheet = false
     @State var showingLoginBottomSheet = false
-    
+    @State var signedIn = false
     // ------ Add @AppStorage("shouldShowOnboarding") instead of @State to persist not showing onbaording after  user's tried ------
     @AppStorage("shouldShowOnboarding") var shouldShowOnboarding: Bool = true
     
@@ -131,26 +131,6 @@ struct LandingPage: View {
 //        .navigationViewStyle(StackNavigationViewStyle())
     }
     }
-
-struct OnboardingFlow : View {
-    @Binding var shouldShowOnboarding: Bool
-    var body: some View {
-        NavigationView {
-            ZStack {
-                
-                TabView {
-                    PageView()
-                    PageView2()
-                    PageView3(shouldShowOnboarding: $shouldShowOnboarding)
-                }
-                .tabViewStyle(.page(indexDisplayMode: .automatic))
-                .indexViewStyle(.page(backgroundDisplayMode: .always))
-            }
-            .background(Color("Primary_color"))
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
-    }
-}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
