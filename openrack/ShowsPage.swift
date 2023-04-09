@@ -33,17 +33,19 @@ struct ShowsPage: View {
                                         .font(Font.system(size: 12))
                                         .fontWeight(.semibold)
 
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(.white)
-                                        .frame(width: 80, height: 20)
-                                        .overlay(
-                                            Text("Cancel Stream").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.red)
-                                        )
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 11)
-                                                .fill(.black)
-                                                .frame(width: 81.5, height: 22)
-                                        )
+                                    Button(action: {}) {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(.white)
+                                            .frame(width: 80, height: 20)
+                                            .overlay(
+                                                Text("Cancel Stream").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.red)
+                                            )
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 11)
+                                                    .fill(.black)
+                                                    .frame(width: 81.5, height: 22)
+                                            )
+                                    }
 
                                     Spacer()
 
@@ -54,23 +56,28 @@ struct ShowsPage: View {
                                 Spacer ()
 
                                 HStack {
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .fill(.black)
-                                        .frame(width: 90, height: 32)
-                                        .overlay(
-                                            Text("Start Streaming").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
-                                        )
+                                    Button(action: {}) {
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(.black)
+                                            .frame(width: 95, height: 30)
+                                            .overlay(
+                                                Text("Start Streaming").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
+                                            )
+                                    }
 
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .fill(.black)
-                                        .frame(width: 75, height: 32)
-                                        .overlay(
-                                            HStack{
-                                                Image(systemName: "link").font(Font.system(size: 10)).padding(.trailing, -5)
-                                                Text("Copy Link").font(Font.system(size: 10)).fontWeight(.semibold)
-                                            }
-                                                .foregroundColor(.white)
-                                        )
+                                    Button(action: {}) {
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(.black)
+                                            .frame(width: 80, height: 30)
+                                            .overlay(
+                                                HStack{
+                                                    Image(systemName: "link").font(Font.system(size: 10)).padding(.trailing, -5)
+                                                    Text("Copy Link").font(Font.system(size: 10)).fontWeight(.semibold)
+                                                }
+                                                    .foregroundColor(.white)
+                                            )
+                                    }
+                                    
                                     Spacer()
                                 }
                                 .padding(.bottom,6).padding(.horizontal,6)
