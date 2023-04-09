@@ -95,11 +95,7 @@ struct ViewerShow: View {
             }
             .frame(width: 370, height: 750))
             .disabled(true)
-            .onAppear{
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                            player.play()
-                        })
-            }
+            .onAppear() { player.play() }
 
     }
 }
