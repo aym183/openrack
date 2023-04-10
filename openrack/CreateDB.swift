@@ -11,9 +11,9 @@ import Foundation
 
 class CreateDB : ObservableObject {
     var miscData = TimeData()
+    var getUsername = ReadDB()
     
     func addUser(email: String, username: String) {
-        let randomID = miscData.getRandomID()
         let db = Firestore.firestore()
         let ref = db.collection("users")
         let data: [String: Any] = [
@@ -27,7 +27,31 @@ class CreateDB : ObservableObject {
             if let error = error {
                 print("Error adding document: \(error.localizedDescription)")
             } else {
-                print("Document added with ID")
+                print("User added")
+            }
+            
+        }
+    }
+    
+    func addShow(name: String, description: String, date: Date) {
+        let db = Firestore.firestore()
+        let ref = db.collection("shows")
+        @AppStorage("username") var userName: String = ""
+        
+        let data: [String: Any] = [
+            "date_created": miscData.getPresentDateTime(),
+            "date_scheduled": date,
+            "created_by": userName,
+            "name": name,
+            "description": description,
+            "has_conducted": false
+        ]
+        
+        ref.addDocument(data: data) { error in
+            if let error = error {
+                print("Error adding document: \(error.localizedDescription)")
+            } else {
+                print("Show added")
             }
             
         }

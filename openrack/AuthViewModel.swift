@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import FirebaseAuth
 import FirebaseCore
 import GoogleSignIn
@@ -16,6 +17,7 @@ class AuthViewModel : ObservableObject {
     
     let auth = Auth.auth()
     @Published var signedIn = false
+    @AppStorage("email") var userEmail: String = ""
     
     func isSignedIn() -> Bool {
         return auth.currentUser != nil
@@ -29,6 +31,8 @@ class AuthViewModel : ObservableObject {
                 print("Successful auth")
                 self.signedIn.toggle()
                 CreateDB().addUser(email: email, username: username)
+                ReadDB().getUsername()
+                UserDefaults.standard.set(email, forKey: "email")
             }
         }
     }
@@ -40,6 +44,8 @@ class AuthViewModel : ObservableObject {
             } else {
                     print("Successful auth")
                     self.signedIn.toggle()
+                    ReadDB().getUsername()
+                    UserDefaults.standard.set(email, forKey: "email")
             }
         }
     }

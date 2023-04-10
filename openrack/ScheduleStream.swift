@@ -13,6 +13,7 @@ struct ScheduleStream: View {
     @State var selectedDate = Date()
     @State var selectedTime = Date()
     @State var showSubmission = false
+    var addStream = CreateDB()
     var isBothTextFieldsEmpty: Bool {
         return streamName.isEmpty || streamDescription.isEmpty
     }
@@ -62,7 +63,15 @@ struct ScheduleStream: View {
                     
                     Spacer()
                     
-                    Button(action: { showSubmission.toggle() }) {
+                    Button(action: {
+                        let calendar = Calendar.current
+                        let dateComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
+                        let timeComponents = calendar.dateComponents([.hour, .minute], from: selectedTime)
+                        let combinedComponents = DateComponents(year: dateComponents.year, month: dateComponents.month, day: dateComponents.day, hour: timeComponents.hour, minute: timeComponents.minute)
+                        let combinedDate = calendar.date(from: combinedComponents)
+                        showSubmission.toggle()
+                        addStream.addShow(name: streamName, description: streamDescription, date: combinedDate!)
+                    }) {
                         HStack { Text("Submit").font(.title3) }
                     }
                     .disabled(isBothTextFieldsEmpty)
