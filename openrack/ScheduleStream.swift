@@ -13,6 +13,7 @@ struct ScheduleStream: View {
     @State var selectedDate = Date()
     @State var selectedTime = Date()
     @State var showSubmission = false
+    @State var isLoading = false
     var addStream = CreateDB()
     var isBothTextFieldsEmpty: Bool {
         return streamName.isEmpty || streamDescription.isEmpty
@@ -22,6 +23,17 @@ struct ScheduleStream: View {
         NavigationStack {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
+                
+                if isLoading {
+                    VStack {
+                        ProgressView()
+                            .scaleEffect(2.5)
+                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                        
+                        Text("Hold on while we create your show 😁").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal)
+                    }
+                }
+                
                 VStack(alignment: .leading) {
                     Text("Schedule Show").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
                     
@@ -64,9 +76,11 @@ struct ScheduleStream: View {
                     Spacer()
                     
                     Button(action: {
-                        
-                        showSubmission.toggle()
                         addStream.addShow(name: streamName, description: streamDescription, date: TimeData().convertDateToString(date_value: selectedDate, time_value: selectedTime))
+                        isLoading.toggle()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            showSubmission.toggle()
+                        }
                     }) {
                         HStack { Text("Submit").font(.title3) }
                     }
@@ -78,9 +92,10 @@ struct ScheduleStream: View {
                     .border(Color.black, width: 2)
                     .padding(.vertical)
                     .navigationDestination(isPresented: $showSubmission) {
-                        ShowsPage().navigationBarHidden(true)
+                        BottomNavbar().navigationBarHidden(true)
                     }
                 }
+                .opacity(isLoading ? 0 : 1)
             }
         }
     }

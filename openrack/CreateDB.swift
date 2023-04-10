@@ -36,6 +36,7 @@ class CreateDB : ObservableObject {
     func addShow(name: String, description: String, date: String) {
         let db = Firestore.firestore()
         let ref = db.collection("shows")
+        let group = DispatchGroup()
         @AppStorage("username") var userName: String = ""
         
         let data: [String: Any] = [
@@ -47,13 +48,20 @@ class CreateDB : ObservableObject {
             "has_conducted": false
         ]
         
-        ref.addDocument(data: data) { error in
-            if let error = error {
-                print("Error adding document: \(error.localizedDescription)")
-            } else {
-                print("Show added")
+        group.enter()
+        DispatchQueue.global(qos: .background).async {
+            ref.addDocument(data: data) { error in
+                if let error = error {
+                    print("Error adding document: \(error.localizedDescription)")
+                } else {
+                    print("Show added")
+                }
             }
             
+            group.leave()
         }
+        group.wait() 
+        
+        ReadDB().getShows()
     }
 }

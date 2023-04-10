@@ -45,13 +45,8 @@ class AuthViewModel : ObservableObject {
             } else {
                     print("Successful auth")
                     self.signedIn.toggle()
-//                    group.enter()
                     UserDefaults.standard.set(email, forKey: "email")
-//                    DispatchQueue.global(qos: .background).async {
                     ReadDB().getUsername()
-//                        group.leave()
-//                    }
-//                    group.wait()
                     ReadDB().getShows()
                     
             }
