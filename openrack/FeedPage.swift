@@ -19,7 +19,10 @@ struct FeedPage: View {
         GridItem(.flexible() , spacing: nil, alignment: nil),
         GridItem(.flexible() , spacing: nil, alignment: nil)
     ]
+    var viewerShows = UserDefaults.standard.array(forKey: "viewer_shows") as? [[String: Any]]
+    
     var body: some View {
+        var noOfShows = viewerShows?.count ?? 0
         NavigationStack {
             VStack {
                 CustomNavbarView()
@@ -27,11 +30,14 @@ struct FeedPage: View {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 20) {
                         // Change to length of response array
-                        ForEach(0..<6) { index in
+                        ForEach(0..<noOfShows) { index in
                             
                             NavigationStack {
                             VStack (alignment: .leading){
-                                Button(action: { isShownShow.toggle() }) {
+                                Button(action: {
+//                                    isShownShow.toggle()
+                                    print(index)
+                                }) {
                                     VStack (alignment: .leading){
                                         
                                         HStack {
@@ -50,7 +56,7 @@ struct FeedPage: View {
                                         //                                    .background(Color.red)
                                         
                                         Spacer()
-                                        Text("Jonah is live🔥 The most entertaining show on earth").font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).multilineTextAlignment(.leading).padding(.horizontal, 5)
+                                        Text(String(describing:viewerShows![index]["name"]!)).font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).multilineTextAlignment(.leading).padding(.horizontal, 5)
                                     }
                                     .padding(.vertical, 10)
                                     .frame(width: 175, height: 260)
@@ -62,7 +68,7 @@ struct FeedPage: View {
                                 } //Button
                                 HStack {
                                     Image(systemName:"person.crop.circle")
-                                    Text("username").fontWeight(.medium).padding(.leading, -5)
+                                    Text(String(describing:viewerShows![index]["created_by"]!)).fontWeight(.medium).padding(.leading, -5)
                                 }
                                 .font(Font.system(size: 15))
                             }

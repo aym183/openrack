@@ -29,7 +29,7 @@ class ReadDB : ObservableObject {
             }
     }
     
-    func getShows() {
+    func getCreatorShows() {
         @AppStorage("username") var userName: String = ""
         var userShows = UserDefaults.standard.array(forKey: "myKey") as? [[String:Any]] ?? []
 
@@ -41,7 +41,7 @@ class ReadDB : ObservableObject {
         
             .getDocuments { (snapshot, error) in
                 if let error = error {
-                    print("Error getting email in getUsername: \(error.localizedDescription)")
+                    print("Error getting email in getCreatorShows: \(error.localizedDescription)")
                 } else {
                     for document in snapshot!.documents {
                         userShows.append(document.data())
@@ -50,5 +50,26 @@ class ReadDB : ObservableObject {
                 UserDefaults.standard.set(userShows, forKey: "shows")
             }
 
+    }
+    
+    func getViewerShows() {
+        @AppStorage("username") var userName: String = ""
+        var viewerShows = UserDefaults.standard.array(forKey: "myViewerKey") as? [[String:Any]] ?? []
+
+        let db = Firestore.firestore()
+        let ref = db.collection("shows")
+        ref.whereField("created_by", isNotEqualTo: userName)
+            .whereField("has_conducted", isEqualTo: false)
+
+            .getDocuments { (snapshot, error) in
+                if let error = error {
+                    print("Error getting email in getViewerShows: \(error.localizedDescription)")
+                } else {
+                    for document in snapshot!.documents {
+                        viewerShows.append(document.data())
+                    }
+                }
+                UserDefaults.standard.set(viewerShows, forKey: "viewer_shows")
+            }
     }
 }

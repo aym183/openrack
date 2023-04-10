@@ -90,7 +90,7 @@ struct SignInEmailView: View {
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
                             isNavigationBarHidden.toggle()
                             isLoading.toggle()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                                 isPresented.toggle()
                         }
                         }

@@ -19,6 +19,7 @@ class AuthViewModel : ObservableObject {
     let group = DispatchGroup()
     @Published var signedIn = false
     @AppStorage("email") var userEmail: String = ""
+    @AppStorage("username") var userName: String = ""
     
     func isSignedIn() -> Bool {
         return auth.currentUser != nil
@@ -32,8 +33,9 @@ class AuthViewModel : ObservableObject {
                 print("Successful auth")
                 self.signedIn.toggle()
                 CreateDB().addUser(email: email, username: username)
-                ReadDB().getUsername()
                 UserDefaults.standard.set(email, forKey: "email")
+                ReadDB().getUsername()
+                ReadDB().getViewerShows()
             }
         }
     }
@@ -43,12 +45,16 @@ class AuthViewModel : ObservableObject {
             if let error = error {
                 print(error.localizedDescription)
             } else {
+                    UserDefaults.standard.set(email, forKey: "email")
+                    print(email)
+                    ReadDB().getUsername()
                     print("Successful auth")
                     self.signedIn.toggle()
-                    UserDefaults.standard.set(email, forKey: "email")
-                    ReadDB().getUsername()
-                    ReadDB().getShows()
-                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        print("I'm here \(self.userName)")
+                        ReadDB().getCreatorShows()
+                        ReadDB().getViewerShows()
+                    }
             }
         }
     }
