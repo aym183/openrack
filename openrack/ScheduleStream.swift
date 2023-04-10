@@ -64,13 +64,9 @@ struct ScheduleStream: View {
                     Spacer()
                     
                     Button(action: {
-                        let calendar = Calendar.current
-                        let dateComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
-                        let timeComponents = calendar.dateComponents([.hour, .minute], from: selectedTime)
-                        let combinedComponents = DateComponents(year: dateComponents.year, month: dateComponents.month, day: dateComponents.day, hour: timeComponents.hour, minute: timeComponents.minute)
-                        let combinedDate = calendar.date(from: combinedComponents)
+                        
                         showSubmission.toggle()
-                        addStream.addShow(name: streamName, description: streamDescription, date: combinedDate!)
+                        addStream.addShow(name: streamName, description: streamDescription, date: TimeData().convertDateToString(date_value: selectedDate, time_value: selectedTime))
                     }) {
                         HStack { Text("Submit").font(.title3) }
                     }

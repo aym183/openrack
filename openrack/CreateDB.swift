@@ -33,7 +33,7 @@ class CreateDB : ObservableObject {
         }
     }
     
-    func addShow(name: String, description: String, date: Date) {
+    func addShow(name: String, description: String, date: String) {
         let db = Firestore.firestore()
         let ref = db.collection("shows")
         @AppStorage("username") var userName: String = ""

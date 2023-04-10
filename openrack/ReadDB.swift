@@ -28,4 +28,27 @@ class ReadDB : ObservableObject {
                 }
             }
     }
+    
+    func getShows() {
+        @AppStorage("username") var userName: String = ""
+        var userShows = UserDefaults.standard.array(forKey: "myKey") as? [[String:Any]] ?? []
+
+        
+        let db = Firestore.firestore()
+        let ref = db.collection("shows")
+        ref.whereField("created_by", isEqualTo: userName)
+            .whereField("has_conducted", isEqualTo: false)
+        
+            .getDocuments { (snapshot, error) in
+                if let error = error {
+                    print("Error getting email in getUsername: \(error.localizedDescription)")
+                } else {
+                    for document in snapshot!.documents {
+                        userShows.append(document.data())
+                    }
+                }
+                UserDefaults.standard.set(userShows, forKey: "shows")
+            }
+
+    }
 }

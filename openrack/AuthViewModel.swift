@@ -16,6 +16,7 @@ import GoogleSignInSwift
 class AuthViewModel : ObservableObject {
     
     let auth = Auth.auth()
+    let group = DispatchGroup()
     @Published var signedIn = false
     @AppStorage("email") var userEmail: String = ""
     
@@ -44,8 +45,15 @@ class AuthViewModel : ObservableObject {
             } else {
                     print("Successful auth")
                     self.signedIn.toggle()
-                    ReadDB().getUsername()
+//                    group.enter()
                     UserDefaults.standard.set(email, forKey: "email")
+//                    DispatchQueue.global(qos: .background).async {
+                    ReadDB().getUsername()
+//                        group.leave()
+//                    }
+//                    group.wait()
+                    ReadDB().getShows()
+                    
             }
         }
     }
