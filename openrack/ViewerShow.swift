@@ -9,26 +9,28 @@ import SwiftUI
 import AVKit
 
 struct ViewerShow: View {
-// https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8
+//https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8
+    let username: String
     let playbackID: String
     let playerController = AVPlayerViewController()
     
     var body: some View {
         let player = AVPlayer(url: URL(string: "https://stream.mux.com/\(playbackID).m3u8")!)
         ZStack {
-            VideoPlayer (player: player)
-                .ignoresSafeArea()
-                .disabled(true)
-                .onAppear() { player.play() }
-//                .allowsHitTesting(false)
-                          
+            GeometryReader { geometry in
+                VideoPlayer (player: player)
+                    .disabled(true)
+                    .onAppear() { player.play() }
+                //                .allowsHitTesting(false)
+            }
+            .edgesIgnoringSafeArea(.all)
             
             VStack {
                 
                 HStack {
                     Image(systemName: "person.circle").font(Font.system(size: 25))
 
-                    Text("username").font(Font.system(size: 20))
+                    Text(username).font(Font.system(size: 20))
                     
                     
                     Spacer()

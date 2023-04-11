@@ -10,7 +10,6 @@ import AVKit
 import AVFoundation
 
 struct FeedPage: View {
-        var player = AVPlayer(url: URL(string: "https://stream.mux.com/P00XyP51P6wIgER8mJZiu2nGl6DVvFjjYzG902ZbuOpmQ.m3u8")!)
     @State var showingBottomSheet = false
     @State var isShowingNextView = false
     @State var isBookmarked = false
@@ -52,7 +51,6 @@ struct FeedPage: View {
                                         }
                                         .padding(.horizontal, 3)
                                         .frame(width: 170)
-                                        //                                    .background(Color.red)
                                         
                                         Spacer()
                                         Text(String(describing:viewerShows![index]["name"]!)).font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).multilineTextAlignment(.leading).padding(.horizontal, 5)
@@ -73,7 +71,7 @@ struct FeedPage: View {
                             }
                         }
                         .navigationDestination(isPresented: $isShownShow) {
-                            ViewerShow(playbackID: String(describing:viewerShows![index]["playback_id"]!)).navigationBarHidden(true)
+                            ViewerShow(username:String(describing:viewerShows![index]["created_by"]!), playbackID: String(describing:viewerShows![index]["playback_id"]!)).navigationBarHidden(true)
                             }
                         
                         }
