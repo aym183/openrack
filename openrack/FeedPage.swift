@@ -35,8 +35,7 @@ struct FeedPage: View {
                             NavigationStack {
                             VStack (alignment: .leading){
                                 Button(action: {
-//                                    isShownShow.toggle()
-                                    print(index)
+                                    isShownShow.toggle()
                                 }) {
                                     VStack (alignment: .leading){
                                         
@@ -74,7 +73,7 @@ struct FeedPage: View {
                             }
                         }
                         .navigationDestination(isPresented: $isShownShow) {
-                            ViewerShow().navigationBarHidden(true)
+                            ViewerShow(playbackID: String(describing:viewerShows![index]["playback_id"]!)).navigationBarHidden(true)
                             }
                         
                         }

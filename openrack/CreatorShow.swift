@@ -131,8 +131,8 @@ struct CreatorShow: View {
     }
 }
 
-struct CreatorShow_Previews: PreviewProvider {
-    static var previews: some View {
-        CreatorShow()
-    }
-}
+//struct CreatorShow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CreatorShow()
+//    }
+//}

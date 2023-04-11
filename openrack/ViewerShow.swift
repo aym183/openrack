@@ -10,10 +10,11 @@ import AVKit
 
 struct ViewerShow: View {
 // https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8
-    let player = AVPlayer(url: URL(string: "https://www.google.com")!)
+    let playbackID: String
     let playerController = AVPlayerViewController()
     
     var body: some View {
+        let player = AVPlayer(url: URL(string: "https://stream.mux.com/\(playbackID).m3u8")!)
         ZStack {
             VideoPlayer (player: player)
                 .ignoresSafeArea()
@@ -127,8 +128,8 @@ struct ViewerShow: View {
     }
 }
 
-struct ViewerShow_Previews: PreviewProvider {
-    static var previews: some View {
-        ViewerShow()
-    }
-}
+//struct ViewerShow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ViewerShow()
+//    }
+//}
