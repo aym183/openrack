@@ -13,7 +13,8 @@ struct CustomNavbarView: View {
     var body: some View {
             HStack {
                 
-                Button(action: {}) {
+                Button(action: {})
+                  {
                     Image(systemName: "slider.horizontal.3").font(.system(size: 10)).padding(.leading, 15).padding(.trailing, -22)
                     Text("Follows").font(Font.system(size: 12)).fontWeight(.bold).padding(.horizontal)
                 }

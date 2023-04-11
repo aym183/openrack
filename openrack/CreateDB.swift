@@ -33,7 +33,7 @@ class CreateDB : ObservableObject {
         }
     }
     
-    func addShow(name: String, description: String, date: String) {
+    func addShow(name: String, description: String, date: String, livestream_id: String, playback_id: String, stream_key: String) {
         let db = Firestore.firestore()
         let ref = db.collection("shows")
         let group = DispatchGroup()
@@ -45,7 +45,10 @@ class CreateDB : ObservableObject {
             "created_by": userName,
             "name": name,
             "description": description,
-            "has_conducted": false
+            "has_conducted": false,
+            "livestream_id": livestream_id,
+            "playback_id": playback_id,
+            "stream_key": stream_key
         ]
         
         group.enter()
@@ -65,4 +68,73 @@ class CreateDB : ObservableObject {
         ReadDB().getCreatorShows()
         ReadDB().getViewerShows()
     }
+    
+        func createLiveStream(completion: @escaping (Result<[String], Error>) -> Void) {
+            // Set up the request URL and parameters
+            let url = URL(string: "https://api.mux.com/video/v1/live-streams")!
+            var request = URLRequest(url: url)
+            let muxTokenID = "a0cb25b9-df73-40b5-acc4-e214297afbea"
+            let muxTokenSecret = "oTZ5J9/aFCGR44YBvkO+GjOa16AfCs595nDMom3O5TO+Mk/VSUz+4a4Ts+ZhwBo6YhOs7LUQOsN"
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            var responseArray = Array<String>()
+    
+            // Set up the request body
+            let bodyData = """
+                {
+                    "playback_policy": "public",
+                    "new_asset_settings": {
+                        "playback_policy": "public"
+                    }
+                }
+                """.data(using: .utf8)!
+            request.httpBody = bodyData
+    
+            // Set up the authentication header
+            let token = "\(muxTokenID):\(muxTokenSecret)".data(using: .utf8)!.base64EncodedString()
+            request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
+    
+            // Make the API call
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    print("Error in createLiveStream: \(error.localizedDescription)")
+                    completion(.failure(error))
+                    return
+                }
+                guard let data = data else {
+                            completion(.failure(NSError(domain: "APIError", code: 1, userInfo: [NSLocalizedDescriptionKey: "No data returned from API"])))
+                            return
+                        }
+//                if let data = data {
+                    do {
+                                // Convert the binary data into a String
+                                let jsonString = String(data: data, encoding: .utf8)
+                                
+                                // Deserialize the JSON into a Swift object
+                        if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                           let data = json["data"] as? [String: Any] {
+                                // Access the values for id, playback_ids, and stream_key
+                                if let id = data["id"] as? String {
+                                    responseArray.append(id)
+                                }
+                                
+                                if let playbackIds = data["playback_ids"] as? [[String: Any]], let playbackId = playbackIds.first, let playbackIdValue = playbackId["id"] as? String {
+                                    responseArray.append(playbackIdValue)
+                                }
+                                
+                                if let streamKey = data["stream_key"] as? String {
+                                    responseArray.append(streamKey)
+                                }
+                                completion(.success(responseArray))
+                        } else {
+                            completion(.failure(NSError(domain: "APIError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Invalid JSON response"])))
+                        }
+                            
+                            } catch {
+                                print("Error parsing JSON response: \(error.localizedDescription)")
+                                completion(.failure(error))
+                            }
+//                }
+            }.resume()
+        }
 }
