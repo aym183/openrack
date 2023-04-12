@@ -14,6 +14,7 @@ struct openrackApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
+//            CreatorShow()
             let viewModel = AuthViewModel()
             LandingPage().environmentObject(viewModel)
         }
