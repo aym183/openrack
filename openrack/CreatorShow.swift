@@ -16,6 +16,9 @@ struct CreatorShow: View {
     let player = AVPlayer(url: URL(string: "https://www.google.com")!)
     let playerController = AVPlayerViewController()
     let rtmpConnection = RTMPConnection()
+    var streamName: String
+    var streamKey: String
+    
 //    @State var rtmpStream: RTMPStream?
 //    private var defaultCamera: AVCaptureDevice.Position = .front
     
@@ -37,7 +40,7 @@ struct CreatorShow: View {
 
                     HStack {
 
-                        Text("Stream Name").font(Font.system(size: 20))
+                        Text(streamName).font(Font.system(size: 20))
 
 
                         Spacer()

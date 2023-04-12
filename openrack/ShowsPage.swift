@@ -11,12 +11,16 @@ struct ShowsPage: View {
     var columns: [GridItem] = [
         GridItem(.flexible() , spacing: nil, alignment: nil)
     ]
-    @State var streamStarted = false
-    var retrievedShows = UserDefaults.standard.array(forKey: "shows") as? [[String: Any]]
-    
+//    var retrievedShows = UserDefaults.standard.array(forKey: "shows") as? [[String: Any]]
+    var retrievedShows: [[String: Any]]
+    var noOfShows: Int
+        
+    init() {
+        retrievedShows = UserDefaults.standard.array(forKey: "shows") as? [[String: Any]] ?? []
+        noOfShows = retrievedShows.count ?? 0
+    }
     
     var body: some View {
-        var noOfShows = retrievedShows?.count ?? 0
         ZStack {
             Color("Secondary_color").ignoresSafeArea()
             VStack (alignment: .leading) {
@@ -29,72 +33,10 @@ struct ShowsPage: View {
 //                        noOfShows
                         ForEach(0..<noOfShows) { index in
                             VStack {
-                                HStack {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color("Primary_color"))
-                                        .frame(width: 60, height: 20)
-                                        .overlay(
-                                            Text("CREATED").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
-                                        )
-
-                                    Text(String(describing:retrievedShows![index]["name"]!))
-                                        .font(Font.system(size: 12))
-                                        .fontWeight(.semibold)
-
-
-                                    Spacer()
-
-                                    Text(String(describing:retrievedShows![index]["date_scheduled"]!)).font(Font.system(size: 12))
-
-                                }
-                                .padding(.horizontal,6)
                                 
+                                showName(name: String(describing: retrievedShows[index]["name"]!), date_sched: String(describing: retrievedShows[index]["date_scheduled"]!), description: String(describing: retrievedShows[index]["description"]!))
 
-                                Text(String(describing:retrievedShows![index]["description"]!)).font(Font.system(size: 12)).frame(width: 345, height: 30)
-
-                                HStack {
-                                    Button(action: { streamStarted.toggle() }) {
-                                        RoundedRectangle(cornerRadius: 20)
-                                            .fill(.black)
-                                            .frame(width: 95, height: 30)
-                                            .overlay(
-                                                Text("Start Streaming").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
-                                            )
-                                    }
-                                    .navigationDestination(isPresented: $streamStarted) {
-                                        CreatorShow().navigationBarHidden(true)
-                                    }
-
-                                    Button(action: {}) {
-                                        RoundedRectangle(cornerRadius: 20)
-                                            .fill(.black)
-                                            .frame(width: 80, height: 30)
-                                            .overlay(
-                                                HStack{
-                                                    Image(systemName: "link").font(Font.system(size: 10)).padding(.trailing, -5)
-                                                    Text("Copy Link").font(Font.system(size: 10)).fontWeight(.semibold)
-                                                }
-                                                    .foregroundColor(.white)
-                                            )
-                                    }
-                                    Button(action: { print(index) }) {
-                                        RoundedRectangle(cornerRadius: 20)
-                                            .fill(.white)
-                                            .frame(width: 78, height: 26)
-                                            .overlay(
-                                                Text("Cancel Stream").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.red)
-                                            )
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 20)
-                                                    .fill(.black)
-                                                    .frame(width: 81.5, height: 30)
-                                            )
-                                    }
-
-
-                                    Spacer()
-                                }
-                                .padding(.horizontal,6).padding(.top, 0)
+                                showButtons(name: String(describing: retrievedShows[index]["name"]!), stream_key: String(describing: retrievedShows[index]["stream_key"]!), stream_id: String(describing: retrievedShows[index]["livestream_id"]!))
 
                             }
                             .frame(width: 360, height: 110)
@@ -109,6 +51,90 @@ struct ShowsPage: View {
     }
 }
 
+struct showName: View {
+    var name: String!
+    var date_sched: String!
+    var description: String!
+    
+    var body: some View {
+        HStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color("Primary_color"))
+                .frame(width: 60, height: 20)
+                .overlay(
+                    Text("CREATED").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
+                )
+
+            Text(name)
+                .font(Font.system(size: 12))
+                .fontWeight(.semibold)
+
+
+            Spacer()
+
+            Text(date_sched).font(Font.system(size: 12))
+
+        }
+        .padding(.horizontal,6)
+        
+        Text(description).font(Font.system(size: 12)).frame(width: 345, height: 30)
+    }
+}
+
+struct showButtons: View {
+    var name: String!
+    var stream_key: String!
+    var stream_id: String!
+    @State var streamStarted = false
+    var body: some View {
+        HStack {
+            Button(action: {
+                ReadDB().getStreamKey(liveStreamID: stream_id)
+                streamStarted.toggle()
+            }) {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.black)
+                    .frame(width: 95, height: 30)
+                    .overlay(
+                        Text("Start Streaming").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
+                    )
+            }
+            .navigationDestination(isPresented: $streamStarted) {
+                CreatorShow(streamName: name, streamKey: stream_key).navigationBarHidden(true)
+            }
+
+            Button(action: {}) {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.black)
+                    .frame(width: 80, height: 30)
+                    .overlay(
+                        HStack{
+                            Image(systemName: "link").font(Font.system(size: 10)).padding(.trailing, -5)
+                            Text("Copy Link").font(Font.system(size: 10)).fontWeight(.semibold)
+                        }
+                            .foregroundColor(.white)
+                    )
+            }
+            Button(action: { print(index) }) {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.white)
+                    .frame(width: 78, height: 26)
+                    .overlay(
+                        Text("Cancel Stream").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.red)
+                    )
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(.black)
+                            .frame(width: 81.5, height: 30)
+                    )
+            }
+
+
+            Spacer()
+        }
+        .padding(.horizontal,6).padding(.top, 0)
+    }
+}
 struct ShowsPage_Previews: PreviewProvider {
     static var previews: some View {
         ShowsPage()

@@ -11,6 +11,7 @@ import CoreImage
 import HaishinKit
 
 class FrameHandler: NSObject, ObservableObject {
+    @AppStorage("stream_key") var streamKey: String = ""
     @Published var frame: CGImage?
     private var permissionGranted = false
     private let captureSession = AVCaptureSession()
@@ -31,6 +32,7 @@ class FrameHandler: NSObject, ObservableObject {
         }
     }
   
+
     func checkPermission() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
             case .authorized:
@@ -79,7 +81,9 @@ class FrameHandler: NSObject, ObservableObject {
         connection.connect("rtmp://global-live.mux.com:5222/app")
         let stream = RTMPStream(connection: connection)
         stream.attachAudio(audioDevice)
-        stream.publish("0cbcc2b5-5b7e-06a4-d476-e4fe272de327")
+//        0cbcc2b5-5b7e-06a4-d476-e4fe272de327
+        print("I AM STREAMKEY \(streamKey)")
+        stream.publish("\(streamKey)")
         rtmpStream = stream
     }
 }
