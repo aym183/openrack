@@ -8,6 +8,8 @@
 import SwiftUI
 import FirebaseCore
 import GoogleSignIn
+import AVFoundation
+import HaishinKit
 
 @main
 struct openrackApp: App {
@@ -24,7 +26,14 @@ struct openrackApp: App {
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
       
-      FirebaseApp.configure()
+        FirebaseApp.configure()
+        let session = AVAudioSession.sharedInstance()
+        do {
+                try session.setCategory(.playAndRecord, mode: .voiceChat, options: [.defaultToSpeaker, .allowBluetooth])
+                try session.setActive(true)
+        } catch {
+                    print("Audio Time")
+        }
       return true
   }
     @available(iOS 9.0, *)
