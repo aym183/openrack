@@ -34,7 +34,7 @@ struct SignInEmailView: View {
                             .scaleEffect(2.5)
                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                         
-                        Text("Fun Fact: 2% of all Openrack profits go to charity!").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal)
+                        Text("Fun Fact: 2% of all Openrack profits go to charity!").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
                     }
                 }
                 

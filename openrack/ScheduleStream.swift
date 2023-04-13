@@ -30,7 +30,7 @@ struct ScheduleStream: View {
                             .scaleEffect(2.5)
                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                         
-                        Text("Hold on while we create your show 😁").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal)
+                        Text("Hold on while we create your show 😁").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
                     }
                 }
                 
@@ -105,6 +105,7 @@ struct ScheduleStream: View {
                 }
                 .opacity(isLoading ? 0 : 1)
             }
+            .foregroundColor(.black)
         }
     }
 }

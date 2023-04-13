@@ -25,7 +25,7 @@ struct ShowsPage: View {
             Color("Secondary_color").ignoresSafeArea()
             VStack (alignment: .leading) {
 
-                Text("Shows").font(Font.system(size: 30)).fontWeight(.bold).padding(.vertical, 20)
+                Text("Shows").font(Font.system(size: 30)).fontWeight(.bold).padding(.vertical, 20).foregroundColor(.black)
                 Spacer()
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 20) {
@@ -77,8 +77,9 @@ struct showName: View {
 
         }
         .padding(.horizontal,6)
+        .foregroundColor(.black)
         
-        Text(description).font(Font.system(size: 12)).frame(width: 345, height: 30)
+        Text(description).font(Font.system(size: 12)).frame(width: 345, height: 30).foregroundColor(.black)
     }
 }
 
@@ -136,6 +137,7 @@ struct showButtons: View {
             Spacer()
         }
         .padding(.horizontal,6).padding(.top, 0)
+        .foregroundColor(.black)
     }
 }
 struct ShowsPage_Previews: PreviewProvider {

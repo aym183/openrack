@@ -38,7 +38,7 @@ struct LandingContent: View {
                         .foregroundColor(Color("Primary_color"))
                         .padding(.top, 80)
                     
-                    Text("Buy, Sell, Discover ✨").font(Font.system(size: 20)).font(.subheadline).fontWeight(.semibold)
+                    Text("Buy, Sell, Discover ✨").font(Font.system(size: 20)).font(.subheadline).fontWeight(.semibold).foregroundColor(.black)
                         .opacity(0.7)
                         
                     
