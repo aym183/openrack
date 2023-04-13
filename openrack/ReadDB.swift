@@ -37,7 +37,6 @@ class ReadDB : ObservableObject {
         let db = Firestore.firestore()
         let ref = db.collection("shows")
         ref.whereField("created_by", isEqualTo: userName)
-            .whereField("has_conducted", isEqualTo: false)
         
             .getDocuments { (snapshot, error) in
                 if let error = error {
@@ -59,7 +58,7 @@ class ReadDB : ObservableObject {
         let db = Firestore.firestore()
         let ref = db.collection("shows")
         ref.whereField("created_by", isNotEqualTo: userName)
-            .whereField("has_conducted", isEqualTo: false)
+            .whereField("status", isEqualTo: "Live")
 
             .getDocuments { (snapshot, error) in
                 if let error = error {

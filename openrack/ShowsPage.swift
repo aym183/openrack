@@ -34,9 +34,9 @@ struct ShowsPage: View {
                         ForEach(0..<noOfShows) { index in
                             VStack {
                                 
-                                showName(name: String(describing: retrievedShows[index]["name"]!), date_sched: String(describing: retrievedShows[index]["date_scheduled"]!), description: String(describing: retrievedShows[index]["description"]!))
+                                showName(name: String(describing: retrievedShows[index]["name"]!), status: String(describing: retrievedShows[index]["status"]!), date_sched: String(describing: retrievedShows[index]["date_scheduled"]!), description: String(describing: retrievedShows[index]["description"]!))
 
-                                showButtons(name: String(describing: retrievedShows[index]["name"]!), stream_key: String(describing: retrievedShows[index]["stream_key"]!), stream_id: String(describing: retrievedShows[index]["livestream_id"]!))
+                                showButtons(name: String(describing: retrievedShows[index]["name"]!), stream_key: String(describing: retrievedShows[index]["stream_key"]!), stream_id: String(describing: retrievedShows[index]["livestream_id"]!), liveStreamID: String(describing: retrievedShows[index]["livestream_id"]!))
 
                             }
                             .frame(width: 360, height: 110)
@@ -53,6 +53,7 @@ struct ShowsPage: View {
 
 struct showName: View {
     var name: String!
+    var status: String!
     var date_sched: String!
     var description: String!
     
@@ -62,7 +63,7 @@ struct showName: View {
                 .fill(Color("Primary_color"))
                 .frame(width: 60, height: 20)
                 .overlay(
-                    Text("CREATED").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
+                    Text(status).textCase(.uppercase).font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
                 )
 
             Text(name)
@@ -85,6 +86,8 @@ struct showButtons: View {
     var name: String!
     var stream_key: String!
     var stream_id: String!
+    var liveStreamID: String!
+    
     @State var streamStarted = false
     var body: some View {
         HStack {
@@ -100,7 +103,7 @@ struct showButtons: View {
                     )
             }
             .navigationDestination(isPresented: $streamStarted) {
-                CreatorShow(streamName: name, streamKey: stream_key).navigationBarHidden(true)
+                CreatorShow(streamName: name, streamKey: stream_key, liveStreamID: liveStreamID).navigationBarHidden(true)
             }
 
             Button(action: {}) {

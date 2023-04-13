@@ -20,6 +20,7 @@ struct CreatorShow: View {
     @State private var isStreaming = false
     var streamName: String
     var streamKey: String
+    var liveStreamID: String
     
 //    @State var rtmpStream: RTMPStream?
 //    private var defaultCamera: AVCaptureDevice.Position = .front
@@ -127,8 +128,10 @@ struct CreatorShow: View {
                                 sessionQueue.async {
                                     model.closeStream()
                                 }
+                                UpdateDB().updateStatus(text: "Finished", livestreamID: liveStreamID)
                             } else {
                                 isStreaming.toggle()
+                                UpdateDB().updateStatus(text: "Live", livestreamID: liveStreamID)
                                 self.streamButtonText = "Stop Stream"
                                 sessionQueue.async {
                                     model.publishStream()

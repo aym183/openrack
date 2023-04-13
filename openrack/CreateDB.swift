@@ -45,7 +45,7 @@ class CreateDB : ObservableObject {
             "created_by": userName,
             "name": name,
             "description": description,
-            "has_conducted": false,
+            "status": "Created",
             "livestream_id": livestream_id,
             "playback_id": playback_id,
             "stream_key": stream_key

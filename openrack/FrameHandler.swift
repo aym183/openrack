@@ -77,7 +77,6 @@ class FrameHandler: NSObject, ObservableObject {
 //        0cbcc2b5-5b7e-06a4-d476-e4fe272de327
      
         rtmpStream = stream
-        
         captureSession.startRunning()
     }
     
