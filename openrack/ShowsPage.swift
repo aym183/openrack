@@ -60,7 +60,7 @@ struct showName: View {
     var body: some View {
         HStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color("Primary_color"))
+                .fill(ColorSelector().getStatusColor(status: status))
                 .frame(width: 60, height: 20)
                 .overlay(
                     Text(status).textCase(.uppercase).font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
