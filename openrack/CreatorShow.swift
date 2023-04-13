@@ -18,9 +18,14 @@ struct CreatorShow: View {
     let rtmpConnection = RTMPConnection()
     @State private var streamButtonText = "Start Stream"
     @State private var isStreaming = false
+    @State var showCircle = false
     var streamName: String
     var streamKey: String
     var liveStreamID: String
+    @State var countdownTimer = 3
+    @State var timerRunning = false
+    @State var isTimerShown = false
+    let timer = Timer.publish(every:1, on: .main, in: .common).autoconnect()
     
 //    @State var rtmpStream: RTMPStream?
 //    private var defaultCamera: AVCaptureDevice.Position = .front
@@ -28,15 +33,22 @@ struct CreatorShow: View {
     @StateObject private var model = FrameHandler()
 
         var body: some View {
-              ZStack {
-//                VideoPlayer (player: player)
-//                    .ignoresSafeArea()
-//                    .disabled(true)
-//                    .onAppear() { player.play() }
-//                .allowsHitTesting(false)
-                  
+            ZStack {
+                
                   FrameView(image: model.frame)
                                   .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                if isTimerShown {
+                    Text("\(countdownTimer)").font(Font.system(size: 100)).opacity(0.7).foregroundColor(.white)
+                        .onReceive(timer) { _ in
+                            if countdownTimer > 0 && timerRunning {
+                                countdownTimer -= 1
+                            } else {
+                                timerRunning = false
+                                isTimerShown = false
+                            }
+                        }
+                }
 
 
                 VStack {
@@ -48,28 +60,26 @@ struct CreatorShow: View {
 
                         Spacer()
 
-                        Circle()
-                            .fill(.red)
-                            .frame(height: 30)
-                            .overlay(
-                                Image(systemName: "record.circle").font(Font.system(size: 20)).foregroundColor(.white)
-                            )
+                        if showCircle {
+                            Circle()
+                                .fill(.red)
+                                .frame(height: 30)
+                                .overlay(
+                                    Image(systemName: "record.circle").font(Font.system(size: 20)).foregroundColor(.white)
+                                )
+                            Text("15:00").font(Font.system(size: 15))
+                                .padding(.trailing)
 
-                        Text("15:00").font(Font.system(size: 15))
-                            .padding(.trailing)
+                            Circle()
+                                .fill(Color("Primary_color"))
+                                .frame(height: 30)
+                                .overlay(
+                                    Image(systemName: "person.fill").font(Font.system(size: 20)).foregroundColor(.white)
+                                )
 
-
-                        Circle()
-                            .fill(Color("Primary_color"))
-                            .frame(height: 30)
-                            .overlay(
-                                Image(systemName: "person.fill").font(Font.system(size: 20)).foregroundColor(.white)
-                            )
-
-                        Text("45").font(Font.system(size: 15))
-                            .padding(.trailing)
-
-
+                            Text("0").font(Font.system(size: 15))
+                                .padding(.trailing)
+                        }
                     }
                     .foregroundColor(.white)
                     .fontWeight(.semibold)
@@ -130,17 +140,22 @@ struct CreatorShow: View {
                                 }
                                 UpdateDB().updateStatus(text: "Finished", livestreamID: liveStreamID)
                             } else {
-                                isStreaming.toggle()
-                                UpdateDB().updateStatus(text: "Live", livestreamID: liveStreamID)
-                                self.streamButtonText = "Stop Stream"
-                                sessionQueue.async {
-                                    model.publishStream()
+                                isTimerShown.toggle()
+                                timerRunning.toggle()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                                    isStreaming.toggle()
+                                    showCircle.toggle()
+                                    UpdateDB().updateStatus(text: "Live", livestreamID: liveStreamID)
+                                    self.streamButtonText = "Stop Stream"
+                                    sessionQueue.async {
+                                        model.publishStream()
+                                    }
                                 }
                             }
-                            
-                            
-                            
-                            
+
+
+
+
                         }) {
                             Text(streamButtonText) // Should popup to add catalogue
                                 .font(.title3).fontWeight(.medium)
