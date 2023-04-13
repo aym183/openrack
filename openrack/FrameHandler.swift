@@ -15,7 +15,6 @@ class FrameHandler: NSObject, ObservableObject {
     @Published var frame: CGImage?
     private var permissionGranted = false
     private let captureSession = AVCaptureSession()
-    private let sessionQueue = DispatchQueue(label: "sessionQueue")
     private let context = CIContext()
     private let rtmpConnection = RTMPConnection()
     private var rtmpStream: RTMPStream?
@@ -23,13 +22,7 @@ class FrameHandler: NSObject, ObservableObject {
     override init() {
         super.init()
         checkPermission()
-        sessionQueue.async { [unowned self] in
-            self.setupCaptureSession()
-//            rtmpConnection.connect("rtmp://global-live.mux.com:5222/app")
-//            let stream = RTMPStream(connection: rtmpConnection)
-//            rtmpStream.publish("307c5749-058e-60c2-adc1-cd6593895183")
-            self.captureSession.startRunning()
-        }
+        self.setupCaptureSession()
     }
   
 
@@ -82,9 +75,20 @@ class FrameHandler: NSObject, ObservableObject {
         let stream = RTMPStream(connection: connection)
         stream.attachAudio(audioDevice)
 //        0cbcc2b5-5b7e-06a4-d476-e4fe272de327
-        print("I AM STREAMKEY \(streamKey)")
-        stream.publish("\(streamKey)")
+     
         rtmpStream = stream
+        
+        captureSession.startRunning()
+    }
+    
+    func publishStream() {
+        print("I AM STREAMKEY \(streamKey)")
+        rtmpStream!.publish("\(streamKey)")
+    }
+    
+    func closeStream() {
+        print("Stream Closed")
+        rtmpStream!.close()
     }
 }
 

@@ -12,16 +12,18 @@ import AVKit
 import HaishinKit
 
 struct CreatorShow: View {
-//// https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8
+//https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8
     let player = AVPlayer(url: URL(string: "https://www.google.com")!)
     let playerController = AVPlayerViewController()
     let rtmpConnection = RTMPConnection()
+    @State private var streamButtonText = "Start Stream"
+    @State private var isStreaming = false
     var streamName: String
     var streamKey: String
     
 //    @State var rtmpStream: RTMPStream?
 //    private var defaultCamera: AVCaptureDevice.Position = .front
-    
+    private let sessionQueue = DispatchQueue(label: "sessionQueue")
     @StateObject private var model = FrameHandler()
 
         var body: some View {
@@ -30,7 +32,7 @@ struct CreatorShow: View {
 //                    .ignoresSafeArea()
 //                    .disabled(true)
 //                    .onAppear() { player.play() }
-    //                .allowsHitTesting(false)
+//                .allowsHitTesting(false)
                   
                   FrameView(image: model.frame)
                                   .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -121,12 +123,27 @@ struct CreatorShow: View {
 
                     HStack{
                         Button(action: {
+                            if self.streamButtonText != "Start Stream" {
+                                sessionQueue.async {
+                                    model.closeStream()
+                                }
+                            } else {
+                                isStreaming.toggle()
+                                self.streamButtonText = "Stop Stream"
+                                sessionQueue.async {
+                                    model.publishStream()
+                                }
+                            }
+                            
+                            
+                            
                             
                         }) {
-                            Text("Start Stream") // Should popup to add catalogue
+                            Text(streamButtonText) // Should popup to add catalogue
                                 .font(.title3).fontWeight(.medium)
                                 .frame(width: 300, height: 50)
-                                .background(.red).foregroundColor(.white)
+                                .background(isStreaming ? Color.white : Color.red)
+                                .foregroundColor(isStreaming ? Color.red : Color.white)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
                                 )
