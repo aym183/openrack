@@ -137,7 +137,7 @@ struct showButtons: View {
                     )
             }
             .navigationDestination(isPresented: $listingStarted) {
-                CreateListings(listingID: listingID).navigationBarHidden(true)
+                CreateListings(listingID: listingID)
             }
             
             Button(action: { print(index) }) {

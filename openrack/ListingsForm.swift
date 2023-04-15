@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ListingsForm: View {
+//    @StateObject var listings = ListingViewModel()
+    @Binding var listings: [Listing]
     @Binding var showingBottomSheet: Bool
     var listingID: String
     @State var listingName = ""
@@ -66,11 +68,20 @@ struct ListingsForm: View {
                     
                     Button(action: {
                         listing = [listingName, listingDescription, listingQuantity, String(describing: selectedCategory!.option), String(describing: selectedSubCategory!.option)]
+                        
+                        let newListing = Listing(image: ImageSelector().getImage(category: String(describing: selectedCategory!.option)), title: listingName, quantity: Int(listingQuantity)!)
+                        listings.append(newListing)
+                        
                         showingBottomSheet.toggle()
+                        
                         DispatchQueue.global(qos: .background).async {
-//                            CreateDB().addListings(listing: listing, docRef: listingID)
-                            UpdateDB().updateListings(listing: listing, docRef: listingID)
+                            if listings.count > 1 {
+                                UpdateDB().updateListings(listing: listing, docRef: listingID)
+                            } else {
+                                CreateDB().addListings(listing: listing, docRef: listingID)
+                            }
                         }
+                    
                     }, label: { Text("Confirm").font(.title3) })
                     .disabled(areTextFieldsEmpty)
                     .frame(width: 360, height: 50)

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CreateListings: View {
     @StateObject var listingsViewModel = ListingViewModel()
+    @State var listings = ListingViewModel().listings
     @State var showingBottomSheet = false
     var listingID: String
     var addStream = CreateDB()
@@ -25,8 +26,11 @@ struct CreateListings: View {
                     
 //                    List {
                     ScrollView {
-                        ForEach(listingsViewModel.listings) { listing in
-                            ListingRow(image: listing.image, title: listing.title, quantity: listing.quantity)
+                        //listingsViewModel.listings
+                        ForEach(listings) { listing in
+                            Button(action: { print(listings) }) {
+                                ListingRow(image: listing.image, title: listing.title, quantity: listing.quantity)
+                            }
                         }
                         .frame(width: 360)
                     }
@@ -51,7 +55,7 @@ struct CreateListings: View {
                     }
                     .frame(width: 360, height: 50)
                     .sheet(isPresented: $showingBottomSheet) {
-                        ListingsForm(showingBottomSheet: $showingBottomSheet, listingID: listingID)
+                        ListingsForm(listings: $listings, showingBottomSheet: $showingBottomSheet, listingID: listingID)
                             .presentationDetents([.height(750)])
                     }
                     
