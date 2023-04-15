@@ -10,6 +10,7 @@ import SwiftUI
 struct CreateListings: View {
     @StateObject var listingsViewModel = ListingViewModel()
     @State var showingBottomSheet = false
+    var listingID: String
     var addStream = CreateDB()
 //    var isBothTextFieldsEmpty: Bool {
 //        return streamName.isEmpty || streamDescription.isEmpty
@@ -46,7 +47,7 @@ struct CreateListings: View {
                     }
                     .frame(width: 360, height: 50)
                     .sheet(isPresented: $showingBottomSheet) {
-                        ListingsForm(showingBottomSheet: $showingBottomSheet)
+                        ListingsForm(showingBottomSheet: $showingBottomSheet, listingID: listingID)
                             .presentationDetents([.height(750)])
                     }
                     
@@ -67,6 +68,6 @@ struct CreateListings: View {
 
 struct CreateListings_Previews: PreviewProvider {
     static var previews: some View {
-        CreateListings()
+        CreateListings(listingID : "Test")
     }
 }

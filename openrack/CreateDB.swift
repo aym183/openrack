@@ -37,20 +37,22 @@ class CreateDB : ObservableObject {
         let db = Firestore.firestore()
         let ref = db.collection("shows")
         let group = DispatchGroup()
+        var docRef = ref.document()
         @AppStorage("username") var userName: String = ""
-        
+
         let data: [String: Any] = [
             "date_created": miscData.getPresentDateTime(),
             "date_scheduled": date,
             "created_by": userName,
             "name": name,
+            "listings": docRef.documentID,
             "description": description,
             "status": "Created",
             "livestream_id": livestream_id,
             "playback_id": playback_id,
             "stream_key": stream_key
         ]
-        
+
         group.enter()
         DispatchQueue.global(qos: .background).async {
             ref.addDocument(data: data) { error in
@@ -60,28 +62,32 @@ class CreateDB : ObservableObject {
                     print("Show added")
                 }
             }
-            
+
             group.leave()
         }
-        group.wait() 
-        
+        group.wait()
+
         ReadDB().getCreatorShows()
         ReadDB().getViewerShows()
-        
+
+        print("Hi")
         
     }
     
-    func addListings(listing: [String]){
+    func addListings(listing: [String], docRef: String){
         let db = Firestore.firestore()
         let ref = db.collection("listings")
         let count = Int(listing[2])
+        var docID = ref.document(docRef)
+        var presentDateTime = miscData.getPresentDateTime()
         
         var documentData = [String: Any]()
         for _ in 0..<count! {
-            var docRef = ref.document()
-            documentData[docRef.documentID] = [listing[0], listing[1], listing[3], listing[4]]
+            var fieldID = ref.document()
+            documentData[fieldID.documentID] = [listing[0], listing[1], listing[3], listing[4], presentDateTime]
         }
-        db.collection("listings").addDocument(data: documentData) { error in
+        
+        docID.setData(documentData) { error in
         if let error = error {
             print("Error adding listing: \(error.localizedDescription)")
         } else {

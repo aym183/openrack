@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ListingsForm: View {
     @Binding var showingBottomSheet: Bool
+    var listingID: String
     @State var listingName = ""
     @State var listingDescription = ""
     @State var listingQuantity = ""
@@ -72,7 +73,7 @@ struct ListingsForm: View {
                         listing = [listingName, listingDescription, listingQuantity, String(describing: selectedCategory!.option), String(describing: selectedSubCategory!.option)]
                         showingBottomSheet.toggle()
                         DispatchQueue.global(qos: .background).async {
-                            CreateDB().addListings(listing: listing)
+                            CreateDB().addListings(listing: listing, docRef: listingID)
                         }
                     }, label: { Text("Confirm").font(.title3) })
                     .disabled(areTextFieldsEmpty)
