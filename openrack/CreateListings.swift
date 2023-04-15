@@ -21,16 +21,19 @@ struct CreateListings: View {
                 Color("Secondary_color").ignoresSafeArea()
                 
                 VStack(alignment: .leading) {
-                    Text("Listings").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
+                    Text("Listings").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20).foregroundColor(.black)
                     
-                    List {
+//                    List {
+                    ScrollView {
                         ForEach(listingsViewModel.listings) { listing in
-                            
+                            ListingRow(image: listing.image, title: listing.title, quantity: listing.quantity)
                         }
+                        .frame(width: 360)
                     }
-                    .frame(width: 360)
-                    .border(Color.black, width: 2)
-                    
+
+//                    }
+//                    .border(Color.black, width: 2)
+
                     Spacer()
                     
                     HStack{
@@ -40,6 +43,7 @@ struct CreateListings: View {
                                     .foregroundColor(Color.white)
                                     .padding(.bottom, 7)
                             })
+                            .foregroundColor(.black)
                             .background(Color("Primary_color"))
                             .cornerRadius(38.5)
                             .padding(.bottom, -15)
@@ -62,7 +66,23 @@ struct CreateListings: View {
                     .padding(.vertical)
                 }
             }
-            .foregroundColor(.black)
+    }
+}
+
+struct ListingRow: View {
+    let image: String
+    let title: String
+    let quantity: Int
+    var body: some View {
+        HStack {
+            Image(systemName: image)
+            Text(title)
+                .fontWeight(.medium)
+            Spacer()
+            Text("Stock: \(quantity)").opacity(0.7)
+        }
+        .frame(height: 50)
+        .foregroundColor(.black)
     }
 }
 

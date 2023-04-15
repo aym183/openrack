@@ -84,7 +84,7 @@ class CreateDB : ObservableObject {
         var documentData = [String: Any]()
         for _ in 0..<count! {
             var fieldID = ref.document()
-            documentData[fieldID.documentID] = [listing[0], listing[1], listing[3], listing[4], presentDateTime]
+            documentData[fieldID.documentID] = [listing[0], listing[1] ,listing[3], listing[4], presentDateTime]
         }
         
         docID.setData(documentData) { error in

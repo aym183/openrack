@@ -9,6 +9,7 @@ import Foundation
 
 struct Listing: Identifiable {
     var id = UUID()
+    let image: String
     let title: String
     let quantity: Int
 }
