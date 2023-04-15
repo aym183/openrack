@@ -90,6 +90,7 @@ struct showButtons: View {
     var liveStreamID: String!
     
     @State var streamStarted = false
+    @State var listingStarted = false
     var body: some View {
         HStack {
             Button(action: {
@@ -119,6 +120,25 @@ struct showButtons: View {
                             .foregroundColor(.white)
                     )
             }
+            
+            Button(action: {
+                listingStarted.toggle()
+            }) {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.black)
+                    .frame(width: 90, height: 30)
+                    .overlay(
+                        HStack{
+                            Image(systemName: "plus").font(Font.system(size: 10)).padding(.trailing, -5)
+                            Text("Add Listings").font(Font.system(size: 10)).fontWeight(.semibold)
+                        }
+                            .foregroundColor(.white)
+                    )
+            }
+            .navigationDestination(isPresented: $listingStarted) {
+                CreateListings().navigationBarHidden(true)
+            }
+            
             Button(action: { print(index) }) {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(.white)
