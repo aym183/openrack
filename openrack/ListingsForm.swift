@@ -43,8 +43,6 @@ struct ListingsForm: View {
                         .padding(.horizontal, 8)
                         .frame(width: 360, height: 50).border(Color.black, width: 2)
                         .background(.white)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
                     
                     VStack(alignment: .leading) {
                         Text("Description").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
@@ -53,8 +51,7 @@ struct ListingsForm: View {
                             .padding(.horizontal, 8)
                             .frame(width: 360, height: 50).border(Color.black, width: 2)
                             .background(.white)
-                            .disableAutocorrection(true)
-                            .autocapitalization(.none)
+
                         
                         Text("Quantity").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                         
@@ -62,8 +59,6 @@ struct ListingsForm: View {
                             .padding(.horizontal, 8)
                             .frame(width: 360, height: 50).border(Color.black, width: 2)
                             .background(.white)
-                            .disableAutocorrection(true)
-                            .autocapitalization(.none)
                         
                         Spacer()
                         
@@ -73,7 +68,8 @@ struct ListingsForm: View {
                         listing = [listingName, listingDescription, listingQuantity, String(describing: selectedCategory!.option), String(describing: selectedSubCategory!.option)]
                         showingBottomSheet.toggle()
                         DispatchQueue.global(qos: .background).async {
-                            CreateDB().addListings(listing: listing, docRef: listingID)
+//                            CreateDB().addListings(listing: listing, docRef: listingID)
+                            UpdateDB().updateListings(listing: listing, docRef: listingID)
                         }
                     }, label: { Text("Confirm").font(.title3) })
                     .disabled(areTextFieldsEmpty)

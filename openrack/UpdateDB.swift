@@ -9,6 +9,8 @@ import Foundation
 import FirebaseFirestore
 
 class UpdateDB : ObservableObject {
+    var miscData = TimeData()
+    
     func updateStatus(text: String, livestreamID: String) {
         let db = Firestore.firestore()
         let collectionRef = db.collection("shows")
@@ -29,4 +31,25 @@ class UpdateDB : ObservableObject {
             }
         }
     }
+    
+    func updateListings(listing: [String], docRef: String) {
+        let db = Firestore.firestore()
+        let ref = db.collection("listings")
+        var docID = ref.document(docRef)
+        let count = Int(listing[2])
+        var presentDateTime = miscData.getPresentDateTime()
+        
+        var documentData = [String: Any]()
+        for _ in 0..<count! {
+            var fieldID = ref.document()
+            documentData[fieldID.documentID] = [listing[0], listing[1], listing[3], listing[4], presentDateTime]
+        }
+        docID.updateData(documentData) { error in
+        if let error = error {
+            print("Error adding listing: \(error.localizedDescription)")
+        } else {
+            print("Document added successfully!")
+        }
+        }
+            }
 }
