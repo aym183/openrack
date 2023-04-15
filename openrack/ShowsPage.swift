@@ -126,11 +126,11 @@ struct showButtons: View {
             }) {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(.black)
-                    .frame(width: 90, height: 30)
+                    .frame(width: 80, height: 30)
                     .overlay(
                         HStack{
-                            Image(systemName: "plus").font(Font.system(size: 10)).padding(.trailing, -5)
-                            Text("Add Listings").font(Font.system(size: 10)).fontWeight(.semibold)
+                            Image(systemName: "tshirt.fill").font(Font.system(size: 10)).padding(.trailing, -5)
+                            Text("Listings").font(Font.system(size: 10)).fontWeight(.semibold)
                         }
                             .foregroundColor(.white)
                     )
@@ -160,8 +160,8 @@ struct showButtons: View {
         .foregroundColor(.black)
     }
 }
-struct ShowsPage_Previews: PreviewProvider {
-    static var previews: some View {
-        ShowsPage()
-    }
-}
+//struct ShowsPage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ShowsPage()
+//    }
+//}

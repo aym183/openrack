@@ -14,7 +14,7 @@ struct Dropdownmenus: Identifiable, Hashable {
 
 extension Dropdownmenus {
     static let singleOption: Dropdownmenus = Dropdownmenus(option: "Trading Cards")
-    static let allOptions: [Dropdownmenus] = [
+    static let categoryAllOptions: [Dropdownmenus] = [
         Dropdownmenus(option: "Trading Cards"),
         Dropdownmenus(option: "Sports"),
         Dropdownmenus(option: "Toys"),
@@ -22,7 +22,17 @@ extension Dropdownmenus {
         Dropdownmenus(option: "Sneakers & Streetwear"),
         Dropdownmenus(option: "Vintage & Thrift Clothing"),
         Dropdownmenus(option: "Bags, Jewelry & Accessories"),
-        Dropdownmenus(option: "Watches"),
-        Dropdownmenus(option: "Video Games & Movies")
+        Dropdownmenus(option: "Watches")
+    ]
+    
+    static let subCategoryAllOptions: [Dropdownmenus] = [
+        Dropdownmenus(option: "Men's"),
+        Dropdownmenus(option: "Woman's"),
+        Dropdownmenus(option: "Unisex"),
+        Dropdownmenus(option: "Unisex"),
+        Dropdownmenus(option: "Gender"),
+        Dropdownmenus(option: "Gender"),
+        Dropdownmenus(option: "Gender"),
+        Dropdownmenus(option: "Gender"),
     ]
 }

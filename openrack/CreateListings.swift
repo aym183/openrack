@@ -36,7 +36,7 @@ struct CreateListings: View {
                 }
                 
                 VStack(alignment: .leading) {
-                    Text("Add Listings").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
+                    Text("Listings").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
                     
                     ScrollView() {
                         Text("Hello")
@@ -58,7 +58,7 @@ struct CreateListings: View {
                     }
                     .frame(width: 360, height: 50)
                     .sheet(isPresented: $showingBottomSheet) {
-                        ListingsForm()
+                        ListingsForm(showingBottomSheet: $showingBottomSheet)
                             .presentationDetents([.height(750)])
                     }
                     
