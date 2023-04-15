@@ -67,6 +67,28 @@ class CreateDB : ObservableObject {
         
         ReadDB().getCreatorShows()
         ReadDB().getViewerShows()
+        
+        
+    }
+    
+    func addListings(listing: [String]){
+        let db = Firestore.firestore()
+        let ref = db.collection("listings")
+        let count = Int(listing[2])
+        
+        var documentData = [String: Any]()
+        for _ in 0..<count! {
+            var docRef = ref.document()
+            documentData[docRef.documentID] = [listing[0], listing[1], listing[3], listing[4]]
+        }
+        db.collection("listings").addDocument(data: documentData) { error in
+        if let error = error {
+            print("Error adding listing: \(error.localizedDescription)")
+        } else {
+            print("Document added successfully!")
+        }
+                }
+        
     }
     
         func createLiveStream(completion: @escaping (Result<[String], Error>) -> Void) {

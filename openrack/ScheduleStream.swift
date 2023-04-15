@@ -95,7 +95,6 @@ struct ScheduleStream: View {
                     .disabled(isBothTextFieldsEmpty)
                     .frame(width: 360, height: 50)
                     .background(isBothTextFieldsEmpty ? Color.gray : Color("Primary_color"))
-                    .background(Color("Primary_color"))
                     .foregroundColor(.white)
                     .border(Color.black, width: 2)
                     .padding(.vertical)

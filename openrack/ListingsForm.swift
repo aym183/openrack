@@ -17,8 +17,11 @@ struct ListingsForm: View {
     var areTextFieldsEmpty: Bool {
         return listingName.isEmpty || listingDescription.isEmpty || listingQuantity.isEmpty
     }
+    @State var listing: [String] = []
     
     var body: some View {
+        
+        // Add type: Auction. Buy Now
         NavigationStack {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
@@ -66,8 +69,11 @@ struct ListingsForm: View {
                     }
                     
                     Button(action: {
-                        print("\(listingName), \(listingDescription), \(listingQuantity), \(String(describing: selectedCategory!.option)), \(String(describing: selectedSubCategory!.option))")
+                        listing = [listingName, listingDescription, listingQuantity, String(describing: selectedCategory!.option), String(describing: selectedSubCategory!.option)]
                         showingBottomSheet.toggle()
+                        DispatchQueue.global(qos: .background).async {
+                            CreateDB().addListings(listing: listing)
+                        }
                     }, label: { Text("Confirm").font(.title3) })
                     .disabled(areTextFieldsEmpty)
                     .frame(width: 360, height: 50)

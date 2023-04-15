@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+class ListingViewModel: ObservableObject {
+    @Published var listings = [Listing]()
+}

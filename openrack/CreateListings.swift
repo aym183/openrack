@@ -8,39 +8,27 @@
 import SwiftUI
 
 struct CreateListings: View {
-    @State var streamName = ""
-    @State var streamDescription = ""
-    @State var selectedDate = Date()
-    @State var selectedTime = Date()
-    @State var showSubmission = false
+    @StateObject var listingsViewModel = ListingViewModel()
     @State var showingBottomSheet = false
-    @State var isLoading = false
     var addStream = CreateDB()
-    var isBothTextFieldsEmpty: Bool {
-        return streamName.isEmpty || streamDescription.isEmpty
-    }
+//    var isBothTextFieldsEmpty: Bool {
+//        return streamName.isEmpty || streamDescription.isEmpty
+//    }
     
     var body: some View {
-        NavigationStack {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
-                
-                if isLoading {
-                    VStack {
-                        ProgressView()
-                            .scaleEffect(2.5)
-                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                        
-                        Text("Hold on while we create your show 😁").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
-                    }
-                }
                 
                 VStack(alignment: .leading) {
                     Text("Listings").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
                     
-                    ScrollView() {
-                        Text("Hello")
+                    List {
+                        ForEach(listingsViewModel.listings) { listing in
+                            
+                        }
                     }
+                    .frame(width: 360)
+                    .border(Color.black, width: 2)
                     
                     Spacer()
                     
@@ -63,37 +51,17 @@ struct CreateListings: View {
                     }
                     
                     Button(action: {
-                        CreateDB().createLiveStream { response in
-                            switch response {
-                                case .success(let array):
-                                    addStream.addShow(name: streamName, description: streamDescription, date: TimeData().convertDateToString(date_value: selectedDate, time_value: selectedTime), livestream_id: array[0], playback_id: array[1], stream_key: array[2])
-                                    
-                                case .failure(let error):
-                                    print("Error: \(error.localizedDescription)")
-                            }
-                        }
-                        isLoading.toggle()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            showSubmission.toggle()
-                        }
                     }) {
-                        HStack { Text("Submit").font(.title3) }
+                        HStack { Text("Done").font(.title3) }
                     }
-                    .disabled(isBothTextFieldsEmpty)
                     .frame(width: 360, height: 50)
-                    .background(isBothTextFieldsEmpty ? Color.gray : Color("Primary_color"))
                     .background(Color("Primary_color"))
                     .foregroundColor(.white)
                     .border(Color.black, width: 2)
                     .padding(.vertical)
-                    .navigationDestination(isPresented: $showSubmission) {
-                        BottomNavbar().navigationBarHidden(true)
-                    }
                 }
-                .opacity(isLoading ? 0 : 1)
             }
             .foregroundColor(.black)
-        }
     }
 }
 
