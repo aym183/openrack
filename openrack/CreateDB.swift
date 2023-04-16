@@ -69,6 +69,7 @@ class CreateDB : ObservableObject {
 
         ReadDB().getCreatorShows()
         ReadDB().getViewerShows()
+        ReadDB().getListingIDs()
 
         print("Hi")
         
@@ -92,7 +93,7 @@ class CreateDB : ObservableObject {
             print("Error adding listing: \(error.localizedDescription)")
         } else {
             print("Document added successfully!")
-//            ReadDB().getListings(listingID: docRef)
+            ReadDB().getListings()
         }
                 }
         

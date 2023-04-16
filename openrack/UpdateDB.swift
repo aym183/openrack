@@ -48,7 +48,7 @@ class UpdateDB : ObservableObject {
             print("Error adding listing: \(error.localizedDescription)")
         } else {
             print("Document added successfully!")
-//            ReadDB().getListings(listingID: docRef)
+            ReadDB().getListings()
         }
         }
             }

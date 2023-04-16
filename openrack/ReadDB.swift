@@ -90,9 +90,27 @@ class ReadDB : ObservableObject {
             }
     }
     
-    func getListings(listingIDs: [String]) {
+    func getListingIDs() {
+        @AppStorage("username") var userName: String = ""
+        let db = Firestore.firestore()
+        let ref = db.collection("shows")
+        var listingIDs: [String] = []
         
-        
+        ref.whereField("created_by", isEqualTo: userName)
+            .getDocuments { (snapshot, error) in
+                if let error = error {
+                    print("Error getting email in getListingIDs: \(error.localizedDescription)")
+                } else {
+                    for document in snapshot!.documents {
+                        listingIDs.append(document.data()["listings"]! as! String)
+                    }
+                }
+                UserDefaults.standard.set(listingIDs, forKey: "listing_ids")
+            }
+    }
+    func getListings() {
+         
+        var listingIDs = UserDefaults.standard.array(forKey: "listing_ids") as? [String]
         var listings: [Listing] = []
         var dictValue: [String: String]?
         var output: [String: [Listing]] = [:]
@@ -100,7 +118,7 @@ class ReadDB : ObservableObject {
 //        var listing: [String]
         let db = Firestore.firestore()
         
-        for (index,id) in listingIDs.enumerated() {
+        for (index,id) in listingIDs!.enumerated() {
             db.collection("listings").whereField(FieldPath.documentID(), isEqualTo: id).getDocuments(source: .default) { (querySnapshot, error) in
                        if let error = error {
                                print("Error getting document: \(error.localizedDescription)")

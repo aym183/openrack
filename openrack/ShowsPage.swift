@@ -18,10 +18,10 @@ struct ShowsPage: View {
         
     init() {
         retrievedShows = UserDefaults.standard.array(forKey: "shows") as? [[String: Any]] ?? []
-        for index in retrievedShows {
-            self.allListingIDs.append(index["listings"] as! String)
-        }
-        ReadDB().getListings(listingIDs: allListingIDs)
+//        for index in retrievedShows {
+//            self.allListingIDs.append(index["listings"] as! String)
+//        }
+        ReadDB().getListingIDs()
         noOfShows = retrievedShows.count ?? 0
     }
     
