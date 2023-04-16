@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Listing: Identifiable {
+struct Listing: Identifiable, Codable {
     var id = UUID()
     let image: String
     let title: String
-    let quantity: Int
+    let quantity: String
 }

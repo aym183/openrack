@@ -74,24 +74,25 @@ class CreateDB : ObservableObject {
         
     }
     
-    func addListings(listing: [String], docRef: String){
+    func addListings(listing: [String: String], docRef: String){
         let db = Firestore.firestore()
         let ref = db.collection("listings")
-        let count = Int(listing[2])
+//        let count = Int(listing[2])
         var docID = ref.document(docRef)
         var presentDateTime = miscData.getPresentDateTime()
         
         var documentData = [String: Any]()
-        for _ in 0..<count! {
-            var fieldID = ref.document()
-            documentData[fieldID.documentID] = [listing[0], listing[1] ,listing[3], listing[4], presentDateTime]
-        }
+//        for _ in 0..<count! {
+        var fieldID = ref.document()
+        documentData[fieldID.documentID] = ["name": listing["name"], "description": listing["description"], "quantity": listing["quantity"], "category": listing["category"], "subcategory": listing["subcategory"], "date_created": presentDateTime]
+//        }
         
         docID.setData(documentData) { error in
         if let error = error {
             print("Error adding listing: \(error.localizedDescription)")
         } else {
             print("Document added successfully!")
+//            ReadDB().getListings(listingID: docRef)
         }
                 }
         

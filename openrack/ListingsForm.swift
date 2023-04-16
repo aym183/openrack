@@ -20,7 +20,7 @@ struct ListingsForm: View {
     var areTextFieldsEmpty: Bool {
         return listingName.isEmpty || listingDescription.isEmpty || listingQuantity.isEmpty
     }
-    @State var listing: [String] = []
+    @State var listing: [String: String] = [:]
     
     var body: some View {
         
@@ -67,9 +67,9 @@ struct ListingsForm: View {
                     }
                     
                     Button(action: {
-                        listing = [listingName, listingDescription, listingQuantity, String(describing: selectedCategory!.option), String(describing: selectedSubCategory!.option)]
+                        listing = ["name": listingName, "description": listingDescription, "quantity": listingQuantity, "category": String(describing: selectedCategory!.option), "subcategory": String(describing: selectedSubCategory!.option)]
                         
-                        let newListing = Listing(image: ImageSelector().getImage(category: String(describing: selectedCategory!.option)), title: listingName, quantity: Int(listingQuantity)!)
+                        let newListing = Listing(image: ImageSelector().getImage(category: String(describing: selectedCategory!.option)), title: listingName, quantity: listingQuantity)
                         listings.append(newListing)
                         
                         showingBottomSheet.toggle()

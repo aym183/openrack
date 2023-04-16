@@ -6,15 +6,25 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct CreateListings: View {
     @StateObject var listingsViewModel = ListingViewModel()
-    @State var listings = ListingViewModel().listings
+
+    @Binding var listings: [Listing]
+//    var retrievedListings = UserDefaults.standard.data(forKey: "listings") //as? [Listing] ?? []
     @State var showingBottomSheet = false
     var listingID: String
     var addStream = CreateDB()
 //    var isBothTextFieldsEmpty: Bool {
 //        return streamName.isEmpty || streamDescription.isEmpty
+//    }
+    
+    // On appear, append read data from db in form of Listings to listings
+    
+//    init() {
+////        retrievedListings = UserDefaults.standard.array(forKey: "listings") as? [Listing] ?? []
+//
 //    }
     
     var body: some View {
@@ -28,7 +38,7 @@ struct CreateListings: View {
                     ScrollView {
                         //listingsViewModel.listings
                         ForEach(listings) { listing in
-                            Button(action: { print(listings) }) {
+                            Button(action: { }) {
                                 ListingRow(image: listing.image, title: listing.title, quantity: listing.quantity)
                             }
                         }
@@ -50,7 +60,6 @@ struct CreateListings: View {
                             .foregroundColor(.black)
                             .background(Color("Primary_color"))
                             .cornerRadius(38.5)
-                            .padding(.bottom, -15)
                             .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
                     }
                     .frame(width: 360, height: 50)
@@ -59,24 +68,33 @@ struct CreateListings: View {
                             .presentationDetents([.height(750)])
                     }
                     
-                    Button(action: {
-                    }) {
-                        HStack { Text("Done").font(.title3) }
-                    }
-                    .frame(width: 360, height: 50)
-                    .background(Color("Primary_color"))
-                    .foregroundColor(.white)
-                    .border(Color.black, width: 2)
-                    .padding(.vertical)
+                    
+//                    Button(action: {
+//                    }) {
+//                        HStack { Text("Done").font(.title3) }
+//                    }
+//                    .frame(width: 360, height: 50)
+//                    .background(Color("Primary_color"))
+//                    .foregroundColor(.white)
+//                    .border(Color.black, width: 2)
+//                    .padding(.vertical)
                 }
             }
+//            .onAppear {
+//                let decoder = JSONDecoder()
+//                if let decodedListings = try? decoder.decode([Listing].self, from: retrievedListings!) {
+//                        for listing in decodedListings {
+//                            listings.append(listing)
+//                        }
+//                    }
+//            }
     }
 }
 
 struct ListingRow: View {
     let image: String
     let title: String
-    let quantity: Int
+    let quantity: String
     var body: some View {
         HStack {
             Image(systemName: image)
@@ -90,8 +108,8 @@ struct ListingRow: View {
     }
 }
 
-struct CreateListings_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateListings(listingID : "Test")
-    }
-}
+//struct CreateListings_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CreateListings(listingID : "Test")
+//    }
+//}
