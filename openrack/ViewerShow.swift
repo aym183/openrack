@@ -13,7 +13,6 @@ struct ViewerShow: View {
     let username: String
     let playbackID: String
     let playerController = AVPlayerViewController()
-    @Binding var listingSelected: Listing
     
     var body: some View {
         let player = AVPlayer(url: URL(string: "https://stream.mux.com/\(playbackID).m3u8")!)
@@ -96,26 +95,26 @@ struct ViewerShow: View {
                         .foregroundColor(.white)
                     }
                 
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(listingSelected.title)
-                            .font(Font.system(size: 15)).fontWeight(.bold)
-                        
-                        if listingSelected.title != "" {
-                            Text("🇦🇪 Shipping & Tax").font(Font.system(size: 10)).opacity(0.7)
-                        }
-                    }
-                    
-                    Spacer()
-                    
-                    Text(listingSelected.price == "0" ? listingSelected.type : listingSelected.price)
-                        .font(Font.system(size: 18)).fontWeight(.bold)
-                        
-                }
-                .padding(.bottom)
-                .padding(.trailing)
-                .padding(.leading, 5)
-                .foregroundColor(Color.white)
+//                HStack {
+//                    VStack(alignment: .leading) {
+//                        Text(listingSelected.title)
+//                            .font(Font.system(size: 15)).fontWeight(.bold)
+//                        
+//                        if listingSelected.title != "" {
+//                            Text("🇦🇪 Shipping & Tax").font(Font.system(size: 10)).opacity(0.7)
+//                        }
+//                    }
+//                    
+//                    Spacer()
+//                    
+//                    Text(listingSelected.price == "0" ? listingSelected.type : listingSelected.price)
+//                        .font(Font.system(size: 18)).fontWeight(.bold)
+//                        
+//                }
+//                .padding(.bottom)
+//                .padding(.trailing)
+//                .padding(.leading, 5)
+//                .foregroundColor(Color.white)
                     
                 HStack{
                     Button(action: { }) {
