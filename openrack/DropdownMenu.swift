@@ -48,8 +48,8 @@ struct DropdownMenu: View {
         .padding(
             .bottom, self.isOptionsPresented
             ? CGFloat(self.options.count * 32) > 300
-                ? 100
-                : CGFloat(self.options.count * 26)
+                ? 300
+                : CGFloat(self.options.count * 30)
             : 0
         )
     }
