@@ -84,7 +84,7 @@ struct ListingsForm: View {
                         }
                         
                         Button(action: {
-                            listing = ["name": listingName, "description": listingDescription, "quantity": listingQuantity, "category": String(describing: selectedCategory!.option), "subcategory": String(describing: selectedSubCategory!.option), "price": selectedType!.option == "Buy Now" ? listingPrice: "0" ]
+                            listing = ["name": listingName, "description": listingDescription, "quantity": listingQuantity, "category": String(describing: selectedCategory!.option), "subcategory": String(describing: selectedSubCategory!.option), "type": selectedType!.option , "price": selectedType!.option == "Buy Now" ? listingPrice: "0" ]
                             
                             let newListing = Listing(image: ImageSelector().getImage(category: String(describing: selectedCategory!.option)), title: listingName, quantity: listingQuantity)
                             listings.append(newListing)
