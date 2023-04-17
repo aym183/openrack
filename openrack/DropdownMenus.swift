@@ -35,4 +35,10 @@ extension Dropdownmenus {
         Dropdownmenus(option: "Gender"),
         Dropdownmenus(option: "Gender"),
     ]
+    
+    static let typeAllOptions: [Dropdownmenus] = [
+        Dropdownmenus(option: "Auction"),
+        Dropdownmenus(option: "Buy Now"),
+        Dropdownmenus(option: "Giveaway")
+    ]
 }

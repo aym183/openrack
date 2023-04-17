@@ -49,7 +49,7 @@ struct DropdownMenu: View {
             .bottom, self.isOptionsPresented
             ? CGFloat(self.options.count * 32) > 300
                 ? 100
-                : CGFloat(self.options.count * 32)
+                : CGFloat(self.options.count * 26)
             : 0
         )
     }

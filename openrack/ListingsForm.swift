@@ -15,6 +15,7 @@ struct ListingsForm: View {
     @State var listingName = ""
     @State var listingDescription = ""
     @State var listingQuantity = ""
+    @State private var selectedType: Dropdownmenus? = nil
     @State private var selectedCategory: Dropdownmenus? = nil
     @State private var selectedSubCategory: Dropdownmenus? = nil
     var areTextFieldsEmpty: Bool {
@@ -38,6 +39,12 @@ struct ListingsForm: View {
                     Text("Subcategory").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
                     DropdownMenu( selectedOption: self.$selectedSubCategory, options: Dropdownmenus.subCategoryAllOptions )
+                    
+                    VStack (alignment: .leading){
+                        Text("Type").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                        
+                        DropdownMenu( selectedOption: self.$selectedType, options: Dropdownmenus.typeAllOptions )
+                    }
                     
                     Text("Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
@@ -67,20 +74,21 @@ struct ListingsForm: View {
                     }
                     
                     Button(action: {
-                        listing = ["name": listingName, "description": listingDescription, "quantity": listingQuantity, "category": String(describing: selectedCategory!.option), "subcategory": String(describing: selectedSubCategory!.option)]
-                        
-                        let newListing = Listing(image: ImageSelector().getImage(category: String(describing: selectedCategory!.option)), title: listingName, quantity: listingQuantity)
-                        listings.append(newListing)
-                        
-                        showingBottomSheet.toggle()
-                        
-                        DispatchQueue.global(qos: .background).async {
-                            if listings.count > 1 {
-                                UpdateDB().updateListings(listing: listing, docRef: listingID)
-                            } else {
-                                CreateDB().addListings(listing: listing, docRef: listingID)
-                            }
-                        }
+                        print(String(describing: selectedType!.option))
+//                        listing = ["name": listingName, "description": listingDescription, "quantity": listingQuantity, "category": String(describing: selectedCategory!.option), "subcategory": String(describing: selectedSubCategory!.option)]
+//
+//                        let newListing = Listing(image: ImageSelector().getImage(category: String(describing: selectedCategory!.option)), title: listingName, quantity: listingQuantity)
+//                        listings.append(newListing)
+//
+//                        showingBottomSheet.toggle()
+//
+//                        DispatchQueue.global(qos: .background).async {
+//                            if listings.count > 1 {
+//                                UpdateDB().updateListings(listing: listing, docRef: listingID)
+//                            } else {
+//                                CreateDB().addListings(listing: listing, docRef: listingID)
+//                            }
+//                        }
                     
                     }, label: { Text("Confirm").font(.title3) })
                     .disabled(areTextFieldsEmpty)
