@@ -23,6 +23,7 @@ struct CreatorShow: View {
     var streamName: String
     var streamKey: String
     var liveStreamID: String
+    var listingID: String
     @State var countdownTimer = 3
     @State var timerRunning = false
     @State var isTimerShown = false
@@ -38,6 +39,7 @@ struct CreatorShow: View {
                 
                   FrameView(image: model.frame)
                                   .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                  .ignoresSafeArea()
 
                 if isTimerShown {
                     Text("\(countdownTimer)").font(Font.system(size: 100)).opacity(0.7).foregroundColor(.white)
@@ -189,10 +191,10 @@ struct CreatorShow: View {
 
                 .frame(width: 370, height: 750)
             }
-//            .sheet(isPresented: $showingBottomSheet) {
-//                CreateListings(listi listingID: <#String#>)
-//                    .presentationDetents([.height(200)])
-//            }
+            .sheet(isPresented: $showingBottomSheet) {
+                CreateListings(listingID: listingID)
+                    .presentationDetents([.height(400)])
+            }
         }
 
 }

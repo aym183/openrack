@@ -38,7 +38,9 @@ struct CreateListings: View {
                     ScrollView {
                         //listingsViewModel.listings
                         ForEach(listings) { listing in
-                            Button(action: { }) {
+                            Button(action: {
+                                print("You clicked \(listing.title)")
+                            }) {
                                 ListingRow(image: listing.image, title: listing.title, quantity: listing.quantity)
                             }
                         }

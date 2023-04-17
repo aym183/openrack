@@ -43,7 +43,7 @@ struct ShowsPage: View {
                                 
                                 showName(name: String(describing: retrievedShows[index]["name"]!), status: String(describing: retrievedShows[index]["status"]!), date_sched: String(describing: retrievedShows[index]["date_scheduled"]!), description: String(describing: retrievedShows[index]["description"]!))
 
-                                showsPageButtons(name: String(describing: retrievedShows[index]["name"]!), stream_key: String(describing: retrievedShows[index]["stream_key"]!), stream_id: String(describing: retrievedShows[index]["livestream_id"]!), liveStreamID: String(describing: retrievedShows[index]["livestream_id"]!), listingID: String(describing: retrievedShows[index]["listings"]!))
+                                ShowsPageButtons(name: String(describing: retrievedShows[index]["name"]!), stream_key: String(describing: retrievedShows[index]["stream_key"]!), stream_id: String(describing: retrievedShows[index]["livestream_id"]!), liveStreamID: String(describing: retrievedShows[index]["livestream_id"]!), listingID: String(describing: retrievedShows[index]["listings"]!))
 
                             }
                             .frame(width: 360, height: 110)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct showsPageButtons: View {
+struct ShowsPageButtons: View {
         var name: String!
         var stream_key: String!
         var stream_id: String!
@@ -33,7 +33,7 @@ struct showsPageButtons: View {
                 }
                 .padding(.leading, 5)
                 .navigationDestination(isPresented: $streamStarted) {
-                    CreatorShow(streamName: name, streamKey: stream_key, liveStreamID: liveStreamID).navigationBarHidden(true)
+                    CreatorShow(streamName: name, streamKey: stream_key, liveStreamID: liveStreamID, listingID: listingID).navigationBarHidden(true)
                 }
 
                 
@@ -93,6 +93,6 @@ struct showsPageButtons: View {
 
 struct showsPageButtons_Previews: PreviewProvider {
     static var previews: some View {
-        showsPageButtons()
+        ShowsPageButtons()
     }
 }
