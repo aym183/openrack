@@ -102,7 +102,7 @@ struct LandingContent: View {
                         SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Sign In"))
                     }
                     
-                    Divider().frame(width: 300, height: 3).background(.black).padding(.top, 5).padding(.bottom, 5)
+                    Divider().frame(width: 300, height: 3).background(.black).padding(.top, 5).padding(.bottom, 5).opacity(0.7)
                     
                     Button(action: { showingLoginBottomSheet.toggle() }) {
                         HStack {

@@ -12,4 +12,6 @@ struct Listing: Identifiable, Codable {
     let image: String
     let title: String
     let quantity: String
+    let price: String
+    let type: String
 }

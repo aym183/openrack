@@ -20,7 +20,7 @@ struct DropdownMenuList: View {
         }
         .frame(height: CGFloat(self.options.count * 32) > 300
                ? 300
-               : CGFloat(self.options.count * 28)
+               : CGFloat(self.options.count * 30)
         )
         .padding(.vertical, 5)
         .overlay {

@@ -16,6 +16,7 @@ struct ShowsPageButtons: View {
         @State var streamStarted = false
         @State var listingStarted = false
         @State var listings = ListingViewModel().listings
+        @State var listingSelected = Listing(image: "", title: "", quantity: "", price: "", type: "")
 //        var retrievedListings = UserDefaults.standard.object(forKey: "listings")
     
         var body: some View {
@@ -33,7 +34,7 @@ struct ShowsPageButtons: View {
                 }
                 .padding(.leading, 5)
                 .navigationDestination(isPresented: $streamStarted) {
-                    CreatorShow(streamName: name, streamKey: stream_key, liveStreamID: liveStreamID, listingID: listingID).navigationBarHidden(true)
+                    CreatorShow(streamName: name, streamKey: stream_key, liveStreamID: liveStreamID, listingID: listingID, listingSelected: $listingSelected).navigationBarHidden(true)
                 }
 
                 
@@ -53,7 +54,7 @@ struct ShowsPageButtons: View {
                         )
                 }
                 .navigationDestination(isPresented: $listingStarted) {
-                    CreateListings(listingID: listingID)
+                    CreateListings(listingID: listingID, creatorView: false, listingSelected: $listingSelected)
                 }
                 
                 Button(action: {}) {

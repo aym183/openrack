@@ -28,6 +28,7 @@ struct CreatorShow: View {
     @State var timerRunning = false
     @State var isTimerShown = false
     let timer = Timer.publish(every:1, on: .main, in: .common).autoconnect()
+    @Binding var listingSelected: Listing
     
 //    @State var rtmpStream: RTMPStream?
 //    private var defaultCamera: AVCaptureDevice.Position = .front
@@ -147,6 +148,27 @@ struct CreatorShow: View {
                             .foregroundColor(.white)
                         }
 
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(listingSelected.title)
+                                .font(Font.system(size: 15)).fontWeight(.bold)
+                            
+                            if listingSelected.title != "" {
+                                Text("🇺🇸 Shipping & Tax").font(Font.system(size: 10)).opacity(0.7)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Text(listingSelected.price == "0" ? listingSelected.type : listingSelected.price)
+                            .font(Font.system(size: 18)).fontWeight(.bold)
+                            
+                    }
+                    .padding(.bottom)
+                    .padding(.trailing)
+                    .padding(.leading, 5)
+                    .foregroundColor(Color.white)
+                    
                     HStack{
                         Button(action: {
                             if self.streamButtonText != "Start Stream" {
@@ -192,7 +214,7 @@ struct CreatorShow: View {
                 .frame(width: 370, height: 750)
             }
             .sheet(isPresented: $showingBottomSheet) {
-                CreateListings(listingID: listingID)
+                CreateListings(listingID: listingID, creatorView: true, listingSelected: $listingSelected)
                     .presentationDetents([.height(400)])
             }
         }
