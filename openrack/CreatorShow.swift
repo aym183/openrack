@@ -154,7 +154,7 @@ struct CreatorShow: View {
                                 .font(Font.system(size: 15)).fontWeight(.bold)
                             
                             if listingSelected.title != "" {
-                                Text("🇺🇸 Shipping & Tax").font(Font.system(size: 10)).opacity(0.7)
+                                Text("🇦🇪 Shipping & Tax").font(Font.system(size: 10)).opacity(0.7)
                             }
                         }
                         
