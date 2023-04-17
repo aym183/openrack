@@ -28,12 +28,7 @@ extension Dropdownmenus {
     static let subCategoryAllOptions: [Dropdownmenus] = [
         Dropdownmenus(option: "Men's"),
         Dropdownmenus(option: "Woman's"),
-        Dropdownmenus(option: "Unisex"),
-        Dropdownmenus(option: "Unisex"),
-        Dropdownmenus(option: "Gender"),
-        Dropdownmenus(option: "Gender"),
-        Dropdownmenus(option: "Gender"),
-        Dropdownmenus(option: "Gender"),
+        Dropdownmenus(option: "Unisex")
     ]
     
     static let typeAllOptions: [Dropdownmenus] = [
