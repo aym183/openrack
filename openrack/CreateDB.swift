@@ -70,8 +70,6 @@ class CreateDB : ObservableObject {
         ReadDB().getCreatorShows()
         ReadDB().getViewerShows()
         ReadDB().getListingIDs()
-
-        print("Hi")
         
     }
     

@@ -11,7 +11,7 @@ import Foundation
 struct CreateListings: View {
     @StateObject var listingsViewModel = ListingViewModel()
 
-    @Binding var listings: [Listing]
+    @State var listings = ListingViewModel().listings
 //    var retrievedListings = UserDefaults.standard.data(forKey: "listings") //as? [Listing] ?? []
     @State var showingBottomSheet = false
     var listingID: String
@@ -80,14 +80,23 @@ struct CreateListings: View {
 //                    .padding(.vertical)
                 }
             }
-//            .onAppear {
-//                let decoder = JSONDecoder()
-//                if let decodedListings = try? decoder.decode([Listing].self, from: retrievedListings!) {
-//                        for listing in decodedListings {
-//                            listings.append(listing)
-//                        }
-//                    }
-//            }
+            .onAppear {
+                if let data = UserDefaults.standard.object(forKey: "listings") as? Data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let listingsDictionary = try decoder.decode([String: [Listing]].self, from: data)
+                        if listingsDictionary[listingID] == nil {
+                            listings = []
+                        } else {
+                            listings = listingsDictionary[listingID]!
+                        }
+                    } catch let error {
+                        print("Error decoding listings data: \(error.localizedDescription)")
+                    }
+                } else {
+                    // handle the case where there is no data for the "myListings" key
+                }
+            }
     }
 }
 

@@ -39,20 +39,7 @@ struct showsPageButtons: View {
                 
                 Button(action: {
 //                    if let myDictionary = UserDefaults.standard.object(forKey: "listings") {
-                    if let data = UserDefaults.standard.object(forKey: "listings") as? Data {
-                        do {
-                            let decoder = JSONDecoder()
-                            let listingsDictionary = try decoder.decode([String: [Listing]].self, from: data)
-                            
-                            listings = listingsDictionary[listingID]!
-                            listingStarted.toggle()
-                        } catch let error {
-                            print("Error decoding listings data: \(error.localizedDescription)")
-                        }
-                    } else {
-                        // handle the case where there is no data for the "myListings" key
-                    }
-                    
+                    listingStarted.toggle()
                 }) {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(.black)
@@ -66,7 +53,7 @@ struct showsPageButtons: View {
                         )
                 }
                 .navigationDestination(isPresented: $listingStarted) {
-                    CreateListings(listings: $listings, listingID: listingID)
+                    CreateListings(listingID: listingID)
                 }
                 
                 Button(action: {}) {

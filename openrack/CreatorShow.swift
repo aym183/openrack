@@ -19,6 +19,7 @@ struct CreatorShow: View {
     @State private var streamButtonText = "Start Stream"
     @State private var isStreaming = false
     @State var showCircle = false
+    @State var showingBottomSheet = false
     var streamName: String
     var streamKey: String
     var liveStreamID: String
@@ -90,6 +91,18 @@ struct CreatorShow: View {
                     HStack {
                             Spacer()
                             VStack {
+                                
+                                Button(action: { showingBottomSheet.toggle() }) {
+                                    Circle()
+                                        .fill(Color("Primary_color"))
+                                        .frame(height: 50)
+                                        .opacity(0.7)
+                                        .overlay(
+                                            Image(systemName: "tshirt.fill").font(Font.system(size: 25)).foregroundColor(.white)
+                                        )
+                                }
+
+                                Text("Listings").font(Font.system(size: 15)).fontWeight(.semibold)
 
                                 Button(action: {}) {
                                     Circle()
@@ -176,6 +189,10 @@ struct CreatorShow: View {
 
                 .frame(width: 370, height: 750)
             }
+//            .sheet(isPresented: $showingBottomSheet) {
+//                CreateListings(listi listingID: <#String#>)
+//                    .presentationDetents([.height(200)])
+//            }
         }
 
 }

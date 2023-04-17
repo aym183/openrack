@@ -23,6 +23,7 @@ struct ShowsPage: View {
 //        }
         ReadDB().getListingIDs()
         noOfShows = retrievedShows.count ?? 0
+        ReadDB().getListings()
     }
     
     var body: some View {
@@ -37,7 +38,7 @@ struct ShowsPage: View {
                     LazyVGrid(columns: columns, spacing: 20) {
                         // Change to length of response array
 //                        noOfShows
-                        ForEach(0..<2) { index in
+                        ForEach(0..<noOfShows) { index in
                             VStack {
                                 
                                 showName(name: String(describing: retrievedShows[index]["name"]!), status: String(describing: retrievedShows[index]["status"]!), date_sched: String(describing: retrievedShows[index]["date_scheduled"]!), description: String(describing: retrievedShows[index]["description"]!))
