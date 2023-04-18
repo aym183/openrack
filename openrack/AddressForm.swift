@@ -15,9 +15,11 @@ struct AddressForm: View {
     @State var state = ""
     @State var postalCode = ""
     @State private var selectedCountry: Dropdownmenus? = nil
+    @Binding var showingPaySheet: Bool
+    @Binding var isShowingAddressForm: Bool
     
     var areTextFieldsEmpty: Bool {
-        return fullName.isEmpty || addressDetails.isEmpty || addressDetailsSecondary.isEmpty || city.isEmpty || state.isEmpty || postalCode.isEmpty
+        return fullName.isEmpty || addressDetails.isEmpty || city.isEmpty || postalCode.isEmpty
     }
     
     var body: some View {
@@ -76,7 +78,8 @@ struct AddressForm: View {
                         
                         Button(action: {
                             UpdateDB().updateUserAddress(address: ["full_name": fullName, "address": addressDetails, "address_secondary": addressDetailsSecondary, "city": city, "state": state, "postal_code": postalCode, "country": selectedCountry!.option])
-                            
+                            showingPaySheet.toggle()
+                            isShowingAddressForm.toggle()
 //                            print("The Address is \(fullName), \(addressDetails), \(addressDetailsSecondary), \(city), \(state), \(postalCode), \(selectedCountry!.option)")
                         }) {
                             Text("Save Info").font(.title3)
@@ -97,8 +100,8 @@ struct AddressForm: View {
     }
 }
 
-struct AddressForm_Previews: PreviewProvider {
-    static var previews: some View {
-        AddressForm()
-    }
-}
+//struct AddressForm_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddressForm()
+//    }
+//}

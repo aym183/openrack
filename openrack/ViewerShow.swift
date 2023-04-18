@@ -185,7 +185,7 @@ struct ViewerShow: View {
                 readListing.getListingSelected(listingID: String(describing: retrievedShow["listings"]!))
             }
             .sheet(isPresented: $showingPaySheet) {
-                    PaymentDetails(isShowingPaymentsForm: $isShowingPaymentsForm, isShowingAddressForm: $isShowingAddressForm)
+                PaymentDetails(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm, isShowingAddressForm: $isShowingAddressForm)
                         .presentationDetents([.height(250)])
             }
         }

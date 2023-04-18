@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PaymentDetails: View {
+    @Binding var showingPaySheet: Bool
     @Binding var isShowingPaymentsForm: Bool
     @Binding var isShowingAddressForm: Bool
     var body: some View {
@@ -34,7 +35,7 @@ struct PaymentDetails: View {
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
                     }
                     .sheet(isPresented: $isShowingAddressForm) {
-                            AddressForm().presentationDetents([.height(750)])
+                        AddressForm(showingPaySheet: $showingPaySheet, isShowingAddressForm: $isShowingAddressForm).presentationDetents([.height(750)])
                     }
                     
                     Button(action: {
