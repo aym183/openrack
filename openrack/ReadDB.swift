@@ -12,6 +12,7 @@ class ReadDB : ObservableObject {
     
     @Published var title: String? = nil
     @Published var price: String? = nil
+    @Published var address: [String: String]? = nil
     
     func getUsername() {
         @AppStorage("username") var userName: String = ""
@@ -26,6 +27,24 @@ class ReadDB : ObservableObject {
                 } else {
                     for document in snapshot!.documents {
                         UserDefaults.standard.set(String(describing:document.data()["username"]!), forKey: "username")
+                    }
+                }
+            }
+    }
+    
+    func getAddress() {
+        @AppStorage("username") var userName: String = ""
+        
+        let db = Firestore.firestore()
+        let ref = db.collection("users")
+        
+        ref.whereField("username", isEqualTo: userName)
+            .getDocuments { (snapshot, error) in
+                if let error = error {
+                    print("Error getting email in getAddress: \(error.localizedDescription)")
+                } else {
+                    for document in snapshot!.documents {
+                        self.address = ["full_name": document.data()["full_name"], "address": document.data()["address"], "city": document.data()["city"], "postal_code": document.data()["postal_code"]] as? [String: String]
                     }
                 }
             }

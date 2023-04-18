@@ -186,7 +186,7 @@ struct ViewerShow: View {
             }
             .sheet(isPresented: $showingPaySheet) {
                 PaymentDetails(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm, isShowingAddressForm: $isShowingAddressForm)
-                        .presentationDetents([.height(250)])
+                        .presentationDetents([.height(320)])
             }
         }
        

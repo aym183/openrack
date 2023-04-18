@@ -11,6 +11,8 @@ struct PaymentDetails: View {
     @Binding var showingPaySheet: Bool
     @Binding var isShowingPaymentsForm: Bool
     @Binding var isShowingAddressForm: Bool
+    @StateObject var addressDetails = ReadDB()
+    
     var body: some View {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
@@ -23,13 +25,19 @@ struct PaymentDetails: View {
                             VStack(alignment: .leading) {
                                 Text("Shipping")
                                     .fontWeight(.bold).font(Font.system(size: 20)).padding(.top)
-                                Text("Please set your information here.")
-                                    .fontWeight(.medium).font(Font.system(size: 14)).multilineTextAlignment(.leading)
+                                
+                                if addressDetails.address == nil {
+                                    Text("Please set your information here.")
+                                        .fontWeight(.semibold).font(Font.system(size: 14)).multilineTextAlignment(.leading).padding(.top, 0)
+                                } else {
+                                    Text("\(addressDetails.address!["full_name"]!)\n\(addressDetails.address!["address"]!)\n\(addressDetails.address!["city"]!) \(addressDetails.address!["postal_code"]!)")
+                                        .fontWeight(.semibold).font(Font.system(size: 12)).multilineTextAlignment(.leading).padding(.top, 0)
+                                }
                             }
                             Spacer()
                             Image(systemName: "pencil").font(Font.system(size: 25))
                         }
-                        .padding(10).padding(.bottom)
+                        .padding(20).padding(.bottom)
                         .frame(width: 370)
                         .background(Color("Primary_color")).cornerRadius(15)
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
@@ -47,12 +55,12 @@ struct PaymentDetails: View {
                                 Text("Payment")
                                     .fontWeight(.bold).font(Font.system(size: 20)).padding(.top)
                                 Text("Please input your payment info.")
-                                    .fontWeight(.medium).font(Font.system(size: 14))
+                                    .fontWeight(.semibold).font(Font.system(size: 14)).padding(.top, 0)
                             }
                             Spacer()
                             Image(systemName: "pencil").font(Font.system(size: 25))
                         }
-                        .padding(10).padding(.bottom)
+                        .padding(20).padding(.bottom)
                         .frame(width: 370)
                         .background(Color("Primary_color")).cornerRadius(15)
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
@@ -63,12 +71,10 @@ struct PaymentDetails: View {
                 }
                 .foregroundColor(.white)
                 .padding(.vertical)
+                .onAppear {
+                    addressDetails.getAddress()
+                }
             }
         }
 }
 
-//struct PaymentDetails_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PaymentDetails()
-//    }
-//}
