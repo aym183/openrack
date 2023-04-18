@@ -14,8 +14,11 @@ struct ViewerShow: View {
 //    let username: String
 //    let playbackID: String
     let playerController = AVPlayerViewController()
-//    let listingID: String 
+//    let listingID: String
     @State var showingPaySheet = false
+    @State var showingAddressSheet = false
+    @State var isShowingPaymentsForm = false
+    @State var isShowingAddressForm = false
     @StateObject var readListing = ReadDB()
  
     
@@ -85,7 +88,9 @@ struct ViewerShow: View {
                             
                             Text("Share").font(Font.system(size: 15)).fontWeight(.semibold)
                             
-                            Button(action: { showingPaySheet.toggle() }) {
+                            Button(action: {
+                                showingPaySheet.toggle()
+                            }) {
                                 Circle()
                                     .fill(Color("Primary_color"))
                                     .frame(height: 50)
@@ -180,8 +185,8 @@ struct ViewerShow: View {
                 readListing.getListingSelected(listingID: String(describing: retrievedShow["listings"]!))
             }
             .sheet(isPresented: $showingPaySheet) {
-                PaymentDetails()
-                    .presentationDetents([.height(250)])
+                    PaymentDetails(isShowingPaymentsForm: $isShowingPaymentsForm, isShowingAddressForm: $isShowingAddressForm)
+                        .presentationDetents([.height(250)])
             }
         }
        

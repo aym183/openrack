@@ -36,4 +36,15 @@ extension Dropdownmenus {
         Dropdownmenus(option: "Buy Now"),
         Dropdownmenus(option: "Giveaway")
     ]
+    
+    static let countryAllOptions: [Dropdownmenus] = [
+        Dropdownmenus(option: "Jordan"),
+        Dropdownmenus(option: "Kuwait"),
+        Dropdownmenus(option: "Lebanon"),
+        Dropdownmenus(option: "Oman"),
+        Dropdownmenus(option: "Qatar"),
+        Dropdownmenus(option: "Saudi Arabia"),
+        Dropdownmenus(option: "United Arab Emirates")
+
+    ]
 }
