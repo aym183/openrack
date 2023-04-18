@@ -158,6 +158,8 @@ class ReadDB : ObservableObject {
         }
     }
     
+    // ------------------------- Realtime Database ---------------------------------
+    
     func getListingSelected(listingID: String) {
         let titleDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("title")
         let priceDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("price")

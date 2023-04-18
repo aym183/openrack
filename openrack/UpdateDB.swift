@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import Firebase
+import SwiftUI
 
 class UpdateDB : ObservableObject {
     var miscData = MiscData()
@@ -53,6 +54,30 @@ class UpdateDB : ObservableObject {
         }
         }
     }
+    
+    func updateUserAddress(address: [String: Any]) {
+        @AppStorage("username") var userName: String = ""
+        let db = Firestore.firestore()
+        let collectionRef = db.collection("users")
+        
+        collectionRef.whereField("username", isEqualTo: userName).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents on updateStatus: \(error)")
+            } else {
+                guard let document = querySnapshot?.documents.first else {
+                    print("No documents found")
+                    return
+                }
+                
+                // Update "Y" field to "Text" for each document where "name" equals "X"
+                let docRef = collectionRef.document(document.documentID)
+                docRef.updateData(address)
+            }
+        }
+        
+    }
+    
+    // ------------------------- Realtime Database ---------------------------------
     
     func updateListingSelected(listingID: String, listing: Listing) {
         

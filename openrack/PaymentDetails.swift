@@ -23,7 +23,7 @@ struct PaymentDetails: View {
                                 Text("Shipping")
                                     .fontWeight(.bold).font(Font.system(size: 20)).padding(.top)
                                 Text("Please set your information here.")
-                                    .fontWeight(.medium).font(Font.system(size: 14))
+                                    .fontWeight(.medium).font(Font.system(size: 14)).multilineTextAlignment(.leading)
                             }
                             Spacer()
                             Image(systemName: "pencil").font(Font.system(size: 25))
@@ -56,9 +56,9 @@ struct PaymentDetails: View {
                         .background(Color("Primary_color")).cornerRadius(15)
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
                     }
-                    .sheet(isPresented: $isShowingPaymentsForm) {
-//                            AddressForm()
-                    }
+//                    .sheet(isPresented: $isShowingPaymentsForm) {
+////                            AddressForm()
+//                    }
                 }
                 .foregroundColor(.white)
                 .padding(.vertical)

@@ -75,7 +75,9 @@ struct AddressForm: View {
                         DropdownMenu( selectedOption: self.$selectedCountry, options: Dropdownmenus.countryAllOptions )
                         
                         Button(action: {
-                            print("The Address is \(fullName), \(addressDetails), \(addressDetailsSecondary), \(city), \(state), \(postalCode), \(selectedCountry!.option)")
+                            UpdateDB().updateUserAddress(address: ["full_name": fullName, "address": addressDetails, "address_secondary": addressDetailsSecondary, "city": city, "state": state, "postal_code": postalCode, "country": selectedCountry!.option])
+                            
+//                            print("The Address is \(fullName), \(addressDetails), \(addressDetailsSecondary), \(city), \(state), \(postalCode), \(selectedCountry!.option)")
                         }) {
                             Text("Save Info").font(.title3)
                         }

@@ -21,7 +21,13 @@ class CreateDB : ObservableObject {
             "date_created": miscData.getPresentDateTime(),
             "last_updated": miscData.getPresentDateTime(),
             "email": email,
-            "username": username
+            "username": username,
+            "name": "",
+            "address": "",
+            "city": "",
+            "state": "",
+            "postal_cod": "",
+            "country": ""
         ]
         
         ref.addDocument(data: data) { error in
