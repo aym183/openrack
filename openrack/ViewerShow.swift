@@ -10,12 +10,17 @@ import AVKit
 
 struct ViewerShow: View {
 //https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8
-    let username: String
-    let playbackID: String
+    let retrievedShow: [String: Any]
+//    let username: String
+//    let playbackID: String
     let playerController = AVPlayerViewController()
+//    let listingID: String 
+    @State var showingBottomSheet = false
+    @StateObject var readListing = ReadDB()
+ 
     
     var body: some View {
-        let player = AVPlayer(url: URL(string: "https://stream.mux.com/\(playbackID).m3u8")!)
+        let player = AVPlayer(url: URL(string: "https://stream.mux.com/\(retrievedShow["playback_id"]!).m3u8")!)
         ZStack {
             GeometryReader { geometry in
                 VideoPlayer (player: player)
@@ -30,7 +35,7 @@ struct ViewerShow: View {
                 HStack {
                     Image(systemName: "person.circle").font(Font.system(size: 25))
 
-                    Text(username).font(Font.system(size: 20))
+                    Text(String(describing: retrievedShow["created_by"]!)).font(Font.system(size: 20))
                     
                     
                     Spacer()
@@ -67,6 +72,7 @@ struct ViewerShow: View {
                 HStack {
                         Spacer()
                         VStack {
+                            
                             Button(action: {}) {
                                 Circle()
                                     .fill(Color("Primary_color"))
@@ -90,32 +96,46 @@ struct ViewerShow: View {
                             }
                         
                             Text("Pay").font(Font.system(size: 15)).fontWeight(.semibold)
+                            
+                            
+                            Button(action: { showingBottomSheet.toggle() }) {
+                                Circle()
+                                    .fill(Color("Primary_color"))
+                                    .frame(height: 70)
+                                    .opacity(0.7)
+                                    .overlay(
+                                       Image(systemName:"bag.fill")
+                                        .font(Font.system(size: 35))
+                                        .foregroundColor(.white)
+                                    )
+                                }
+                            .padding(.top)
                         }
                         .padding(.vertical, 50).padding(.trailing)
                         .foregroundColor(.white)
                     }
                 
-//                HStack {
-//                    VStack(alignment: .leading) {
-//                        Text(listingSelected.title)
-//                            .font(Font.system(size: 15)).fontWeight(.bold)
-//                        
-//                        if listingSelected.title != "" {
-//                            Text("🇦🇪 Shipping & Tax").font(Font.system(size: 10)).opacity(0.7)
-//                        }
-//                    }
-//                    
-//                    Spacer()
-//                    
-//                    Text(listingSelected.price == "0" ? listingSelected.type : listingSelected.price)
-//                        .font(Font.system(size: 18)).fontWeight(.bold)
-//                        
-//                }
-//                .padding(.bottom)
-//                .padding(.trailing)
-//                .padding(.leading, 5)
-//                .foregroundColor(Color.white)
+                if readListing.title != nil {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(readListing.title!)
+                                .font(Font.system(size: 15)).fontWeight(.bold)
+                            
+                            Text("🇦🇪 Shipping & Tax").font(Font.system(size: 10)).opacity(0.7)
+                        }
+                        
+                        Spacer()
+                        
+                        Text(readListing.price!)
+                            .font(Font.system(size: 18)).fontWeight(.bold)
+                        
+                    }
+                    .padding(.bottom)
+                    .padding(.trailing)
+                    .padding(.leading, 5)
+                    .foregroundColor(Color.white)
                     
+                }
                 HStack{
                     Button(action: { }) {
                         Text("Buy It Now")
@@ -144,8 +164,14 @@ struct ViewerShow: View {
                     
                     
             }
-            
             .frame(width: 370, height: 750)
+            .onAppear{
+                readListing.getListingSelected(listingID: String(describing: retrievedShow["listings"]!))
+            }
+//            .sheet(isPresented: $showingBottomSheet) {
+//                CreateListings(listingID: listingID, creatorView: false, listingSelected: $listingSelected)
+//                    .presentationDetents([.height(400)])
+//            }
         }
        
     }
@@ -153,6 +179,6 @@ struct ViewerShow: View {
 
 //struct ViewerShow_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ViewerShow()
+//        ViewerShow(username: "", playbackID: "")
 //    }
 //}

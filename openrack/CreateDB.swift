@@ -10,8 +10,9 @@ import Firebase
 import Foundation
 
 class CreateDB : ObservableObject {
-    var miscData = TimeData()
+    var miscData = MiscData()
     var getUsername = ReadDB()
+    
     
     func addUser(email: String, username: String) {
         let db = Firestore.firestore()
@@ -37,7 +38,7 @@ class CreateDB : ObservableObject {
         let db = Firestore.firestore()
         let ref = db.collection("shows")
         let group = DispatchGroup()
-        var docRef = ref.document()
+        var docRef = ref.document().documentID
         @AppStorage("username") var userName: String = ""
 
         let data: [String: Any] = [
@@ -45,7 +46,7 @@ class CreateDB : ObservableObject {
             "date_scheduled": date,
             "created_by": userName,
             "name": name,
-            "listings": docRef.documentID,
+            "listings": docRef,
             "description": description,
             "status": "Created",
             "livestream_id": livestream_id,
@@ -60,6 +61,7 @@ class CreateDB : ObservableObject {
                     print("Error adding document: \(error.localizedDescription)")
                 } else {
                     print("Show added")
+                    CreateDB().addcurrentListing(listingID: docRef)
                 }
             }
 
@@ -97,7 +99,7 @@ class CreateDB : ObservableObject {
         
     }
     
-        func createLiveStream(completion: @escaping (Result<[String], Error>) -> Void) {
+    func createLiveStream(completion: @escaping (Result<[String], Error>) -> Void) {
             // Set up the request URL and parameters
             let url = URL(string: "https://api.mux.com/video/v1/live-streams")!
             var request = URLRequest(url: url)
@@ -165,4 +167,15 @@ class CreateDB : ObservableObject {
 //                }
             }.resume()
         }
+    
+    // ------------------------- Realtime Database ---------------------------------
+    
+    func addcurrentListing(listingID: String) {
+        print(listingID)
+        let showsRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
+        showsRef.child("title").setValue("")
+        showsRef.child("price").setValue("")
+    }
+    
+    
 }

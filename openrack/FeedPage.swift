@@ -70,8 +70,9 @@ struct FeedPage: View {
                             }
                         }
                         .navigationDestination(isPresented: $isShownShow) {
-                            ViewerShow(username:String(describing:viewerShows![index]["created_by"]!), playbackID: String(describing:viewerShows![index]["playback_id"]!)).navigationBarHidden(true)
-                            }
+//                            ViewerShow(username:viewerShows![index]["created_by"]!, playbackID: viewerShows![index]["playback_id"]!, listingID: viewerShows![index]["listings"]!).navigationBarHidden(true)
+                                ViewerShow(retrievedShow: viewerShows![index]).navigationBarHidden(true)
+                        }
                         
                         }
                     }

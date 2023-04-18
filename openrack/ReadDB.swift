@@ -10,6 +10,9 @@ import SwiftUI
 
 class ReadDB : ObservableObject {
     
+    @Published var title: String? = nil
+    @Published var price: String? = nil
+    
     func getUsername() {
         @AppStorage("username") var userName: String = ""
         @AppStorage("email") var userEmail: String = ""
@@ -83,7 +86,6 @@ class ReadDB : ObservableObject {
                     print("Error getting email in getStreamKey: \(error.localizedDescription)")
                 } else {
                     for document in snapshot!.documents {
-                        print("THE STREAM KEY IS \(String(describing:document.data()["stream_key"]!))")
                         UserDefaults.standard.set(String(describing:document.data()["stream_key"]!), forKey: "stream_key")
                     }
                 }
@@ -118,38 +120,63 @@ class ReadDB : ObservableObject {
 //        var listing: [String]
         let db = Firestore.firestore()
         
-        for (index,id) in listingIDs!.enumerated() {
-            db.collection("listings").whereField(FieldPath.documentID(), isEqualTo: id).getDocuments(source: .default) { (querySnapshot, error) in
-                       if let error = error {
-                               print("Error getting document: \(error.localizedDescription)")
-                           } else if let snapshot = querySnapshot, !snapshot.isEmpty {
-                               let document = snapshot.documents[0]
-                               let documentData = document.data()
-                               
-                               listings = []
-                               for value in documentData.values {
+        if listingIDs == nil {
+            print("Ignore as no Listing IDs")
+        } else{
+            for (index,id) in listingIDs!.enumerated() {
+                db.collection("listings").whereField(FieldPath.documentID(), isEqualTo: id).getDocuments(source: .default) { (querySnapshot, error) in
+                           if let error = error {
+                                   print("Error getting document: \(error.localizedDescription)")
+                               } else if let snapshot = querySnapshot, !snapshot.isEmpty {
+                                   let document = snapshot.documents[0]
+                                   let documentData = document.data()
                                    
-                                   dictValue = value as! [String: String]
+                                   listings = []
+                                   for value in documentData.values {
+                                       
+                                       dictValue = value as! [String: String]
+                                       
+                                       listings.append(Listing(image: ImageSelector().getImage(category: dictValue!["category"]!), title: dictValue!["name"]!, quantity: dictValue!["quantity"]!, price: dictValue!["price"]!, type: dictValue!["type"]!))
+               
+    //                                   getListings.append(listing!)
+               //                        ListingViewModel().listings.append(listing!)
+                                   }
+                                   output[id] = listings
                                    
-                                   listings.append(Listing(image: ImageSelector().getImage(category: dictValue!["category"]!), title: dictValue!["name"]!, quantity: dictValue!["quantity"]!, price: dictValue!["price"]!, type: dictValue!["type"]!))
-           
-//                                   getListings.append(listing!)
-           //                        ListingViewModel().listings.append(listing!)
+                               } else {
+                                   print("Document does not exist")
                                }
-                               output[id] = listings
-                               
-                           } else {
-                               print("Document does not exist")
-                           }
-                if index == 0 {
-                    let encoder = JSONEncoder()
-                    if let encodedListings = try? encoder.encode(output) {
-                        UserDefaults.standard.set(encodedListings, forKey: "listings")
+                    if index == 0 {
+                        let encoder = JSONEncoder()
+                        if let encodedListings = try? encoder.encode(output) {
+                            UserDefaults.standard.set(encodedListings, forKey: "listings")
+                        }
                     }
-                }
-                    
-                   }
+                        
+                       }
+            }
         }
+    }
+    
+    func getListingSelected(listingID: String) {
+        let titleDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("title")
+        let priceDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("price")
+        
+        titleDB.observe(.value) { snapshot in
+            if let title_text = snapshot.value as? String {
+                    self.title = title_text
+                }
+        }
+        
+        priceDB.observe(.value) { snapshot in
+            if let price_text = snapshot.value as? String {
+                    self.price = price_text
+                }
+        }
+        
+    }
+    
+}
         
         /////////////////
         
@@ -169,9 +196,6 @@ class ReadDB : ObservableObject {
 //                            UserDefaults.standard.set(listings, forKey: "listings")
 //                        }
 //                    }
-    }
-    
-}
 
 //if let error = error {
 //    print("Error getting ReadListings: \(error.localizedDescription)")

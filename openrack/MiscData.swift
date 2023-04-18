@@ -8,7 +8,8 @@
 import Foundation
 
 
-class TimeData : ObservableObject {
+class MiscData : ObservableObject {    
+    
     func getPresentDateTime() -> String {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
@@ -33,4 +34,5 @@ class TimeData : ObservableObject {
     func getRandomID() -> Int {
         return Int.random(in: 1000000...999999999)
     }
+    
 }

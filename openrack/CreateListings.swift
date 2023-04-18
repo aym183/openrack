@@ -21,6 +21,7 @@ struct CreateListings: View {
     @State var preSelected: Listing?
     @Binding var listingSelected: Listing
     
+    
     var body: some View {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
@@ -45,6 +46,7 @@ struct CreateListings: View {
                                 if creatorView {
                                     itemSelected.toggle()
                                     preSelected = listing
+                                    UpdateDB().updateListingSelected(listingID: listingID, listing: listing)
                                 }
                             }) {
                                 ListingRow(image: listing.image, title: listing.title, quantity: listing.quantity)

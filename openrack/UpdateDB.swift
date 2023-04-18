@@ -7,9 +7,10 @@
 
 import Foundation
 import FirebaseFirestore
+import Firebase
 
 class UpdateDB : ObservableObject {
-    var miscData = TimeData()
+    var miscData = MiscData()
     
     func updateStatus(text: String, livestreamID: String) {
         let db = Firestore.firestore()
@@ -51,5 +52,19 @@ class UpdateDB : ObservableObject {
             ReadDB().getListings()
         }
         }
+    }
+    
+    func updateListingSelected(listingID: String, listing: Listing) {
+        
+        let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
+        
+        dbRef.updateChildValues(["title": listing.title, "price": listing.price == "0" ? listing.type : listing.price ]) { error, ref in
+            if let error = error {
+                print("Error updating name: \(error.localizedDescription)")
+            } else {
+                print("Realtime Listing Selected Updated")
             }
+        }
+
+    }
 }

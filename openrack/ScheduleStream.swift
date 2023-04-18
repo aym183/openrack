@@ -79,7 +79,7 @@ struct ScheduleStream: View {
                         CreateDB().createLiveStream { response in
                             switch response {
                                 case .success(let array):
-                                    addStream.addShow(name: streamName, description: streamDescription, date: TimeData().convertDateToString(date_value: selectedDate, time_value: selectedTime), livestream_id: array[0], playback_id: array[1], stream_key: array[2])
+                                    addStream.addShow(name: streamName, description: streamDescription, date: MiscData().convertDateToString(date_value: selectedDate, time_value: selectedTime), livestream_id: array[0], playback_id: array[1], stream_key: array[2])
                                     
                                 case .failure(let error):
                                     print("Error: \(error.localizedDescription)")
