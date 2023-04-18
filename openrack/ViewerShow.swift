@@ -15,7 +15,7 @@ struct ViewerShow: View {
 //    let playbackID: String
     let playerController = AVPlayerViewController()
 //    let listingID: String 
-    @State var showingBottomSheet = false
+    @State var showingPaySheet = false
     @StateObject var readListing = ReadDB()
  
     
@@ -85,7 +85,7 @@ struct ViewerShow: View {
                             
                             Text("Share").font(Font.system(size: 15)).fontWeight(.semibold)
                             
-                            Button(action: {}) {
+                            Button(action: { showingPaySheet.toggle() }) {
                                 Circle()
                                     .fill(Color("Primary_color"))
                                     .frame(height: 50)
@@ -98,7 +98,7 @@ struct ViewerShow: View {
                             Text("Pay").font(Font.system(size: 15)).fontWeight(.semibold)
                             
                             
-                            Button(action: { showingBottomSheet.toggle() }) {
+                            Button(action: {}) {
                                 Circle()
                                     .fill(Color("Primary_color"))
                                     .frame(height: 70)
@@ -138,9 +138,9 @@ struct ViewerShow: View {
                 }
                 HStack{
                     Button(action: { }) {
-                        Text("Buy It Now")
+                        Text("Buy Now")
                             .font(.title3).fontWeight(.medium)
-                            .frame(width: 300, height: 50)
+                            .frame(width: 180, height: 50)
                             .background(.white).foregroundColor(Color("Primary_color"))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
@@ -148,11 +148,23 @@ struct ViewerShow: View {
                             .cornerRadius(50)
                             .padding(.horizontal)
                     }
+                    .padding(.trailing, -20)
                     
-//                    Button(action: { }) {
-//                        Text("Make Offer")
-//                            .font(.title3).fontWeight(.medium)
-//                            .frame(width: 100, height: 50)
+                    Button(action: { }) {
+                        Text("Make Offer")
+                            .font(.title3).fontWeight(.medium)
+                            .frame(width: 140, height: 50)
+                            .background(Color("Primary_color"))
+                            .foregroundColor(.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
+                            )
+                            .cornerRadius(50)
+                            .padding(.horizontal)
+                    }
+                }
+                .padding(.trailing)
+                    
 //                            .background(.white).foregroundColor(Color("Primary_color"))
 //                            .overlay(
 //                                RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
@@ -160,7 +172,6 @@ struct ViewerShow: View {
 //                            .cornerRadius(50)
 //                            .padding(.horizontal)
 //                    }
-                }
                     
                     
             }
@@ -168,17 +179,17 @@ struct ViewerShow: View {
             .onAppear{
                 readListing.getListingSelected(listingID: String(describing: retrievedShow["listings"]!))
             }
-//            .sheet(isPresented: $showingBottomSheet) {
-//                CreateListings(listingID: listingID, creatorView: false, listingSelected: $listingSelected)
-//                    .presentationDetents([.height(400)])
-//            }
+            .sheet(isPresented: $showingPaySheet) {
+                PaymentDetails()
+                    .presentationDetents([.height(250)])
+            }
         }
        
     }
 }
 
-//struct ViewerShow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ViewerShow(username: "", playbackID: "")
-//    }
-//}
+struct ViewerShow_Previews: PreviewProvider {
+    static var previews: some View {
+        ViewerShow(retrievedShow: ["playback_id": "sdsds", "created_by": "test", "listings": "dacdads"])
+    }
+}
