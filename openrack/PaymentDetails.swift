@@ -13,6 +13,28 @@ struct PaymentDetails: View {
     @Binding var isShowingAddressForm: Bool
     @StateObject var addressDetails = ReadDB()
     
+    private func startCheckout(completion: @escaping (String?) -> Void) {
+        let url = URL(string: "https://foul-checkered-lettuce.glitch.me/create-payment-intent")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-type")
+        request.httpBody = try? JSONEncoder().encode(["name": "Imad new test", "email": "simiu942@gmail.com", "price": "450"])
+        
+//        Listing(image: "tshirt.fill", title: "Off-White Tee", quantity: "2", price: "450", type: "Buy Now")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil,
+                  (response as? HTTPURLResponse)?.statusCode == 200
+            else {
+                completion(nil)
+                return
+            }
+            let checkoutIntentResponse = try? JSONDecoder().decode(CheckoutIntentResponse.self, from: data)
+            completion(checkoutIntentResponse?.clientSecret)
+            
+        }.resume()
+    }
+    
     var body: some View {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
@@ -47,7 +69,13 @@ struct PaymentDetails: View {
                     }
                     
                     Button(action: {
-                        isShowingPaymentsForm.toggle()
+                        startCheckout { clientSecret in
+                            
+                            PaymentConfig.shared.paymentIntentClientSecret = clientSecret
+                            DispatchQueue.main.async {
+                                isShowingPaymentsForm.toggle()
+                            }
+                        }
                     }) {
                         HStack {
                             Image(systemName: "creditcard.fill").padding(.trailing, 10).padding(.leading, 5)
@@ -65,9 +93,11 @@ struct PaymentDetails: View {
                         .background(Color("Primary_color")).cornerRadius(15)
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
                     }
-//                    .sheet(isPresented: $isShowingPaymentsForm) {
-////                            AddressForm()
-//                    }
+                    .sheet(isPresented: $isShowingPaymentsForm) {
+//                            AddressForm()
+//                        ExampleSwiftUIPaymentSheet()
+                        CheckoutView()
+                    }
                 }
                 .foregroundColor(.white)
                 .padding(.vertical)

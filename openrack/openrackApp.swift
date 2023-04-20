@@ -10,10 +10,16 @@ import FirebaseCore
 import GoogleSignIn
 import AVFoundation
 import HaishinKit
+import Stripe
 
 @main
 struct openrackApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    init() {
+        StripeAPI.defaultPublishableKey = "pk_test_51LcPpgJ4NNUHuKH8CVncZseI96JVxtbDzpEGLuKbM1dDOLCigYJXC9MTwNUZTYjoGpLPuTax7gbMb4NpQVlXkex000vVNrubiU"
+    }
+    
     var body: some Scene {
         WindowGroup {
             let viewModel = AuthViewModel()

@@ -11,6 +11,7 @@ struct SignInEmailView: View {
     var userDetails:  Array<Any>
     var signupVM = AuthViewModel()
     @State var emailText = ""
+    @State var fullNameText = ""
     @State var passwordText = ""
     @State var usernameText = ""
     @State private var isOn = false
@@ -60,6 +61,15 @@ struct SignInEmailView: View {
                             .background(.white)
                             .disableAutocorrection(true)
                             .autocapitalization(.none)
+                        
+                        Text("Full Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                        
+                        TextField("", text: $fullNameText)
+                            .padding(.horizontal, 8)
+                            .frame(width: 360, height: 50).border(Color.black, width: 2)
+                            .background(.white)
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
                     }
                     
                     Text("Password").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
@@ -82,7 +92,7 @@ struct SignInEmailView: View {
                     Button(action: {
                         withAnimation(.easeIn) {
                             if String(describing: userDetails[3]) == "Yes" {
-                                signupVM.signUpWithEmail(email: emailText, password: passwordText, username: usernameText)
+                                signupVM.signUpWithEmail(email: emailText, password: passwordText, username: usernameText, fullName: fullNameText)
                                 
                             } else {
                                     signupVM.signIn(email: emailText, password: passwordText)

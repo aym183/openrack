@@ -25,14 +25,15 @@ class AuthViewModel : ObservableObject {
         return auth.currentUser != nil
     }
     
-    func signUpWithEmail(email: String, password: String, username: String) {
+    func signUpWithEmail(email: String, password: String, username: String, fullName: String) {
         auth.createUser(withEmail: email, password: password) { result, error in
             if error != nil {
                 print(error!.localizedDescription)
             } else {
                 print("Successful auth")
                 self.signedIn.toggle()
-                CreateDB().addUser(email: email, username: username)
+                CreateDB().addUser(email: email, username: username, fullName: fullName)
+//                CreateDB().createStripeCustomer(name: fullName, email: email)
                 UserDefaults.standard.set(email, forKey: "email")
                 ReadDB().getUsername()
                 ReadDB().getViewerShows()
