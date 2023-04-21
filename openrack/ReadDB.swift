@@ -14,9 +14,12 @@ class ReadDB : ObservableObject {
     @Published var price: String? = nil
     @Published var address: [String: String]? = nil
     
-    func getUsername() {
+    func getUserDefaults() {
         @AppStorage("username") var userName: String = ""
+        @AppStorage("full_name") var fullName: String = ""
         @AppStorage("email") var userEmail: String = ""
+        @AppStorage("stripe_customer_id") var stripeCustomerID: String = ""
+        
         let db = Firestore.firestore()
         let ref = db.collection("users")
         
@@ -27,6 +30,8 @@ class ReadDB : ObservableObject {
                 } else {
                     for document in snapshot!.documents {
                         UserDefaults.standard.set(String(describing:document.data()["username"]!), forKey: "username")
+                        UserDefaults.standard.set(String(describing:document.data()["full_name"]!), forKey: "full_name")
+                        UserDefaults.standard.set(String(describing:document.data()["stripe_customer_id"]!), forKey: "stripe_customer_id")
                     }
                 }
             }

@@ -35,7 +35,7 @@ class AuthViewModel : ObservableObject {
                 CreateDB().addUser(email: email, username: username, fullName: fullName)
 //                CreateDB().createStripeCustomer(name: fullName, email: email)
                 UserDefaults.standard.set(email, forKey: "email")
-                ReadDB().getUsername()
+                ReadDB().getUserDefaults()
                 ReadDB().getViewerShows()
             }
         }
@@ -48,7 +48,7 @@ class AuthViewModel : ObservableObject {
             } else {
                     UserDefaults.standard.set(email, forKey: "email")
                     print(email)
-                    ReadDB().getUsername()
+                    ReadDB().getUserDefaults()
                     print("Successful auth")
                     self.signedIn.toggle()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {

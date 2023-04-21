@@ -27,7 +27,8 @@ class CreateDB : ObservableObject {
             "city": "",
             "state": "",
             "postal_cod": "",
-            "country": ""
+            "country": "",
+            "stripe_customer_id": ""
         ]
         
         ref.addDocument(data: data) { error in

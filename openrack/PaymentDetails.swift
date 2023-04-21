@@ -12,13 +12,16 @@ struct PaymentDetails: View {
     @Binding var isShowingPaymentsForm: Bool
     @Binding var isShowingAddressForm: Bool
     @StateObject var addressDetails = ReadDB()
+    @AppStorage("email") var userEmail: String = ""
+    @AppStorage("full_name") var fullName: String = ""
+    @AppStorage("stripe_customer_id") var stripeCustomerID: String = ""
     
     private func startCheckout(completion: @escaping (String?) -> Void) {
         let url = URL(string: "https://foul-checkered-lettuce.glitch.me/create-payment-intent")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-type")
-        request.httpBody = try? JSONEncoder().encode(["name": "Imad new test", "email": "simiu942@gmail.com", "price": "450"])
+        request.httpBody = try? JSONEncoder().encode(["customer_id": stripeCustomerID, "name": fullName, "email": userEmail, "price": "5"])
         
 //        Listing(image: "tshirt.fill", title: "Off-White Tee", quantity: "2", price: "450", type: "Buy Now")
         
@@ -30,6 +33,10 @@ struct PaymentDetails: View {
                 return
             }
             let checkoutIntentResponse = try? JSONDecoder().decode(CheckoutIntentResponse.self, from: data)
+            
+            if stripeCustomerID == "" {
+                UpdateDB().updateStripeCustomerID(customerID: checkoutIntentResponse!.customerID)
+            }
             completion(checkoutIntentResponse?.clientSecret)
             
         }.resume()
@@ -71,6 +78,7 @@ struct PaymentDetails: View {
                     Button(action: {
                         startCheckout { clientSecret in
                             
+//                            print("Response in \(response)")
                             PaymentConfig.shared.paymentIntentClientSecret = clientSecret
                             DispatchQueue.main.async {
                                 isShowingPaymentsForm.toggle()

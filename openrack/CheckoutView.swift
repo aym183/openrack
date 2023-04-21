@@ -22,18 +22,18 @@ struct CheckoutView: View {
         
         let paymentIntentParams = STPPaymentIntentParams(clientSecret: clientSecret)
         paymentIntentParams.paymentMethodParams = paymentMethodParams
-        paymentIntentParams.savePaymentMethod = NSNumber(value: true)
+//        paymentIntentParams.savePaymentMethod = NSNumber(value: true)
         
         paymentGateway.submitPayment(intent: paymentIntentParams) {
             status, intent, error in
             
             switch status {
-            case .failed:
-                message = "Failed"
-            case .canceled:
-                message = "Cancelled"
-            case .succeeded:
-                message = "Your payment has been successfully completed!"
+                case .failed:
+                    message = "Failed"
+                case .canceled:
+                    message = "Cancelled"
+                case .succeeded:
+                    message = "Your payment has been successfully completed!"
             }
         }
     }
@@ -53,7 +53,6 @@ struct CheckoutView: View {
                 Spacer()
                 Button(action: {
                     pay()
-                    print(message)
                 }) {
                     Text("Pay")
                         .frame(width: 300, height: 50)

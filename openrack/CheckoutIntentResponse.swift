@@ -9,8 +9,5 @@ import Foundation
 
 struct CheckoutIntentResponse: Decodable {
     let clientSecret: String
-}
-
-struct CreateCustomerResponse: Decodable {
-    let message: String
+    let customerID: String
 }
