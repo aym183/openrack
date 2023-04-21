@@ -9,8 +9,7 @@ import SwiftUI
 import Stripe
 
 struct CheckoutView: View {
-    @State private var name = ""
-    @State private var email = ""
+    @State private var isOn = false
     @State private var paymentMethodParams: STPPaymentMethodParams?
     let paymentGateway = PaymentGateway()
     @State var message = ""
@@ -22,6 +21,7 @@ struct CheckoutView: View {
         
         let paymentIntentParams = STPPaymentIntentParams(clientSecret: clientSecret)
         paymentIntentParams.paymentMethodParams = paymentMethodParams
+        print(paymentIntentParams.paymentMethodParams)
 //        paymentIntentParams.savePaymentMethod = NSNumber(value: true)
         
         paymentGateway.submitPayment(intent: paymentIntentParams) {
@@ -34,32 +34,36 @@ struct CheckoutView: View {
                     message = "Cancelled"
                 case .succeeded:
                     message = "Your payment has been successfully completed!"
+                    // execute payment method getting, collapse view, save and use to get card details for display
+                    
             }
         }
     }
     
     var body: some View {
-        VStack {
-            Section {
-                TextField("Name", text: $name).padding().border(Color.black, width: 2).padding(.horizontal)
-                TextField("Email", text: $email).padding().border(Color.black, width: 2).padding(.horizontal)
-                STPPaymentCardTextField.Representable.init(paymentMethodParams: $paymentMethodParams).padding()
-            } header: {
-                Text("Payment Information").opacity(0.7)
-            }
-            
-            
-            HStack {
-                Spacer()
-                Button(action: {
-                    pay()
-                }) {
-                    Text("Pay")
-                        .frame(width: 300, height: 50)
+        ZStack {
+            Color("Secondary_color").ignoresSafeArea()
+            VStack {
+                Section {
+                    STPPaymentCardTextField.Representable.init(paymentMethodParams: $paymentMethodParams).padding()
+                } header: {
+                    Text("Set Payment Information").opacity(0.7)
                 }
-                .background(Color("Primary_color"))
-                .foregroundColor(.white)
-                Spacer()
+                
+                
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        pay()
+                    }) {
+                        Text("Pay")
+                            .frame(width: 300, height: 50)
+                    }
+                    .background(Color("Primary_color"))
+                    .foregroundColor(.white)
+                    Spacer()
+                }
+                .padding(.vertical,5)
             }
         }
     }

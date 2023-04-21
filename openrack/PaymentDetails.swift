@@ -104,7 +104,7 @@ struct PaymentDetails: View {
                     .sheet(isPresented: $isShowingPaymentsForm) {
 //                            AddressForm()
 //                        ExampleSwiftUIPaymentSheet()
-                        CheckoutView()
+                        CheckoutView().presentationDetents([.height(250)])
                     }
                 }
                 .foregroundColor(.white)
