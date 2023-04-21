@@ -82,9 +82,9 @@ struct PaymentDetails: View {
                             PaymentConfig.shared.paymentIntentClientSecret = response[0] //clientSecret
                             PaymentConfig.shared.paymentIntentID = response[1]
                             
-                            DispatchQueue.main.async {
-                                isShowingPaymentsForm.toggle()
-                            }
+//                            DispatchQueue.main.async {
+                            isShowingPaymentsForm.toggle()
+//                            }
                         }
                     }) {
                         HStack {

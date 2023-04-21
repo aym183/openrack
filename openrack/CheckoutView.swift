@@ -64,6 +64,9 @@ struct CheckoutView: View {
                     // for now, save only one method per user
                     getPaymentMethod(payment_intent: paymentIntentID) { paymentMethod in
                         UpdateDB().updateStripePaymentMethodID(paymentMethodID: paymentMethod!)
+                        ReadServer().getPaymentMethodDetails(payment_method: paymentMethod!) { response in
+                            print("Payment Method Details are \(response)")
+                        }
                     }
             }
         }
