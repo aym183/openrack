@@ -13,6 +13,8 @@ struct CheckoutView: View {
     @State private var paymentMethodParams: STPPaymentMethodParams?
     let paymentGateway = PaymentGateway()
     @State var message = ""
+    @Binding var showingPaySheet: Bool
+    @Binding var isShowingPaymentsForm: Bool
     
     private func getPaymentMethod(payment_intent: String, completion: @escaping (String?) -> Void) {
         let url = URL(string: "https://foul-checkered-lettuce.glitch.me/get-payment-method")!
@@ -62,10 +64,12 @@ struct CheckoutView: View {
                     message = "Your payment has been successfully completed!"
                     // execute payment method getting, collapse view, save and use to get card details for display
                     // for now, save only one method per user
+                    showingPaySheet.toggle()
+                    isShowingPaymentsForm.toggle()
                     getPaymentMethod(payment_intent: paymentIntentID) { paymentMethod in
                         UpdateDB().updateStripePaymentMethodID(paymentMethodID: paymentMethod!)
                         ReadServer().getPaymentMethodDetails(payment_method: paymentMethod!) { response in
-                            print("Payment Method Details are \(response)")
+                            UpdateDB().updateStripePaymentDetails(paymentDetails: [response[0]!, response[1]!])
                         }
                     }
             }
@@ -104,8 +108,8 @@ struct CheckoutView: View {
     }
 }
 
-struct CheckoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        CheckoutView()
-    }
-}
+//struct CheckoutView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CheckoutView()
+//    }
+//}

@@ -69,7 +69,7 @@ struct PaymentDetails: View {
                         .padding(20).padding(.bottom)
                         .frame(width: 370)
                         .background(Color("Primary_color")).cornerRadius(15)
-                        .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
+                        .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2))
                     }
                     .sheet(isPresented: $isShowingAddressForm) {
                         AddressForm(showingPaySheet: $showingPaySheet, isShowingAddressForm: $isShowingAddressForm).presentationDetents([.height(750)])
@@ -92,8 +92,12 @@ struct PaymentDetails: View {
                             VStack(alignment: .leading) {
                                 Text("Payment")
                                     .fontWeight(.bold).font(Font.system(size: 20)).padding(.top)
-                                Text("Please input your payment info.")
-                                    .fontWeight(.semibold).font(Font.system(size: 14)).padding(.top, 0)
+                                if addressDetails.cardDetails == nil {
+                                    Text("Please input your payment info.")
+                                        .fontWeight(.semibold).font(Font.system(size: 14)).padding(.top, 0)
+                                } else {
+                                    Text("\(addressDetails.cardDetails!["card_brand"]!) - \(addressDetails.cardDetails!["last_four"]!)").fontWeight(.semibold).font(Font.system(size: 12)).multilineTextAlignment(.leading).padding(.top, 0)
+                                }
                             }
                             Spacer()
                             Image(systemName: "pencil").font(Font.system(size: 25))
@@ -106,13 +110,15 @@ struct PaymentDetails: View {
                     .sheet(isPresented: $isShowingPaymentsForm) {
 //                            AddressForm()
 //                        ExampleSwiftUIPaymentSheet()
-                        CheckoutView().presentationDetents([.height(250)])
+                        CheckoutView(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm).presentationDetents([.height(250)])
                     }
                 }
                 .foregroundColor(.white)
                 .padding(.vertical)
                 .onAppear {
                     addressDetails.getAddress()
+                    addressDetails.getCardDetails()
+                    
                 }
             }
         }
