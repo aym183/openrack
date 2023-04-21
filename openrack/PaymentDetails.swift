@@ -16,7 +16,7 @@ struct PaymentDetails: View {
     @AppStorage("full_name") var fullName: String = ""
     @AppStorage("stripe_customer_id") var stripeCustomerID: String = ""
     
-    private func startCheckout(completion: @escaping (String?) -> Void) {
+    private func startCheckout(completion: @escaping ([String?]) -> Void) {
         let url = URL(string: "https://foul-checkered-lettuce.glitch.me/create-payment-intent")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -29,7 +29,7 @@ struct PaymentDetails: View {
             guard let data = data, error == nil,
                   (response as? HTTPURLResponse)?.statusCode == 200
             else {
-                completion(nil)
+                completion([])
                 return
             }
             let checkoutIntentResponse = try? JSONDecoder().decode(CheckoutIntentResponse.self, from: data)
@@ -37,7 +37,7 @@ struct PaymentDetails: View {
             if stripeCustomerID == "" {
                 UpdateDB().updateStripeCustomerID(customerID: checkoutIntentResponse!.customerID)
             }
-            completion(checkoutIntentResponse?.clientSecret)
+            completion([checkoutIntentResponse?.clientSecret, checkoutIntentResponse?.paymentIntentID])
             
         }.resume()
     }
@@ -76,10 +76,12 @@ struct PaymentDetails: View {
                     }
                     
                     Button(action: {
-                        startCheckout { clientSecret in
-                            
+                        startCheckout { response in
+
 //                            print("Response in \(response)")
-                            PaymentConfig.shared.paymentIntentClientSecret = clientSecret
+                            PaymentConfig.shared.paymentIntentClientSecret = response[0] //clientSecret
+                            PaymentConfig.shared.paymentIntentID = response[1]
+                            
                             DispatchQueue.main.async {
                                 isShowingPaymentsForm.toggle()
                             }

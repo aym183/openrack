@@ -10,4 +10,5 @@ import Foundation
 struct CheckoutIntentResponse: Decodable {
     let clientSecret: String
     let customerID: String
+    let paymentIntentID: String
 }

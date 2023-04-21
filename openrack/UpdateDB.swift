@@ -56,6 +56,28 @@ class UpdateDB : ObservableObject {
         }
     }
     
+    func updateStripePaymentMethodID(paymentMethodID: String) {
+        let db = Firestore.firestore()
+        let collectionRef = db.collection("users")
+        @AppStorage("username") var userName: String = ""
+        
+        // Query for documents where "name" equals "X"
+        collectionRef.whereField("username", isEqualTo: userName).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents on updateStripeCustomerID: \(error)")
+            } else {
+                guard let document = querySnapshot?.documents.first else {
+                    print("No documents found")
+                    return
+                }
+                
+                // Update "Y" field to "Text" for each document where "name" equals "X"
+                let docRef = collectionRef.document(document.documentID)
+                docRef.updateData(["stripe_payment_method": paymentMethodID])
+            }
+        }
+    }
+    
     func updateListings(listing: [String: String], docRef: String) {
         let db = Firestore.firestore()
         let ref = db.collection("listings")
