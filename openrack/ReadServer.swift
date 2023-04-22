@@ -61,11 +61,12 @@ class ReadServer : ObservableObject {
     }
 
     func getPaymentMethod(payment_intent: String, completion: @escaping (String?) -> Void) {
+        @AppStorage("stripe_customer_id") var stripeCustomerID: String = ""
         let url = URL(string: "https://foul-checkered-lettuce.glitch.me/get-payment-method")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-type")
-        request.httpBody = try? JSONEncoder().encode(["payment_intent_id": payment_intent])
+        request.httpBody = try? JSONEncoder().encode(["payment_intent_id": payment_intent, "customer_id": stripeCustomerID])
         
 //        Listing(image: "tshirt.fill", title: "Off-White Tee", quantity: "2", price: "450", type: "Buy Now")
         
