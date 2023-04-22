@@ -146,14 +146,16 @@ struct ViewerShow: View {
                         Text("Buy Now")
                             .font(.title3).fontWeight(.medium)
                             .frame(width: 180, height: 50)
-                            .background(.white).foregroundColor(Color("Primary_color"))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
-                            )
-                            .cornerRadius(50)
-                            .padding(.horizontal)
+                            .padding(.trailing, 10)
                     }
                     .padding(.trailing, -20)
+                    .background((readListing.price != nil) ? Color.white : Color.gray)
+                    .foregroundColor((readListing.price != nil) ? Color("Primary_color") : Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
+                    )
+                    .cornerRadius(50)
+                    .disabled(readListing.price != nil ? false : true)
                     
                     Button(action: { }) {
                         Text("Make Offer")
@@ -168,7 +170,7 @@ struct ViewerShow: View {
                             .padding(.horizontal)
                     }
                 }
-                .padding(.trailing)
+                .padding(.horizontal)
                     
 //                            .background(.white).foregroundColor(Color("Primary_color"))
 //                            .overlay(
