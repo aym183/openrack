@@ -50,7 +50,7 @@ struct ListingsForm: View {
                         
                         Text("Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                         
-                        TextField("", text: $listingName)
+                        TextField("", text: $listingName, prompt: Text("White Air Jordans, EU 42"))
                             .padding(.horizontal, 8)
                             .frame(width: 360, height: 50).border(Color.black, width: 2)
                             .background(.white)
@@ -58,7 +58,7 @@ struct ListingsForm: View {
                         VStack(alignment: .leading) {
                             Text("Description").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                             
-                            TextField("", text: $listingDescription)
+                            TextField("", text: $listingDescription, prompt: Text("Grab Exclusive Kicks!"))
                                 .padding(.horizontal, 8)
                                 .frame(width: 360, height: 50).border(Color.black, width: 2)
                                 .background(.white)
@@ -66,7 +66,7 @@ struct ListingsForm: View {
                             
                             Text("Quantity").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                             
-                            TextField("", text: $listingQuantity)
+                            TextField("", text: $listingQuantity, prompt: Text("5"))
                                 .padding(.horizontal, 8)
                                 .frame(width: 360, height: 50).border(Color.black, width: 2)
                                 .background(.white)
@@ -74,10 +74,11 @@ struct ListingsForm: View {
                             if(String(describing: selectedType!.option) == "Buy Now") {
                                 Text("Price").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                                 
-                                TextField("", text: $listingPrice)
+                                TextField("", text: $listingPrice, prompt: Text("450"))
                                     .padding(.horizontal, 8)
                                     .frame(width: 360, height: 50).border(Color.black, width: 2)
                                     .background(.white)
+                                
                                 Spacer()
                             }
                             Spacer()
@@ -99,9 +100,8 @@ struct ListingsForm: View {
                                 }
                             }
                             
-                        }, label: { Text("Confirm").font(.title3) })
+                        }, label: { Text("Confirm").font(.title3).frame(width: 360, height: 50) })
                         .disabled(areTextFieldsEmpty)
-                        .frame(width: 360, height: 50)
                         .background(areTextFieldsEmpty ? Color.gray : Color("Primary_color"))
                         .foregroundColor(.white)
                         .border(Color.black, width: 2)

@@ -107,7 +107,7 @@ struct SignInEmailView: View {
                         
                     }) {
                         HStack {
-                            Text(String(describing: userDetails[2])).font(.title3)
+                            Text(String(describing: userDetails[2])).font(.title3).frame(width: 360, height: 50)
                         }
                     }
                     .navigationDestination(isPresented: $isPresented) {
@@ -118,7 +118,7 @@ struct SignInEmailView: View {
                     }
                     
                     .disabled(isBothTextFieldsEmpty)
-                    .frame(width: 360, height: 50)
+//                    .frame(width: 360, height: 50)
                     .background(isBothTextFieldsEmpty ? Color.gray : Color("Primary_color"))
                     .foregroundColor(.white)
                     .border(Color.black, width: 2)
