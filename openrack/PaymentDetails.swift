@@ -6,15 +6,14 @@
 //
 
 import SwiftUI
+import SPAlert
 
 struct PaymentDetails: View {
     @Binding var showingPaySheet: Bool
     @Binding var isShowingPaymentsForm: Bool
     @Binding var isShowingAddressForm: Bool
     @StateObject var addressDetails = ReadDB()
-    
-    
-    
+
     var body: some View {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
@@ -91,7 +90,6 @@ struct PaymentDetails: View {
                 .onAppear {
                     addressDetails.getAddress()
                     addressDetails.getCardDetails()
-                    
                 }
             }
         }
