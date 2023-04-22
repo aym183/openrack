@@ -12,35 +12,8 @@ struct PaymentDetails: View {
     @Binding var isShowingPaymentsForm: Bool
     @Binding var isShowingAddressForm: Bool
     @StateObject var addressDetails = ReadDB()
-    @AppStorage("email") var userEmail: String = ""
-    @AppStorage("full_name") var fullName: String = ""
-    @AppStorage("stripe_customer_id") var stripeCustomerID: String = ""
     
-    private func startCheckout(completion: @escaping ([String?]) -> Void) {
-        let url = URL(string: "https://foul-checkered-lettuce.glitch.me/create-payment-intent")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-type")
-        request.httpBody = try? JSONEncoder().encode(["customer_id": stripeCustomerID, "name": fullName, "email": userEmail, "price": "5"])
-        
-//        Listing(image: "tshirt.fill", title: "Off-White Tee", quantity: "2", price: "450", type: "Buy Now")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil,
-                  (response as? HTTPURLResponse)?.statusCode == 200
-            else {
-                completion([])
-                return
-            }
-            let checkoutIntentResponse = try? JSONDecoder().decode(CheckoutIntentResponse.self, from: data)
-            
-            if stripeCustomerID == "" {
-                UpdateDB().updateStripeCustomerID(customerID: checkoutIntentResponse!.customerID)
-            }
-            completion([checkoutIntentResponse?.clientSecret, checkoutIntentResponse?.paymentIntentID])
-            
-        }.resume()
-    }
+    
     
     var body: some View {
             ZStack {
@@ -76,7 +49,7 @@ struct PaymentDetails: View {
                     }
                     
                     Button(action: {
-                        startCheckout { response in
+                        ReadServer().startCheckout { response in
 
 //                            print("Response in \(response)")
                             PaymentConfig.shared.paymentIntentClientSecret = response[0] //clientSecret

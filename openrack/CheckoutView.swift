@@ -16,28 +16,6 @@ struct CheckoutView: View {
     @Binding var showingPaySheet: Bool
     @Binding var isShowingPaymentsForm: Bool
     
-    private func getPaymentMethod(payment_intent: String, completion: @escaping (String?) -> Void) {
-        let url = URL(string: "https://foul-checkered-lettuce.glitch.me/get-payment-method")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-type")
-        request.httpBody = try? JSONEncoder().encode(["payment_intent_id": payment_intent])
-        
-//        Listing(image: "tshirt.fill", title: "Off-White Tee", quantity: "2", price: "450", type: "Buy Now")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil,
-                  (response as? HTTPURLResponse)?.statusCode == 200
-            else {
-                completion(nil)
-                return
-            }
-            let paymentIntentResponse = try? JSONDecoder().decode(PaymentIntentResponse.self, from: data)
-            completion(paymentIntentResponse?.paymentMethodID)
-            
-        }.resume()
-    }
-    
     
     private func pay() {
         guard let clientSecret = PaymentConfig.shared.paymentIntentClientSecret else {
@@ -66,7 +44,7 @@ struct CheckoutView: View {
                     // for now, save only one method per user
                     showingPaySheet.toggle()
                     isShowingPaymentsForm.toggle()
-                    getPaymentMethod(payment_intent: paymentIntentID) { paymentMethod in
+                    ReadServer().getPaymentMethod(payment_intent: paymentIntentID) { paymentMethod in
                         UpdateDB().updateStripePaymentMethodID(paymentMethodID: paymentMethod!)
                         ReadServer().getPaymentMethodDetails(payment_method: paymentMethod!) { response in
                             UpdateDB().updateStripePaymentDetails(paymentDetails: [response[0]!, response[1]!])
@@ -83,7 +61,7 @@ struct CheckoutView: View {
                 Section {
                     STPPaymentCardTextField.Representable.init(paymentMethodParams: $paymentMethodParams).padding()
                 } header: {
-                    Text("Set Payment Information").foregroundColor(.black).opacity(0.7)
+                    Text("Set Payment Information").fontWeight(.semibold).foregroundColor(.black).opacity(0.7)
                 }
                 
                 
