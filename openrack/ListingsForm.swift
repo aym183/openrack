@@ -34,13 +34,13 @@ struct ListingsForm: View {
                     VStack(alignment: .leading) {
                         Text("Add Listing").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
                         
-                        Text("Category").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                        
-                        DropdownMenu( selectedOption: self.$selectedCategory, options: Dropdownmenus.categoryAllOptions )
-                        
-                        Text("Subcategory").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                        
-                        DropdownMenu( selectedOption: self.$selectedSubCategory, options: Dropdownmenus.subCategoryAllOptions )
+//                        Text("Category").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+//
+//                        DropdownMenu( selectedOption: self.$selectedCategory, options: Dropdownmenus.categoryAllOptions )
+//
+//                        Text("Subcategory").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+//
+//                        DropdownMenu( selectedOption: self.$selectedSubCategory, options: Dropdownmenus.subCategoryAllOptions )
                         
                         VStack (alignment: .leading){
                             Text("Type").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
@@ -55,21 +55,22 @@ struct ListingsForm: View {
                             .frame(width: 360, height: 50).border(Color.black, width: 2)
                             .background(.white)
                         
+                        Text("Description").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                        
+                        TextField("", text: $listingDescription, prompt: Text("Grab Exclusive Kicks!"))
+                            .padding(.horizontal, 8)
+                            .frame(width: 360, height: 50).border(Color.black, width: 2)
+                            .background(.white)
+                        
+                        
+                        Text("Quantity").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                        
+                        TextField("", text: $listingQuantity, prompt: Text("5"))
+                            .padding(.horizontal, 8)
+                            .frame(width: 360, height: 50).border(Color.black, width: 2)
+                            .background(.white)
+                        
                         VStack(alignment: .leading) {
-                            Text("Description").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                            
-                            TextField("", text: $listingDescription, prompt: Text("Grab Exclusive Kicks!"))
-                                .padding(.horizontal, 8)
-                                .frame(width: 360, height: 50).border(Color.black, width: 2)
-                                .background(.white)
-                            
-                            
-                            Text("Quantity").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                            
-                            TextField("", text: $listingQuantity, prompt: Text("5"))
-                                .padding(.horizontal, 8)
-                                .frame(width: 360, height: 50).border(Color.black, width: 2)
-                                .background(.white)
                             
                             if(String(describing: selectedType!.option) == "Buy Now") {
                                 Text("Price").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
@@ -79,15 +80,15 @@ struct ListingsForm: View {
                                     .frame(width: 360, height: 50).border(Color.black, width: 2)
                                     .background(.white)
                                 
-                                Spacer()
                             }
-                            Spacer()
                         }
                         
                         Button(action: {
-                            listing = ["name": listingName, "description": listingDescription, "quantity": listingQuantity, "category": String(describing: selectedCategory!.option), "subcategory": String(describing: selectedSubCategory!.option), "type": selectedType!.option , "price": selectedType!.option == "Buy Now" ? listingPrice: "0" ]
+//                            , "category": String(describing: selectedCategory!.option), "subcategory": String(describing: selectedSubCategory!.option),
+                            listing = ["name": listingName, "description": listingDescription, "quantity": listingQuantity, "type": selectedType!.option , "price": selectedType!.option == "Buy Now" ? listingPrice: "0" ]
                             
-                            let newListing = Listing(image: ImageSelector().getImage(category: String(describing: selectedCategory!.option)), title: listingName, quantity: listingQuantity, price: selectedType!.option == "Buy Now" ? listingPrice: "0", type: selectedType!.option)
+//                            ImageSelector().getImage(category: String(describing: selectedCategory!.option)),
+                            let newListing = Listing(image: "tshirt.fill", title: listingName, quantity: listingQuantity, price: selectedType!.option == "Buy Now" ? listingPrice: "0", type: selectedType!.option)
                             listings.append(newListing)
                             
                             showingBottomSheet.toggle()

@@ -112,7 +112,8 @@ class UpdateDB : ObservableObject {
         var documentData = [String: Any]()
 //        for _ in 0..<count! {
         var fieldID = ref.document()
-        documentData[fieldID.documentID] = ["name": listing["name"], "description": listing["description"], "quantity": listing["quantity"], "category": listing["category"], "subcategory": listing["subcategory"], "price": listing["price"], "type": listing["type"], "date_created": presentDateTime]
+        documentData[fieldID.documentID] = ["name": listing["name"], "description": listing["description"], "quantity": listing["quantity"], "price": listing["price"], "type": listing["type"], "date_created": presentDateTime]
+//        , "category": listing["category"], "subcategory": listing["subcategory"]
 //        }
         docID.updateData(documentData) { error in
         if let error = error {

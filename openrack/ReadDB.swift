@@ -185,7 +185,8 @@ class ReadDB : ObservableObject {
                                        
                                        dictValue = value as! [String: String]
                                        
-                                       listings.append(Listing(image: ImageSelector().getImage(category: dictValue!["category"]!), title: dictValue!["name"]!, quantity: dictValue!["quantity"]!, price: dictValue!["price"]!, type: dictValue!["type"]!))
+                                       listings.append(Listing(image: "tshirt.fill", title: dictValue!["name"]!, quantity: dictValue!["quantity"]!, price: dictValue!["price"]!, type: dictValue!["type"]!))
+//                                       ImageSelector().getImage(category: dictValue!["category"]!)
                
     //                                   getListings.append(listing!)
     //                        ListingViewModel().listings.append(listing!)
