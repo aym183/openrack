@@ -12,6 +12,7 @@ class ReadDB : ObservableObject {
     
     @Published var title: String? = nil
     @Published var price: String? = nil
+    @Published var isSold: Bool? = nil
     @Published var address: [String: String]? = nil
     @Published var cardDetails: [String: String]? = nil
     
@@ -211,17 +212,24 @@ class ReadDB : ObservableObject {
     func getListingSelected(listingID: String) {
         let titleDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("title")
         let priceDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("price")
+        let isSoldDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("is_sold")
         
         titleDB.observe(.value) { snapshot in
             if let title_text = snapshot.value as? String {
                     self.title = title_text
-                }
+            }
         }
         
         priceDB.observe(.value) { snapshot in
             if let price_text = snapshot.value as? String {
                     self.price = price_text
-                }
+            }
+        }
+        
+        isSoldDB.observe(.value) { snapshot in
+            if let is_sold = snapshot.value as? Bool {
+                    self.isSold = is_sold
+            }
         }
         
     }

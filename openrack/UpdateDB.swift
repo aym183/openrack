@@ -161,4 +161,13 @@ class UpdateDB : ObservableObject {
         }
 
     }
+    
+    
+    // ------------------------- Realtime Database ---------------------------------
+    
+    func updateListingSold(listingID: String) {
+        let showsRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
+        showsRef.child("is_sold").setValue(true)
+    }
+    
 }

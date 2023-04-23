@@ -121,7 +121,7 @@ struct ViewerShow: View {
                         .foregroundColor(.white)
                     }
                 
-                if readListing.title != nil {
+                if readListing.title != nil && readListing.isSold != true {
                     HStack {
                         VStack(alignment: .leading) {
                             Text(readListing.title!)
@@ -145,8 +145,10 @@ struct ViewerShow: View {
                 HStack{
                     Button(action: {
                         ReadServer().executeOrderTransaction(order_amount: readListing.price!) { response in
-                            print(response)
-                            showConfirmationOrder.toggle()
+                            if response! == "success" {
+                                UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
+                                showConfirmationOrder.toggle()
+                            }
                         }
                     }) {
                         Text("Buy Now")

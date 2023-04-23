@@ -238,7 +238,7 @@ class CreateDB : ObservableObject {
         let showsRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
         showsRef.child("title").setValue("")
         showsRef.child("price").setValue("")
-        showsRef.child("is_sold").setValue("false")
+        showsRef.child("is_sold").setValue(false)
     }
     
     
