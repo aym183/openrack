@@ -111,6 +111,7 @@ class CreateDB : ObservableObject {
             "created_by": userName,
             "name": name,
             "listings": docRef,
+            "sales": docRef,
             "description": description,
             "status": "Created",
             "livestream_id": livestream_id,
@@ -158,10 +159,35 @@ class CreateDB : ObservableObject {
         } else {
             print("Document added successfully!")
             ReadDB().getListings()
+            self.addSales(docRef: docRef)
         }
                 }
-        
     }
+    
+    func addSales(docRef: String){
+        let db = Firestore.firestore()
+        let ref = db.collection("sales")
+//        let count = Int(listing[2])
+        var docID = ref.document(docRef)
+        var presentDateTime = miscData.getPresentDateTime()
+        
+        var documentData = [String: Any]()
+//        for _ in 0..<count! {
+        var fieldID = ref.document()
+        documentData[fieldID.documentID] = ["added": "nil"]
+//        }
+        
+        docID.setData(documentData) { error in
+        if let error = error {
+            print("Error adding listing: \(error.localizedDescription)")
+        } else {
+            print("Document added successfully!")
+//            ReadDB().getSales()
+        }
+                }
+    }
+    
+    
     
     func createLiveStream(completion: @escaping (Result<[String], Error>) -> Void) {
             // Set up the request URL and parameters
