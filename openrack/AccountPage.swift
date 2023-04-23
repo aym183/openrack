@@ -148,8 +148,11 @@ struct AccountPage: View {
                 }
             }
             .navigationDestination(isPresented: $showingFeedPage) {
-                FeedPage()
-                    .navigationBarBackButtonHidden(true)
+                if userEmail != "ayman.ali1302@gmail.com" {
+                    FeedPage().navigationBarBackButtonHidden(true)
+                } else {
+                    BottomNavbar().navigationBarBackButtonHidden(true)
+                }
             }
             
         }
