@@ -30,6 +30,7 @@ struct CreatorShow: View {
     let timer = Timer.publish(every:1, on: .main, in: .common).autoconnect()
     @Binding var listingSelected: Listing
     @StateObject var readListing = ReadDB()
+    @State var showConfirmationOrder = false
     
 //    @State var rtmpStream: RTMPStream?
 //    private var defaultCamera: AVCaptureDevice.Position = .front
@@ -169,8 +170,12 @@ struct CreatorShow: View {
                         .padding(.leading, 5)
                         .foregroundColor(Color.white)
                         
+                    } else if readListing.isSold == true {
+                        Text("")
+                            .onAppear {
+                                showConfirmationOrder.toggle()
+                            }
                     }
-                    
                     HStack{
                         Button(action: {
                             if self.streamButtonText != "Start Stream" {
@@ -221,6 +226,16 @@ struct CreatorShow: View {
                 CreateListings(listingID: listingID, creatorView: true, listingSelected: $listingSelected)
                     .presentationDetents([.height(400)])
             }
+            .SPAlert(
+                isPresent: $showConfirmationOrder,
+                title: "Order Alert!",
+                message: "\(readListing.title != nil ? readListing.title! : "Item") has been bought \(readListing.price != nil ? "for \(readListing.price!) AED!" : "!")",
+                duration: 2.0,
+                dismissOnTap: false,
+                preset: .done,
+                haptic: .success,
+                layout: .init()
+            )
         }
 
 }
