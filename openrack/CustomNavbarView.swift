@@ -9,8 +9,10 @@ import SwiftUI
 
 struct CustomNavbarView: View {
     var addStream = ReadDB()
+    @State var showingAccountPage = false
     @AppStorage("username") var userName: String = ""
     var body: some View {
+        NavigationStack {
             HStack {
                 
 //                Button(action: {})
@@ -27,9 +29,12 @@ struct CustomNavbarView: View {
                 
                 Spacer()
                 
-                Button(action: {}) {
+                Button(action: { showingAccountPage.toggle() }) {
                     Image(systemName: "person.circle").font(Font.system(size: 18)).fontWeight(.semibold).padding(.trailing, -5)
                     Text(userName).font(Font.system(size: 12)).fontWeight(.bold).padding(.trailing, 15)
+                }
+                .navigationDestination(isPresented: $showingAccountPage) {
+                    AccountPage().navigationBarBackButtonHidden(true)
                 }
                 
             }
@@ -44,6 +49,7 @@ struct CustomNavbarView: View {
                     .shadow(color: .black, radius: 6, x: 0, y: 0.5)
                     ,alignment: .bottom
             )
+        }
         
 
     }
