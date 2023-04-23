@@ -52,6 +52,7 @@ class UpdateDB : ObservableObject {
                 // Update "Y" field to "Text" for each document where "name" equals "X"
                 let docRef = collectionRef.document(document.documentID)
                 docRef.updateData(["stripe_customer_id": customerID])
+                UserDefaults.standard.set(String(describing: customerID), forKey: "stripe_customer_id")
             }
         }
     }
@@ -74,6 +75,7 @@ class UpdateDB : ObservableObject {
                 // Update "Y" field to "Text" for each document where "name" equals "X"
                 let docRef = collectionRef.document(document.documentID)
                 docRef.updateData(["stripe_payment_method": paymentMethodID])
+                UserDefaults.standard.set(String(describing: paymentMethodID), forKey: "stripe_payment_method")
             }
         }
     }

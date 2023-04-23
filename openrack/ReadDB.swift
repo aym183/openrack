@@ -33,6 +33,7 @@ class ReadDB : ObservableObject {
                         UserDefaults.standard.set(String(describing:document.data()["username"]!), forKey: "username")
                         UserDefaults.standard.set(String(describing:document.data()["full_name"]!), forKey: "full_name")
                         UserDefaults.standard.set(String(describing:document.data()["stripe_customer_id"]!), forKey: "stripe_customer_id")
+                        UserDefaults.standard.set(String(describing:document.data()["stripe_payment_method"]!), forKey: "stripe_payment_method")
                     }
                 }
             }
@@ -186,7 +187,7 @@ class ReadDB : ObservableObject {
                                        listings.append(Listing(image: ImageSelector().getImage(category: dictValue!["category"]!), title: dictValue!["name"]!, quantity: dictValue!["quantity"]!, price: dictValue!["price"]!, type: dictValue!["type"]!))
                
     //                                   getListings.append(listing!)
-               //                        ListingViewModel().listings.append(listing!)
+    //                        ListingViewModel().listings.append(listing!)
                                    }
                                    output[id] = listings
                                    

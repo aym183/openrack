@@ -62,6 +62,7 @@ class ReadServer : ObservableObject {
 
     func getPaymentMethod(payment_intent: String, completion: @escaping (String?) -> Void) {
         @AppStorage("stripe_customer_id") var stripeCustomerID: String = ""
+        
         let url = URL(string: "https://foul-checkered-lettuce.glitch.me/get-payment-method")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -79,6 +80,31 @@ class ReadServer : ObservableObject {
             }
             let paymentIntentResponse = try? JSONDecoder().decode(PaymentIntentResponse.self, from: data)
             completion(paymentIntentResponse?.paymentMethodID)
+            
+        }.resume()
+    }
+    
+    func executeOrderTransaction(order_amount: String, completion: @escaping (String?) -> Void) {
+        @AppStorage("stripe_customer_id") var stripeCustomerID: String = ""
+        @AppStorage("stripe_payment_method") var stripePaymentMethod: String = ""
+        
+        let url = URL(string: "https://foul-checkered-lettuce.glitch.me/execute-transaction")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-type")
+        request.httpBody = try? JSONEncoder().encode(["customer_id": stripeCustomerID, "amount": order_amount, "payment_method": stripePaymentMethod])
+        
+//        Listing(image: "tshirt.fill", title: "Off-White Tee", quantity: "2", price: "450", type: "Buy Now")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil,
+                  (response as? HTTPURLResponse)?.statusCode == 200
+            else {
+                completion(nil)
+                return
+            }
+            let orderTransactionResponse = try? JSONDecoder().decode(OrderTransactionResponse.self, from: data)
+            completion(orderTransactionResponse?.message)
             
         }.resume()
     }

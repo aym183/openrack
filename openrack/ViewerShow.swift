@@ -132,7 +132,7 @@ struct ViewerShow: View {
                         Spacer()
                         
                         Text(readListing.price!)
-                            .font(Font.system(size: 18)).fontWeight(.bold)
+                            .font(Font.system(size: 18)).fontWeight(.bold).padding(.trailing,10)
                         
                     }
                     .padding(.bottom)
@@ -142,7 +142,11 @@ struct ViewerShow: View {
                     
                 }
                 HStack{
-                    Button(action: { }) {
+                    Button(action: {
+                        ReadServer().executeOrderTransaction(order_amount: readListing.price!) { response in
+                            print(response)
+                        }
+                    }) {
                         Text("Buy Now")
                             .font(.title3).fontWeight(.medium)
                             .frame(width: 180, height: 50)
