@@ -15,6 +15,7 @@ import SwiftUI
 struct BottomNavbar: View {
 
     @State var selectedTab: Int = 1
+    @AppStorage("email") var userEmail: String = ""
 
     var body: some View {
         TabView(selection: $selectedTab){
@@ -24,7 +25,7 @@ struct BottomNavbar: View {
                     Text("My Feed")
                 }
 
-
+            
             ShowsPage()
                 .tabItem {
                     Image(systemName: "video.fill")

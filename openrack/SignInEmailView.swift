@@ -15,10 +15,12 @@ struct SignInEmailView: View {
     @State var passwordText = ""
     @State var usernameText = ""
     @State private var isOn = false
-    @State private var isPresented = false
+    @State private var isUserPresented = false
+    @State private var isAdminPresented = false
     @State private var isLogin = false
     @State var isLoading = false
     @State var isNavigationBarHidden = false
+    @AppStorage("email") var userEmail: String = ""
     
     var isBothTextFieldsEmpty: Bool {
             return emailText.isEmpty || passwordText.isEmpty
@@ -101,7 +103,13 @@ struct SignInEmailView: View {
                             isNavigationBarHidden.toggle()
                             isLoading.toggle()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                                isPresented.toggle()
+                                if emailText == "ayman.ali1302@gmail.com" {
+                                    isAdminPresented.toggle()
+                                } else {
+                                    isUserPresented.toggle()
+                                }
+                        
+//                                isPresented.toggle()
                         }
                         }
                         
@@ -110,12 +118,21 @@ struct SignInEmailView: View {
                             Text(String(describing: userDetails[2])).font(.title3).frame(width: 360, height: 50)
                         }
                     }
-                    .navigationDestination(isPresented: $isPresented) {
+                    .navigationDestination(isPresented: $isAdminPresented) {
                         withAnimation(.easeIn(duration: 2)) {
-                            BottomNavbar()
-                            .navigationBarBackButtonHidden(true)
+                                BottomNavbar()
+                                .navigationBarBackButtonHidden(true)
+
                         }
                     }
+                    .navigationDestination(isPresented: $isUserPresented) {
+                        withAnimation(.easeIn(duration: 2)) {
+                                FeedPage()
+                                .navigationBarBackButtonHidden(true)
+
+                        }
+                    }
+                    
                     
                     .disabled(isBothTextFieldsEmpty)
 //                    .frame(width: 360, height: 50)

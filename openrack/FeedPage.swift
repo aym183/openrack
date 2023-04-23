@@ -18,6 +18,7 @@ struct FeedPage: View {
         GridItem(.flexible() , spacing: nil, alignment: nil)
     ]
     var viewerShows = UserDefaults.standard.array(forKey: "viewer_shows") as? [[String: Any]]
+    @AppStorage("email") var userEmail: String = ""
     
     var body: some View {
         var noOfShows = viewerShows?.count ?? 0
@@ -80,17 +81,18 @@ struct FeedPage: View {
                 }
 
 
-                Button(action: { showingBottomSheet.toggle() }, label: {
-                        Text("+")
-                            .font(.system(.largeTitle)).frame(width: 50, height: 40)
-                            .foregroundColor(Color.white)
-                            .padding(.bottom, 7)
-                    })
-                    .background(Color("Primary_color"))
-                    .cornerRadius(38.5)
-                    .padding(.bottom, -15)
-                    .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
-
+                if userEmail == "ayman.ali1302@gmail.com" {
+                    Button(action: { showingBottomSheet.toggle() }, label: {
+                            Text("+")
+                                .font(.system(.largeTitle)).frame(width: 50, height: 40)
+                                .foregroundColor(Color.white)
+                                .padding(.bottom, 7)
+                        })
+                        .background(Color("Primary_color"))
+                        .cornerRadius(38.5)
+                        .padding(.bottom, -15)
+                        .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
+                }
             }
             .background(Color("Secondary_color"))
             .sheet(isPresented: $showingBottomSheet) {

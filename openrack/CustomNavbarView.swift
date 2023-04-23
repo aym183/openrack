@@ -29,8 +29,7 @@ struct CustomNavbarView: View {
                 
                 Button(action: {}) {
                     Image(systemName: "person.circle").font(Font.system(size: 18)).fontWeight(.semibold).padding(.trailing, -5)
-                    Text("aym1302").font(Font.system(size: 12)).fontWeight(.bold).padding(.trailing, 15)
-//                    userName
+                    Text(userName).font(Font.system(size: 12)).fontWeight(.bold).padding(.trailing, 15)
                 }
                 
             }
