@@ -19,6 +19,7 @@ struct ViewerShow: View {
     @State var showingAddressSheet = false
     @State var isShowingPaymentsForm = false
     @State var isShowingAddressForm = false
+    @State var showConfirmationOrder = false
     @StateObject var readListing = ReadDB()
  
     
@@ -145,6 +146,7 @@ struct ViewerShow: View {
                     Button(action: {
                         ReadServer().executeOrderTransaction(order_amount: readListing.price!) { response in
                             print(response)
+                            showConfirmationOrder.toggle()
                         }
                     }) {
                         Text("Buy Now")
@@ -195,7 +197,16 @@ struct ViewerShow: View {
                         .presentationDetents([.height(320)])
             }
         }
-       
+        .SPAlert(
+            isPresent: $showConfirmationOrder,
+            title: "Success!",
+            message: "Your order has been placed",
+            duration: 2.0,
+            dismissOnTap: false,
+            preset: .done,
+            haptic: .success,
+            layout: .init()
+        )
     }
 }
 

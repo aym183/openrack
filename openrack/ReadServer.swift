@@ -88,25 +88,29 @@ class ReadServer : ObservableObject {
         @AppStorage("stripe_customer_id") var stripeCustomerID: String = ""
         @AppStorage("stripe_payment_method") var stripePaymentMethod: String = ""
         
-        let url = URL(string: "https://foul-checkered-lettuce.glitch.me/execute-transaction")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-type")
-        request.httpBody = try? JSONEncoder().encode(["customer_id": stripeCustomerID, "amount": order_amount, "payment_method": stripePaymentMethod])
-        
-//        Listing(image: "tshirt.fill", title: "Off-White Tee", quantity: "2", price: "450", type: "Buy Now")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil,
-                  (response as? HTTPURLResponse)?.statusCode == 200
-            else {
-                completion(nil)
-                return
-            }
-            let orderTransactionResponse = try? JSONDecoder().decode(OrderTransactionResponse.self, from: data)
-            completion(orderTransactionResponse?.message)
+        if Int(order_amount) == nil {
+            print("Item not available for buying")
+        } else {
+            let url = URL(string: "https://foul-checkered-lettuce.glitch.me/execute-transaction")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-type")
+            request.httpBody = try? JSONEncoder().encode(["customer_id": stripeCustomerID, "amount": order_amount, "payment_method": stripePaymentMethod])
             
-        }.resume()
+    //        Listing(image: "tshirt.fill", title: "Off-White Tee", quantity: "2", price: "450", type: "Buy Now")
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil,
+                      (response as? HTTPURLResponse)?.statusCode == 200
+                else {
+                    completion(nil)
+                    return
+                }
+                let orderTransactionResponse = try? JSONDecoder().decode(OrderTransactionResponse.self, from: data)
+                completion(orderTransactionResponse?.message)
+                
+            }.resume()
+        }
     }
     
 }
