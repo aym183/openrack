@@ -23,11 +23,6 @@ class CreateDB : ObservableObject {
             "email": email,
             "username": username,
             "full_name": fullName,
-            "address": "",
-            "city": "",
-            "state": "",
-            "postal_cod": "",
-            "country": "",
             "stripe_customer_id": "",
             "stripe_payment_method": ""
         ]

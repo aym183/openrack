@@ -9,17 +9,15 @@ import SwiftUI
 
 struct AddressForm: View {
     @State var fullName = ""
-    @State var addressDetails = ""
-    @State var addressDetailsSecondary = ""
+    @State var houseNumber = ""
+    @State var street = ""
     @State var city = ""
-    @State var state = ""
-    @State var postalCode = ""
     @State private var selectedCountry: Dropdownmenus? = nil
     @Binding var showingPaySheet: Bool
     @Binding var isShowingAddressForm: Bool
     
     var areTextFieldsEmpty: Bool {
-        return fullName.isEmpty || addressDetails.isEmpty || city.isEmpty || postalCode.isEmpty
+        return fullName.isEmpty || houseNumber.isEmpty || city.isEmpty || street.isEmpty
     }
     
     var body: some View {
@@ -36,16 +34,16 @@ struct AddressForm: View {
                         .frame(width: 360, height: 50).border(Color.black, width: 2)
                         .background(.white)
                     
-                    Text("Address").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                    Text("House Number").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
-                    TextField("", text: $addressDetails)
+                    TextField("", text: $houseNumber)
                         .padding(.horizontal, 8)
                         .frame(width: 360, height: 50).border(Color.black, width: 2)
                         .background(.white)
                     
-                    Text("Address 2 (optional)").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                    Text("Street").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
-                    TextField("", text: $addressDetailsSecondary)
+                    TextField("", text: $street)
                         .padding(.horizontal, 8)
                         .frame(width: 360, height: 50).border(Color.black, width: 2)
                         .background(.white)
@@ -58,26 +56,13 @@ struct AddressForm: View {
                         .background(.white)
                     
                     VStack (alignment: .leading){
-                        Text("State (optional)").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                        
-                        TextField("", text: $state)
-                            .padding(.horizontal, 8)
-                            .frame(width: 360, height: 50).border(Color.black, width: 2)
-                            .background(.white)
-                        
-                        Text("Postal Code").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-
-                        TextField("", text: $postalCode)
-                            .padding(.horizontal, 8)
-                            .frame(width: 360, height: 50).border(Color.black, width: 2)
-                            .background(.white)
                         
                         Text("Country").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                         
                         DropdownMenu( selectedOption: self.$selectedCountry, options: Dropdownmenus.countryAllOptions )
                         
                         Button(action: {
-                            UpdateDB().updateUserAddress(address: ["full_name": fullName, "address": addressDetails, "address_secondary": addressDetailsSecondary, "city": city, "state": state, "postal_code": postalCode, "country": selectedCountry!.option])
+                            UpdateDB().updateUserAddress(address: ["full_name": fullName, "house_number": houseNumber, "street": street, "city": city, "country": selectedCountry!.option])
                             showingPaySheet.toggle()
                             isShowingAddressForm.toggle()
 //                            print("The Address is \(fullName), \(addressDetails), \(addressDetailsSecondary), \(city), \(state), \(postalCode), \(selectedCountry!.option)")

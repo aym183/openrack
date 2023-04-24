@@ -52,7 +52,8 @@ class ReadDB : ObservableObject {
                     print("Error getting email in getAddress: \(error.localizedDescription)")
                 } else {
                     for document in snapshot!.documents {
-                        self.address = ["full_name": document.data()["full_name"], "address": document.data()["address"], "city": document.data()["city"], "postal_code": document.data()["postal_code"]] as? [String: String]
+                        self.address = ["full_name": document.data()["full_name"], "house_number": document.data()["house_number"], "street": document.data()["street"] , "city": document.data()["city"], "country": document.data()["country"]] as? [String: String]
+                        print(self.address)
                     }
                 }
             }

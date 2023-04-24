@@ -99,6 +99,7 @@ class UpdateDB : ObservableObject {
                 let docRef = collectionRef.document(document.documentID)
                 docRef.updateData(["card_brand": paymentDetails[0]])
                 docRef.updateData(["last_four": paymentDetails[1]])
+                ReadDB().getCardDetails()
             }
         }
     }
@@ -142,6 +143,7 @@ class UpdateDB : ObservableObject {
                 // Update "Y" field to "Text" for each document where "name" equals "X"
                 let docRef = collectionRef.document(document.documentID)
                 docRef.updateData(address)
+                ReadDB().getAddress()
             }
         }
         

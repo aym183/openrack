@@ -81,7 +81,7 @@ struct AccountPage: View {
                                     Text("Please set your information here.")
                                         .fontWeight(.semibold).font(Font.system(size: 14)).multilineTextAlignment(.leading).padding(.top, 0)
                                 } else {
-                                    Text("\(addressDetails.address!["full_name"]!)\n\(addressDetails.address!["address"]!)\n\(addressDetails.address!["city"]!) \(addressDetails.address!["postal_code"]!)")
+                                    Text("\(addressDetails.address!["full_name"]!)\n\(addressDetails.address!["house_number"]!)\n\(addressDetails.address!["street"]!), \(addressDetails.address!["city"]!)")
                                         .fontWeight(.semibold).font(Font.system(size: 12)).multilineTextAlignment(.leading).padding(.top, 0)
                                 }
                             }
@@ -149,7 +149,8 @@ struct AccountPage: View {
             }
             .navigationDestination(isPresented: $showingFeedPage) {
                 if userEmail != "ayman.ali1302@gmail.com" {
-                    FeedPage().navigationBarBackButtonHidden(true)
+                    FeedPage()
+                        .navigationBarBackButtonHidden(true)
                 } else {
                     BottomNavbar().navigationBarBackButtonHidden(true)
                 }
