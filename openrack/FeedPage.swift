@@ -31,7 +31,7 @@ struct FeedPage: View {
                     Text("Live Shows")
                     Spacer()
                 }
-                .foregroundColor(.black).fontWeight(.semibold).font(Font.system(size: 20)).opacity(0.7).multilineTextAlignment(.leading).padding(.horizontal).padding(.bottom, -15)
+                .foregroundColor(.black).fontWeight(.semibold).font(Font.system(size: 20)).opacity(0.7).multilineTextAlignment(.leading).padding(.horizontal).padding(.bottom, -12)
 
                 
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -91,64 +91,64 @@ struct FeedPage: View {
                 }
                 .frame(height: 300)
                 
-                
-                
-                 HStack {
-                     Text("Upcoming Shows")
-                     Spacer()
-                 }
-                 .foregroundColor(.black).fontWeight(.semibold).font(Font.system(size: 20)).opacity(0.7).multilineTextAlignment(.leading).padding(.horizontal).padding(.bottom, -3)
-
-                 
-                 ScrollView(.horizontal, showsIndicators: false) {
-                     LazyHGrid(rows: rows, spacing: 20) {
-                         // Change to length of response array
-                         
-                         ForEach(0..<noOfScheduledShows) { index in
-
-                             NavigationStack {
-                             VStack (alignment: .leading){
-                                 Button(action: {}) {
-                                     VStack (alignment: .leading){
-
-                                         HStack {
-                                             // Use Async Images instead of Image when using url's
-                                             Text(MiscData().getSubstring(input: String(describing:viewerScheduledShows![index]["date_scheduled"]!)))
-                                                 .fontWeight(.semibold).foregroundColor(Color.white).font(Font.system(size: 12))
-                                             Spacer()
-                                             Button(action: {isBookmarked.toggle()}) {
-                                                 Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color.white)
-                                             }
-
-                                         }
-                                         .padding(.horizontal, 3)
-                                         .frame(width: 170)
-
-                                         Spacer()
-                                         Text(String(describing:viewerScheduledShows![index]["name"]!)).font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).multilineTextAlignment(.leading).padding(.horizontal, 5)
-                                     }
-                                     .padding(.vertical, 10)
-                                     .frame(width: 175, height: 260)
-                                     .background(Image("ShowPreview").resizable())
-                                     .cornerRadius(10.0)
-                                     .overlay(
-                                         RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
-                                     )
-                                 } //Button
-                                 HStack {
-                                     Image(systemName:"person.crop.circle")
-                                     Text(String(describing:viewerScheduledShows![index]["created_by"]!)).fontWeight(.medium).padding(.leading, -5)
-                                 }
-                                 .font(Font.system(size: 15))
-                             }
-                         }
-                         }
-                         
-                     }
-                     .padding(.horizontal, 15).padding(.top, 0)
-                 }
-                 .frame(height: 300)
-                
+                if userEmail != "ayman.ali1302@gmail.com" {
+                    
+                    HStack {
+                        Text("Upcoming Shows")
+                        Spacer()
+                    }
+                    .foregroundColor(.black).fontWeight(.semibold).font(Font.system(size: 20)).opacity(0.7).multilineTextAlignment(.leading).padding(.horizontal).padding(.bottom, 0)
+                    
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        LazyHGrid(rows: rows, spacing: 20) {
+                            // Change to length of response array
+                            
+                            ForEach(0..<noOfScheduledShows) { index in
+                                
+                                NavigationStack {
+                                    VStack (alignment: .leading){
+                                        Button(action: {}) {
+                                            VStack (alignment: .leading){
+                                                
+                                                HStack {
+                                                    // Use Async Images instead of Image when using url's
+                                                    Text(MiscData().getSubstring(input: String(describing:viewerScheduledShows![index]["date_scheduled"]!)))
+                                                        .fontWeight(.semibold).foregroundColor(Color.white).font(Font.system(size: 12))
+                                                    Spacer()
+                                                    Button(action: {isBookmarked.toggle()}) {
+                                                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color.white)
+                                                    }
+                                                    
+                                                }
+                                                .padding(.horizontal, 3)
+                                                .frame(width: 170)
+                                                
+                                                Spacer()
+                                                Text(String(describing:viewerScheduledShows![index]["name"]!)).font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).multilineTextAlignment(.leading).padding(.horizontal, 5)
+                                            }
+                                            .padding(.vertical, 10)
+                                            .frame(width: 175, height: 260)
+                                            .background(Image("ShowPreview").resizable())
+                                            .cornerRadius(10.0)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
+                                            )
+                                        } //Button
+                                        HStack {
+                                            Image(systemName:"person.crop.circle")
+                                            Text(String(describing:viewerScheduledShows![index]["created_by"]!)).fontWeight(.medium).padding(.leading, -5)
+                                        }
+                                        .font(Font.system(size: 15))
+                                    }
+                                }
+                            }
+                            
+                        }
+                        .padding(.horizontal, 15).padding(.top, 0)
+                    }
+                    .frame(height: 300)
+                }
                 
                 Spacer()
                         
