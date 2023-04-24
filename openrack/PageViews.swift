@@ -84,7 +84,7 @@ struct PageView3: View {
             .multilineTextAlignment(.center)
             .foregroundColor(Color("Secondary_color"))
             .frame(height: 1300)
-            .background(Color("Primary_color"))
+            .background(Color("Primary_color")).ignoresSafeArea()
         }
         .navigationViewStyle(StackNavigationViewStyle())
         

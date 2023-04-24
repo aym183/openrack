@@ -130,7 +130,8 @@ class CreateDB : ObservableObject {
         group.wait()
 
         ReadDB().getCreatorShows()
-        ReadDB().getViewerShows()
+        ReadDB().getViewerLiveShows()
+        ReadDB().getViewerScheduledShows()
         ReadDB().getListingIDs()
         
     }

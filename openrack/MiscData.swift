@@ -35,4 +35,10 @@ class MiscData : ObservableObject {
         return Int.random(in: 1000000...999999999)
     }
     
+    func getSubstring(input: String) -> String {
+            let endIndex = input.index(input.endIndex, offsetBy: -3)
+            let substring = input.prefix(upTo: endIndex)
+            return String(substring)
+    }
+    
 }

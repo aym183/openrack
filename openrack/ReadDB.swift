@@ -102,7 +102,7 @@ class ReadDB : ObservableObject {
         
     }
     
-    func getViewerShows() {
+    func getViewerLiveShows() {
         @AppStorage("username") var userName: String = ""
         var viewerShows = UserDefaults.standard.array(forKey: "myViewerKey") as? [[String:Any]] ?? []
         
@@ -120,6 +120,29 @@ class ReadDB : ObservableObject {
                     }
                 }
                 UserDefaults.standard.set(viewerShows, forKey: "viewer_shows")
+
+            }
+    }
+    
+    func getViewerScheduledShows() {
+        @AppStorage("username") var userName: String = ""
+        var viewerScheduledShows = UserDefaults.standard.array(forKey: "myViewerKey2") as? [[String:Any]] ?? []
+        
+        let db = Firestore.firestore()
+        let ref = db.collection("shows")
+        ref.whereField("created_by", isNotEqualTo: userName)
+            .whereField("status", isEqualTo: "Created")
+        
+            .getDocuments { (snapshot, error) in
+                if let error = error {
+                    print("Error getting email in getViewerShows: \(error.localizedDescription)")
+                } else {
+                    for document in snapshot!.documents {
+                        viewerScheduledShows.append(document.data())
+                    }
+                }
+                UserDefaults.standard.set(viewerScheduledShows, forKey: "viewer_scheduled_shows")
+
             }
     }
     

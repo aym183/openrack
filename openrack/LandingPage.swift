@@ -11,11 +11,13 @@ import Firebase
 
 struct LandingPage: View {
     var body: some View {
-        if Auth.auth().currentUser == nil {
-            BottomNavbar()
-        } else {
-            LandingContent()
-        }
+        
+        LandingContent()
+//        if Auth.auth().currentUser == nil {
+//            BottomNavbar()
+//        } else {
+//            LandingContent()
+//        }
 //        .navigationViewStyle(StackNavigationViewStyle())
     }
     }

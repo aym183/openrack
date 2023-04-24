@@ -34,14 +34,14 @@ struct AddressForm: View {
                         .frame(width: 360, height: 50).border(Color.black, width: 2)
                         .background(.white)
                     
-                    Text("House Number").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                    Text("Apartment/Villa Number").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
                     TextField("", text: $houseNumber)
                         .padding(.horizontal, 8)
                         .frame(width: 360, height: 50).border(Color.black, width: 2)
                         .background(.white)
                     
-                    Text("Street").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                    Text("Street/Area Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
                     TextField("", text: $street)
                         .padding(.horizontal, 8)

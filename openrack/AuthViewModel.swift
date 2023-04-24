@@ -36,7 +36,8 @@ class AuthViewModel : ObservableObject {
 //                CreateDB().createStripeCustomer(name: fullName, email: email)
                 UserDefaults.standard.set(email, forKey: "email")
                 ReadDB().getUserDefaults()
-                ReadDB().getViewerShows()
+                ReadDB().getViewerLiveShows()
+                ReadDB().getViewerScheduledShows()
             }
         }
     }
@@ -54,7 +55,9 @@ class AuthViewModel : ObservableObject {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         print("I'm here \(self.userName)")
                         ReadDB().getCreatorShows()
-                        ReadDB().getViewerShows()
+                        ReadDB().getViewerLiveShows()
+                        ReadDB().getViewerScheduledShows()
+                        print("Viewer show ready")
                     }
             }
         }

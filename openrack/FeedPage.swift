@@ -13,31 +13,39 @@ struct FeedPage: View {
     @State var isShowingNextView = false
     @State var isBookmarked = false
     @State var isShownShow = false
-    var columns: [GridItem] = [
+    var rows: [GridItem] = [
         GridItem(.flexible() , spacing: nil, alignment: nil),
-        GridItem(.flexible() , spacing: nil, alignment: nil)
     ]
     var viewerShows = UserDefaults.standard.array(forKey: "viewer_shows") as? [[String: Any]]
+    var viewerScheduledShows = UserDefaults.standard.array(forKey: "viewer_scheduled_shows") as? [[String: Any]]
     @AppStorage("email") var userEmail: String = ""
     
     var body: some View {
         var noOfShows = viewerShows?.count ?? 0
+        var noOfScheduledShows = viewerScheduledShows?.count ?? 0
         NavigationStack {
             VStack {
                 CustomNavbarView()
-                Spacer()
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 20) {
-                        // Change to length of response array
+               
+                HStack {
+                    Text("Live Shows")
+                    Spacer()
+                }
+                .foregroundColor(.black).fontWeight(.semibold).font(Font.system(size: 20)).opacity(0.7).multilineTextAlignment(.leading).padding(.horizontal).padding(.bottom, -15)
+
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHGrid(rows: rows, spacing: 20) {
+
                         ForEach(0..<noOfShows) { index in
-                            
+
                             NavigationStack {
                             VStack (alignment: .leading){
                                 Button(action: {
                                     isShownShow.toggle()
                                 }) {
                                     VStack (alignment: .leading){
-                                        
+
                                         HStack {
                                             // Use Async Images instead of Image when using url's
                                             Image(systemName: "livephoto").foregroundColor(Color.red)
@@ -47,16 +55,16 @@ struct FeedPage: View {
                                             Button(action: {isBookmarked.toggle()}) {
                                                 Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color.white)
                                             }
-                                            
+
                                         }
                                         .padding(.horizontal, 3)
                                         .frame(width: 170)
-                                        
+
                                         Spacer()
                                         Text(String(describing:viewerShows![index]["name"]!)).font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).multilineTextAlignment(.leading).padding(.horizontal, 5)
                                     }
                                     .padding(.vertical, 10)
-                                    .frame(width: 175, height: 260)
+                                    .frame(width: 175, height: 240)
                                     .background(Image("ShowPreview").resizable())
                                     .cornerRadius(10.0)
                                     .overlay(
@@ -74,11 +82,77 @@ struct FeedPage: View {
 //                            ViewerShow(username:viewerShows![index]["created_by"]!, playbackID: viewerShows![index]["playback_id"]!, listingID: viewerShows![index]["listings"]!).navigationBarHidden(true)
                                 ViewerShow(retrievedShow: viewerShows![index]).navigationBarHidden(true)
                         }
-                        
+
                         }
+                        
+                        
                     }
-                    .padding(.horizontal,5).padding(.top)
+                    .padding(.horizontal, 15)
                 }
+                .frame(height: 300)
+                
+                
+                
+                 HStack {
+                     Text("Upcoming Shows")
+                     Spacer()
+                 }
+                 .foregroundColor(.black).fontWeight(.semibold).font(Font.system(size: 20)).opacity(0.7).multilineTextAlignment(.leading).padding(.horizontal).padding(.bottom, -3)
+
+                 
+                 ScrollView(.horizontal, showsIndicators: false) {
+                     LazyHGrid(rows: rows, spacing: 20) {
+                         // Change to length of response array
+                         
+                         ForEach(0..<noOfScheduledShows) { index in
+
+                             NavigationStack {
+                             VStack (alignment: .leading){
+                                 Button(action: {}) {
+                                     VStack (alignment: .leading){
+
+                                         HStack {
+                                             // Use Async Images instead of Image when using url's
+                                             Text(MiscData().getSubstring(input: String(describing:viewerScheduledShows![index]["date_scheduled"]!)))
+                                                 .fontWeight(.semibold).foregroundColor(Color.white).font(Font.system(size: 12))
+                                             Spacer()
+                                             Button(action: {isBookmarked.toggle()}) {
+                                                 Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color.white)
+                                             }
+
+                                         }
+                                         .padding(.horizontal, 3)
+                                         .frame(width: 170)
+
+                                         Spacer()
+                                         Text(String(describing:viewerScheduledShows![index]["name"]!)).font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).multilineTextAlignment(.leading).padding(.horizontal, 5)
+                                     }
+                                     .padding(.vertical, 10)
+                                     .frame(width: 175, height: 260)
+                                     .background(Image("ShowPreview").resizable())
+                                     .cornerRadius(10.0)
+                                     .overlay(
+                                         RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
+                                     )
+                                 } //Button
+                                 HStack {
+                                     Image(systemName:"person.crop.circle")
+                                     Text(String(describing:viewerScheduledShows![index]["created_by"]!)).fontWeight(.medium).padding(.leading, -5)
+                                 }
+                                 .font(Font.system(size: 15))
+                             }
+                         }
+                         }
+                         
+                     }
+                     .padding(.horizontal, 15).padding(.top, 0)
+                 }
+                 .frame(height: 300)
+                
+                
+                Spacer()
+                        
+                        
 
 
                 if userEmail == "ayman.ali1302@gmail.com" {
@@ -103,7 +177,9 @@ struct FeedPage: View {
                 ScheduleStream().navigationBarHidden(true)
             }
         }
-
+//        .onAppear {
+//            print(viewerScheduledShows)
+//        }
         
     }
 }
