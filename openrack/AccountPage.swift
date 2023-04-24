@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct AccountPage: View {
-    @State var showingPaySheet = false
-    @State var showingFeedPage = false
-    @State var isShowingPaymentsForm = false
-    @State var isShowingAddressForm = false
-    @StateObject var addressDetails = ReadDB()
     @AppStorage("email") var userEmail: String = ""
     @AppStorage("username") var userName: String = ""
     @AppStorage("full_name") var fullName: String = ""
+    @State var showingPaySheet = false
+    @State var disableFields = true
+    @State var showingFeedPage = false
+    @State var usernameText = ""
+    @State var nameText = ""
+    @State var emailText = ""
+    @State var phoneText = ""
+    @State var isShowingPaymentsForm = false
+    @State var isShowingAddressForm = false
+    @StateObject var addressDetails = ReadDB()
     
     var body: some View {
         NavigationStack {
@@ -31,36 +36,75 @@ struct AccountPage: View {
                     }
                     .foregroundColor(.black)
                     
-                    Text("Personal Details").font(Font.system(size: 18)).fontWeight(.bold).foregroundColor(.black).opacity(0.7).padding(.horizontal,5)
+                    HStack {
+                        Text("Personal Details").font(Font.system(size: 18)).fontWeight(.bold).foregroundColor(.black).padding(.horizontal,5)
+                        
+                        Spacer()
+                        
+                        Button(action: { disableFields.toggle() }) {
+                            Image(systemName: "applepencil").font(Font.system(size: 20)).fontWeight(.bold).foregroundColor(.black)
+                        }
+                        .padding(.trailing)
+                    }
+                    .opacity(0.7)
+                    
                     Divider().frame(width: 340, height: 2).background(.black).padding(.bottom, 5).opacity(0.5).padding(.horizontal,5)
                     
                     HStack {
-                        Text("Username")
-                        Text(userName).padding(.leading, 22)
+                        Text("Username").padding(.trailing, 20)
+                        TextField("", text: $usernameText)
+                            .padding(.horizontal, 8)
+                            .opacity(disableFields ? 0.7 : 1)
+                            .frame(width: 200, height: 35).border(Color.black, width: 2)
+                            .background(.white)
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
+                            .disabled(disableFields)
+                            
+                        
+//                        Text(userName).padding(.leading, 22)
                     }
                     .foregroundColor(.black)
                     .fontWeight(.semibold)
                     .padding()
                     
                     HStack {
-                        Text("Name")
-                        Text(fullName).padding(.leading, 56)
+                        Text("Name").padding(.trailing, 55)
+                        TextField("", text: $nameText)
+                            .padding(.horizontal, 8)
+                            .opacity(disableFields ? 0.7 : 1)
+                            .frame(width: 200, height: 35).border(Color.black, width: 2)
+                            .background(.white)
+                            .disabled(disableFields)
+//                        Text(fullName).padding(.leading, 56)
                     }
                     .foregroundColor(.black)
                     .fontWeight(.semibold)
                     .padding()
                     
                     HStack {
-                        Text("Email")
-                        Text(userEmail).font(Font.system(size: 15)).padding(.leading, 60)
+                        Text("Email").padding(.trailing, 58)
+                        TextField("", text: $emailText)
+                            .padding(.horizontal, 8)
+                            .opacity(disableFields ? 0.7 : 1)
+                            .frame(width: 200, height: 35).border(Color.black, width: 2)
+                            .background(.white)
+                            .disabled(disableFields)
+//                        Text(userEmail).font(Font.system(size: 15)).padding(.leading, 60)
                     }
                     .foregroundColor(.black)
                     .fontWeight(.semibold)
                     .padding()
                     
                     HStack {
-                        Text("Phone")
-                        Text("+447859234405").padding(.leading, 53)
+                        Text("Phone").padding(.trailing, 51)
+                        TextField("", text: $phoneText)
+                            .padding(.horizontal, 8)
+                            .opacity(disableFields ? 0.7 : 1)
+                            .frame(width: 200, height: 35).border(Color.black, width: 2)
+                            .background(.white)
+                            .disabled(disableFields)
+//                        Text("+447859234405").padding(.leading, 53)
                     }
                     .foregroundColor(.black)
                     .fontWeight(.semibold)
@@ -154,6 +198,12 @@ struct AccountPage: View {
                 } else {
                     BottomNavbar().navigationBarBackButtonHidden(true)
                 }
+            }
+            .onAppear {
+                usernameText = userName
+                nameText = fullName
+                emailText = userEmail
+                phoneText = "+447859234405"
             }
             
         }
