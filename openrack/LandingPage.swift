@@ -36,7 +36,7 @@ struct LandingContent: View {
                     
                     Text("Openrack").font(Font.system(size: 70)).fontWeight(.heavy)
                         .foregroundColor(Color("Primary_color"))
-                        .padding(.top, 80)
+                        .padding(.top, 150)
                     
                     Text("Buy, Sell, Discover ✨").font(Font.system(size: 20)).font(.subheadline).fontWeight(.semibold).foregroundColor(.black)
                         .opacity(0.7)
@@ -49,26 +49,6 @@ struct LandingContent: View {
 //                        .padding(.horizontal, 10.0).padding(.top, 50.0)
 //                        .multilineTextAlignment(.center)
 //
-                    
-                    SignInWithAppleButton( onRequest: { request in }, onCompletion: { result in } )
-                        .frame(height: 50)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
-                        )
-                        .cornerRadius(50)
-                        .padding(.horizontal)
-                    
-                    Button(action: {}) {
-                        Image("Facebook_Logo")
-                        Text("Sign in with Facebook").font(.title3)
-                    }
-                    .frame(width: 360, height: 50)
-                    .background(Color("Facebook_color")).foregroundColor(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
-                    )
-                    .cornerRadius(50)
-                    .padding(.horizontal)
                     
                     Button(action: { DispatchQueue.global().async { signupVM.signUpWithGoogle() } })
                     {
