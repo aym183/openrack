@@ -37,16 +37,30 @@ struct AccountPage: View {
                     .foregroundColor(.black)
                     
                     HStack {
-                        Text("Personal Details").font(Font.system(size: 18)).fontWeight(.bold).foregroundColor(.black).padding(.horizontal,5)
+                        Text("Personal Details").font(Font.system(size: 18)).fontWeight(.bold).foregroundColor(.black).padding(.horizontal,5).opacity(0.7)
                         
                         Spacer()
                         
-                        Button(action: { disableFields.toggle() }) {
-                            Image(systemName: "applepencil").font(Font.system(size: 20)).fontWeight(.bold).foregroundColor(.black)
+                        Button(action: {
+                            if disableFields == false {
+                                print("Add update code")
+                                disableFields.toggle()
+                            } else {
+                                disableFields.toggle()
+                            }
+                            
+                        }) {
+                            if disableFields == false {
+                                Text(String("Save Details")).font(Font.system(size: 15)).frame(width: 100, height: 30).background(Color("Primary_color"))
+                                    .foregroundColor(.white)
+                                    .border(Color.black, width: 2)
+                            } else {
+                                Image(systemName: "applepencil").font(Font.system(size: 20)).fontWeight(.bold).foregroundColor(.black)
+                            }
                         }
                         .padding(.trailing)
                     }
-                    .opacity(0.7)
+
                     
                     Divider().frame(width: 340, height: 2).background(.black).padding(.bottom, 5).opacity(0.5).padding(.horizontal,5)
                     
@@ -54,9 +68,10 @@ struct AccountPage: View {
                         Text("Username").padding(.trailing, 20)
                         TextField("", text: $usernameText)
                             .padding(.horizontal, 8)
+                            .frame(width: 200, height: 35)
+                            .background(disableFields ? .gray : .white)
                             .opacity(disableFields ? 0.7 : 1)
-                            .frame(width: 200, height: 35).border(Color.black, width: 2)
-                            .background(.white)
+                            .border(Color.black, width: 2)
                             .disableAutocorrection(true)
                             .autocapitalization(.none)
                             .disabled(disableFields)
@@ -72,9 +87,10 @@ struct AccountPage: View {
                         Text("Name").padding(.trailing, 55)
                         TextField("", text: $nameText)
                             .padding(.horizontal, 8)
+                            .frame(width: 200, height: 35)
+                            .background(disableFields ? .gray : .white)
                             .opacity(disableFields ? 0.7 : 1)
-                            .frame(width: 200, height: 35).border(Color.black, width: 2)
-                            .background(.white)
+                            .border(Color.black, width: 2)
                             .disabled(disableFields)
 //                        Text(fullName).padding(.leading, 56)
                     }
@@ -86,9 +102,10 @@ struct AccountPage: View {
                         Text("Email").padding(.trailing, 58)
                         TextField("", text: $emailText)
                             .padding(.horizontal, 8)
+                            .frame(width: 200, height: 35)
+                            .background(disableFields ? .gray : .white)
                             .opacity(disableFields ? 0.7 : 1)
-                            .frame(width: 200, height: 35).border(Color.black, width: 2)
-                            .background(.white)
+                            .border(Color.black, width: 2)
                             .disabled(disableFields)
 //                        Text(userEmail).font(Font.system(size: 15)).padding(.leading, 60)
                     }
@@ -100,9 +117,10 @@ struct AccountPage: View {
                         Text("Phone").padding(.trailing, 51)
                         TextField("", text: $phoneText)
                             .padding(.horizontal, 8)
+                            .frame(width: 200, height: 35)
+                            .background(disableFields ? .gray : .white)
                             .opacity(disableFields ? 0.7 : 1)
-                            .frame(width: 200, height: 35).border(Color.black, width: 2)
-                            .background(.white)
+                            .border(Color.black, width: 2)
                             .disabled(disableFields)
 //                        Text("+447859234405").padding(.leading, 53)
                     }
@@ -132,7 +150,7 @@ struct AccountPage: View {
                             Spacer()
                             Image(systemName: "pencil").font(Font.system(size: 25))
                         }
-                        .padding(20).padding(.bottom)
+                        .padding().padding(.bottom)
                         .frame(width: 370)
                         .background(Color("Primary_color")).cornerRadius(15)
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2))
@@ -168,7 +186,7 @@ struct AccountPage: View {
                             Spacer()
                             Image(systemName: "pencil").font(Font.system(size: 25))
                         }
-                        .padding(20).padding(.bottom)
+                        .padding().padding(.bottom)
                         .frame(width: 370)
                         .background(Color("Primary_color")).cornerRadius(15)
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
