@@ -34,6 +34,30 @@ class UpdateDB : ObservableObject {
         }
     }
     
+    func updateUserDetails(inputs: [String:String]) {
+        let db = Firestore.firestore()
+        let collectionRef = db.collection("users")
+        @AppStorage("username") var userName: String = ""
+        
+        // Query for documents where "name" equals "X"
+        collectionRef.whereField("username", isEqualTo: userName).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents on updateUserDetails: \(error)")
+            } else {
+                guard let document = querySnapshot?.documents.first else {
+                    print("No documents found")
+                    return
+                }
+                
+                // Update "Y" field to "Text" for each document where "name" equals "X"
+                let docRef = collectionRef.document(document.documentID)
+                // Add phone number
+                docRef.updateData(["full_name": inputs["full_name"]])
+                ReadDB().getUserDefaults()
+            }
+        }
+    }
+    
     func updateStripeCustomerID(customerID: String) {
         let db = Firestore.firestore()
         let collectionRef = db.collection("users")

@@ -53,7 +53,6 @@ class ReadDB : ObservableObject {
                 } else {
                     for document in snapshot!.documents {
                         self.address = ["full_name": document.data()["full_name"], "house_number": document.data()["house_number"], "street": document.data()["street"] , "city": document.data()["city"], "country": document.data()["country"]] as? [String: String]
-                        print(self.address)
                     }
                 }
             }
