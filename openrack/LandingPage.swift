@@ -52,6 +52,24 @@ struct LandingContent: View {
 //                        .multilineTextAlignment(.center)
 //
                     
+                    Button(action: { showingSignInBottomSheet.toggle() }) {
+                        HStack {
+                            Image(systemName: "iphone.homebutton")
+                            Text("Sign in with Phone").font(.title3)
+                        }
+                    }
+                    .frame(width: 360, height: 50)
+                    .background(Color.black).foregroundColor(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
+                    )
+                    .cornerRadius(50)
+                    .padding(.horizontal)
+                    .navigationDestination(isPresented: $showingSignInBottomSheet) {
+                        SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Phone Sign In"))
+                    }
+                    
+                    
                     Button(action: { DispatchQueue.global().async { signupVM.signUpWithGoogle() } })
                     {
                         HStack{
