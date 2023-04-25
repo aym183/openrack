@@ -37,6 +37,30 @@ class CreateDB : ObservableObject {
         }
     }
     
+    func addPhoneUser(phoneNumber: String, username: String, fullName: String) {
+        let db = Firestore.firestore()
+        let ref = db.collection("users")
+        let data: [String: Any] = [
+            "date_created": miscData.getPresentDateTime(),
+            "last_updated": miscData.getPresentDateTime(),
+            "phone_number": phoneNumber,
+            "username": username,
+            "full_name": fullName,
+            "stripe_customer_id": "",
+            "stripe_payment_method": ""
+        ]
+        
+        ref.addDocument(data: data) { error in
+            if let error = error {
+                print("Error adding addPhoneUser: \(error.localizedDescription)")
+            } else {
+                print("Phone User added")
+            }
+            
+        }
+    }
+    
+    
     func createStripeCustomer(name: String, email: String) {
         print(" I am in the func ")
         let url = URL(string: "https://foul-checkered-lettuce.glitch.me/create-customer")!

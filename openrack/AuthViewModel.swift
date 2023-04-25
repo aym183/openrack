@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Firebase
 import FirebaseAuth
 import FirebaseCore
 import GoogleSignIn
@@ -57,6 +58,25 @@ class AuthViewModel : ObservableObject {
                         ReadDB().getCreatorShows()
                         ReadDB().getViewerLiveShows()
                     }
+            }
+        }
+    }
+    
+    func phoneSignIn(phoneNumber: String, username: String, fullName: String, credential: PhoneAuthCredential) {
+        Auth.auth().signIn(with: credential) { authResult, error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+//                    UserDefaults.standard.set(email, forKey: "email")
+//                    ReadDB().getUserDefaults()
+                    CreateDB().addPhoneUser(phoneNumber: phoneNumber, username: username, fullName: fullName)
+                    print("Successful auth")
+                    self.signedIn.toggle()
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                        print("I'm here \(self.userName)")
+//                        ReadDB().getCreatorShows()
+//                        ReadDB().getViewerLiveShows()
+//                    }
             }
         }
     }

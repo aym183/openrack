@@ -196,16 +196,18 @@ struct SignInEmailView: View {
                                     
                                     
                                 } else if String(describing: userDetails[3]) == "Phone" {
-                                    print("\(phoneText), \(verificationText), \(fullNameText), \(usernameText), \(passwordText)")
                                     
                                     let credential = PhoneAuthProvider.provider().credential(withVerificationID: phoneID, verificationCode: verificationText)
-                                    Auth.auth().signIn(with: credential) { (res, err) in
-                                        if err != nil {
-                                            print("Error in phone auth sign in")
-                                        }
-                                        
-                                    }
+                                    
+                                    AuthViewModel().phoneSignIn(phoneNumber: phoneText, username: usernameText, fullName: fullNameText, credential: credential)
+//                                    Auth.auth().signIn(with: credential) { (res, err) in
+//                                        if err != nil {
+//                                            print("Error in phone auth sign in")
+//                                        }
+//
+//                                    }
                                     print("Credentials are: \(credential)")
+                                    print(type(of: credential))
                                     
                                 } else {
                                     
