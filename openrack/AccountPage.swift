@@ -11,6 +11,7 @@ struct AccountPage: View {
     @AppStorage("email") var userEmail: String = ""
     @AppStorage("username") var userName: String = ""
     @AppStorage("full_name") var fullName: String = ""
+    @AppStorage("phone_number") var phoneNumber: String = ""
     @State var showingPaySheet = false
     @State var disableFields = true
     @State var showingFeedPage = false
@@ -228,7 +229,7 @@ struct AccountPage: View {
                 usernameText = userName
                 nameText = fullName
                 emailText = userEmail
-                phoneText = "+447859234405"
+                phoneText = phoneNumber
             }
             
         }

@@ -21,6 +21,7 @@ class ReadDB : ObservableObject {
         @AppStorage("full_name") var fullName: String = ""
         @AppStorage("email") var userEmail: String = ""
         @AppStorage("stripe_customer_id") var stripeCustomerID: String = ""
+        @AppStorage("phone_number") var phoneNumber: String = ""
         
         let db = Firestore.firestore()
         let ref = db.collection("users")
@@ -33,6 +34,7 @@ class ReadDB : ObservableObject {
                     for document in snapshot!.documents {
                         UserDefaults.standard.set(String(describing:document.data()["email"]!), forKey: "email")
                         UserDefaults.standard.set(String(describing:document.data()["full_name"]!), forKey: "full_name")
+                        UserDefaults.standard.set(String(describing:document.data()["phone_number"]!), forKey: "phone_number")
                         UserDefaults.standard.set(String(describing:document.data()["stripe_customer_id"]!), forKey: "stripe_customer_id")
                         UserDefaults.standard.set(String(describing:document.data()["stripe_payment_method"]!), forKey: "stripe_payment_method")
                     }

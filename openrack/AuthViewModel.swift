@@ -71,7 +71,7 @@ class AuthViewModel : ObservableObject {
                     CreateDB().addPhoneUser(phoneNumber: phoneNumber, username: username, fullName: fullName)
                     print("Successful auth")
                     self.signedIn.toggle()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                             print("I'm here \(self.userName)")
                             ReadDB().getCreatorShows()
                             ReadDB().getViewerLiveShows()
