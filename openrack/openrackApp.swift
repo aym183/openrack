@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import Firebase
 import GoogleSignIn
 import AVFoundation
 import HaishinKit
@@ -24,17 +25,6 @@ struct openrackApp: App {
         WindowGroup {
             let viewModel = AuthViewModel()
             LandingPage().environmentObject(viewModel)
-//                .onOpenURL { url in
-//                                    // Check to see if the URL matches the expected return URL from Stripe
-//                                    guard url.scheme == "openrack", url.host == "return-stripe" else { return }
-//                                    
-//                                    // Parse any data passed in the URL and use it to display appropriate content
-//                                    let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems
-//                                    let status = queryItems?.filter({ $0.name == "status" }).first?.value
-//                                    let transactionId = queryItems?.filter({ $0.name == "transaction_id" }).first?.value
-//                    
-//                                    print("\(queryItems) \(status) \(transactionId)")
-//                                }
         }
     }
 }
@@ -53,6 +43,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
       return true
   }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        
+    }
+    
     
     // This method handles opening universal link URLs (for example, "https://example.com/stripe_ios_callback")
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool  {

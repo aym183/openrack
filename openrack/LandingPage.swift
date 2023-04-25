@@ -125,6 +125,7 @@ struct LandingContent: View {
                     //                    .sheet(isPresented: $showingLoginBottomSheet) { SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Login")) }
                     
                     Text("By continuing you agree to our Terms of Service.\nOpenrack services are subject to our Privacy Policy.")
+                        .foregroundColor(.black)
                         .font(.footnote).fontWeight(.semibold)
                         .padding(.horizontal).padding(.top, 20).padding(.bottom, 30)
                         .opacity(0.7)

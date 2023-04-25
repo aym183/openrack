@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 struct SignInEmailView: View {
     
     var userDetails:  Array<Any>
@@ -14,7 +15,10 @@ struct SignInEmailView: View {
     @State var fullNameText = ""
     @State var passwordText = ""
     @State var usernameText = ""
+    @State var verificationText = ""
     @State var phoneText = "+971"
+    @State var phoneID = "+971"
+    @State private var isVerification = false
     @State private var isOn = false
     @State private var isUserPresented = false
     @State private var isAdminPresented = false
@@ -24,7 +28,7 @@ struct SignInEmailView: View {
     @AppStorage("email") var userEmail: String = ""
     
     var isBothTextFieldsEmpty: Bool {
-            return emailText.isEmpty || passwordText.isEmpty
+            return usernameText.isEmpty || passwordText.isEmpty
     }
     
     var isPhoneTextFieldEmpty: Bool {
@@ -74,17 +78,29 @@ struct SignInEmailView: View {
                             .background(.white)
                             .keyboardType(.numberPad)
                         
-                        Button(action: {}) {
-                            HStack {
-                                Text(String(describing: userDetails[2])).font(.title3).frame(width: 360, height: 50)
+                        if !isVerification {
+                            Button(action: {
+                                print(phoneText)
+                                PhoneAuthProvider.provider().verifyPhoneNumber(phoneText, uiDelegate: nil) { (ID, err) in
+                                    if let error = err {
+                                        print("PHONE ERROR")
+                                    }
+                                    phoneID = ID!
+                                    isVerification.toggle()
+                                    
+                                }
+                            }) {
+                                HStack {
+                                    Text(String(describing: userDetails[2])).font(.title3).frame(width: 360, height: 50)
+                                }
                             }
+                            .disabled(isPhoneTextFieldEmpty)
+        //                    .frame(width: 360, height: 50)
+                            .background(isPhoneTextFieldEmpty ? Color.gray : Color("Primary_color"))
+                            .foregroundColor(.white)
+                            .border(Color.black, width: 2)
+                            .padding(.vertical)
                         }
-                        .disabled(isPhoneTextFieldEmpty)
-    //                    .frame(width: 360, height: 50)
-                        .background(isPhoneTextFieldEmpty ? Color.gray : Color("Primary_color"))
-                        .foregroundColor(.white)
-                        .border(Color.black, width: 2)
-                        .padding(.vertical)
                         
                     }
                     
@@ -117,34 +133,38 @@ struct SignInEmailView: View {
                             .autocapitalization(.none)
                     }
 
-//                    if String(describing: userDetails[3]) == "Phone" {
-//                        Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-//
-//                        TextField("", text: $usernameText)
-//                            .padding(.horizontal, 8)
-//                            .frame(width: 360, height: 50).border(Color.black, width: 2)
-//                            .background(.white)
-//                            .disableAutocorrection(true)
-//                            .autocapitalization(.none)
-//
-//                        Text("Full Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-//
-//                        TextField("", text: $fullNameText)
-//                            .padding(.horizontal, 8)
-//                            .frame(width: 360, height: 50).border(Color.black, width: 2)
-//                            .background(.white)
-//                            .disableAutocorrection(true)
-//                            .autocapitalization(.none)
-//
-//                        Text("Password").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-//
-//                        SecureField("", text: $passwordText)
-//                            .padding(.horizontal, 8)
-//                            .frame(width: 360, height: 50).border(Color.black, width: 2)
-//                            .background(.white)
-//                            .disableAutocorrection(true)
-//                            .autocapitalization(.none)
-//                    }
+                    if isVerification {
+                        Text("Verification Code").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+
+                        TextField("", text: $verificationText)
+                            .padding(.horizontal, 8)
+                            .frame(width: 360, height: 50).border(Color.black, width: 2)
+                            .background(.white)
+                            .keyboardType(.numberPad)
+                        
+                        Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+
+                        TextField("", text: $usernameText)
+                            .padding(.horizontal, 8)
+                            .frame(width: 360, height: 50).border(Color.black, width: 2)
+                            .background(.white)
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
+
+                        Text("Full Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+
+                        TextField("", text: $fullNameText)
+                            .padding(.horizontal, 8)
+                            .frame(width: 360, height: 50).border(Color.black, width: 2)
+                            .background(.white)
+                        
+                        Text("Password").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+
+                        SecureField("", text: $passwordText)
+                            .padding(.horizontal, 8)
+                            .frame(width: 360, height: 50).border(Color.black, width: 2)
+                            .background(.white)
+                    }
                     
                     if String(describing: userDetails[3]) == "No" {
                         Text("Password").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
@@ -167,7 +187,7 @@ struct SignInEmailView: View {
                     }
                     Spacer()
                     
-                    if String(describing: userDetails[3]) != "Phone" {
+                    if String(describing: userDetails[3]) != "Phone" || isVerification {
                         Button(action: {
                             withAnimation(.easeIn) {
                                 if String(describing: userDetails[3]) == "Yes" {
@@ -176,6 +196,16 @@ struct SignInEmailView: View {
                                     
                                     
                                 } else if String(describing: userDetails[3]) == "Phone" {
+                                    print("\(phoneText), \(verificationText), \(fullNameText), \(usernameText), \(passwordText)")
+                                    
+                                    let credential = PhoneAuthProvider.provider().credential(withVerificationID: phoneID, verificationCode: verificationText)
+                                    Auth.auth().signIn(with: credential) { (res, err) in
+                                        if err != nil {
+                                            print("Error in phone auth sign in")
+                                        }
+                                        
+                                    }
+                                    print("Credentials are: \(credential)")
                                     
                                 } else {
                                     
@@ -236,9 +266,6 @@ struct SignInEmailView: View {
                 .padding(.horizontal)
                 .foregroundColor(.black)
                 .opacity(isLoading ? 0 : 1)
-            }
-            .onAppear {
-                print(userDetails)
             }
         }
         .navigationBarHidden(isNavigationBarHidden)
