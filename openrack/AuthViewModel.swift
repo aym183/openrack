@@ -35,20 +35,19 @@ class AuthViewModel : ObservableObject {
                 self.signedIn.toggle()
                 CreateDB().addUser(email: email, username: username, fullName: fullName)
 //                CreateDB().createStripeCustomer(name: fullName, email: email)
-                UserDefaults.standard.set(email, forKey: "email")
+                UserDefaults.standard.set(username, forKey: "username")
                 ReadDB().getUserDefaults()
                 ReadDB().getViewerLiveShows()
-                ReadDB().getViewerScheduledShows()
             }
         }
     }
     
-    func signIn(email: String, password: String) {
+    func signIn(username: String, email: String, password: String) {
         auth.signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print(error.localizedDescription)
             } else {
-                    UserDefaults.standard.set(email, forKey: "email")
+                    UserDefaults.standard.set(username, forKey: "username")
                     print(email)
                     ReadDB().getUserDefaults()
                     print("Successful auth")
@@ -67,16 +66,16 @@ class AuthViewModel : ObservableObject {
             if let error = error {
                 print(error.localizedDescription)
             } else {
-//                    UserDefaults.standard.set(email, forKey: "email")
-//                    ReadDB().getUserDefaults()
+                    UserDefaults.standard.set(username, forKey: "username")
+                    ReadDB().getUserDefaults()
                     CreateDB().addPhoneUser(phoneNumber: phoneNumber, username: username, fullName: fullName)
                     print("Successful auth")
                     self.signedIn.toggle()
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                        print("I'm here \(self.userName)")
-//                        ReadDB().getCreatorShows()
-//                        ReadDB().getViewerLiveShows()
-//                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            print("I'm here \(self.userName)")
+                            ReadDB().getCreatorShows()
+                            ReadDB().getViewerLiveShows()
+                    }
             }
         }
     }

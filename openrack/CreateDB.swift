@@ -20,6 +20,7 @@ class CreateDB : ObservableObject {
         let data: [String: Any] = [
             "date_created": miscData.getPresentDateTime(),
             "last_updated": miscData.getPresentDateTime(),
+            "phone_number": "",
             "email": email,
             "username": username,
             "full_name": fullName,
@@ -45,6 +46,7 @@ class CreateDB : ObservableObject {
             "last_updated": miscData.getPresentDateTime(),
             "phone_number": phoneNumber,
             "username": username,
+            "email": "",
             "full_name": fullName,
             "stripe_customer_id": "",
             "stripe_payment_method": ""
@@ -60,9 +62,7 @@ class CreateDB : ObservableObject {
         }
     }
     
-    
     func createStripeCustomer(name: String, email: String) {
-        print(" I am in the func ")
         let url = URL(string: "https://foul-checkered-lettuce.glitch.me/create-customer")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -78,43 +78,6 @@ class CreateDB : ObservableObject {
             
         }.resume()
     }
-    
-//    func createStripeCustomer(name: String, email: String, completion: @escaping (Result<String, Error>) -> Void) {
-//        let url = URL(string: "https://api.stripe.com/v1/customers")!
-//            var request = URLRequest(url: url)
-//            request.httpMethod = "POST"
-//            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-//            request.setValue("Bearer sk_test_51LcPpgJ4NNUHuKH8i7Pu627HnZXwmCPugAZxzZDqk1wafKLhimkcaEz02yrfh6pe4kP2Y2TUtz4pBK03JtEzHsJM00zfXEHjWW:", forHTTPHeaderField: "Authorization")
-//
-//            let customerData = "name=\(name)&email=\(email)"
-//            print(customerData)
-//            request.httpBody = customerData.data(using: .utf8)
-//
-//            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-//                if let error = error {
-//                    completion(.failure(error))
-//                    return
-//                }
-//
-//                guard let data = data else {
-//                    completion(.failure(NSError(domain: "com.openrack.stripe", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data returned from server"])))
-//                    return
-//                }
-//
-//                do {
-//                    let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-//                    if let customerID = json?["id"] as? String {
-//                        completion(.success(customerID))
-//                    } else {
-//                        completion(.failure(NSError(domain: "com.yourapp.stripe", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse customer ID from response"])))
-//                    }
-//                } catch {
-//                    completion(.failure(error))
-//                    return
-//                }
-//            }
-//            task.resume()
-//    }
     
     
     func addShow(name: String, description: String, date: String, livestream_id: String, playback_id: String, stream_key: String) {

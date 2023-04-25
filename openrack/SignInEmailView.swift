@@ -17,7 +17,7 @@ struct SignInEmailView: View {
     @State var usernameText = ""
     @State var verificationText = ""
     @State var phoneText = "+971"
-    @State var phoneID = "+971"
+    @State var phoneID = ""
     @State private var isVerification = false
     @State private var isOn = false
     @State private var isUserPresented = false
@@ -28,7 +28,7 @@ struct SignInEmailView: View {
     @AppStorage("email") var userEmail: String = ""
     
     var isBothTextFieldsEmpty: Bool {
-            return usernameText.isEmpty || passwordText.isEmpty
+            return passwordText.isEmpty
     }
     
     var isPhoneTextFieldEmpty: Bool {
@@ -62,6 +62,15 @@ struct SignInEmailView: View {
                         Text("Email").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                         
                         TextField("", text: $emailText)
+                            .padding(.horizontal, 8)
+                            .frame(width: 360, height: 50).border(Color.black, width: 2)
+                            .background(.white)
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
+                        
+                        Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                        
+                        TextField("", text: $usernameText)
                             .padding(.horizontal, 8)
                             .frame(width: 360, height: 50).border(Color.black, width: 2)
                             .background(.white)
@@ -105,14 +114,6 @@ struct SignInEmailView: View {
                     }
                     
                     if String(describing: userDetails[3]) == "Yes" {
-                        Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                        
-                        TextField("", text: $usernameText)
-                            .padding(.horizontal, 8)
-                            .frame(width: 360, height: 50).border(Color.black, width: 2)
-                            .background(.white)
-                            .disableAutocorrection(true)
-                            .autocapitalization(.none)
                         
                         Text("Full Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                         
@@ -189,6 +190,7 @@ struct SignInEmailView: View {
                     
                     if String(describing: userDetails[3]) != "Phone" || isVerification {
                         Button(action: {
+                            print(String(describing: userDetails[3]))
                             withAnimation(.easeIn) {
                                 if String(describing: userDetails[3]) == "Yes" {
                                     
@@ -206,24 +208,22 @@ struct SignInEmailView: View {
 //                                        }
 //
 //                                    }
-                                    print("Credentials are: \(credential)")
-                                    print(type(of: credential))
                                     
                                 } else {
                                     
-                                    signupVM.signIn(email: emailText, password: passwordText)
-                                    isNavigationBarHidden.toggle()
-                                    isLoading.toggle()
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                                        if emailText == "ayman.ali1302@gmail.com" {
-                                            isAdminPresented.toggle()
-                                        } else {
-                                            isUserPresented.toggle()
-                                        }
+                                    signupVM.signIn(username: usernameText, email: emailText, password: passwordText)
                                         
                                     }
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
                                     
+                                    isNavigationBarHidden.toggle()
+                                    isLoading.toggle()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+                                        if emailText == "ayman.ali1302@gmail.com" {
+                                            isAdminPresented.toggle()
+                                        } else {
+                                            isUserPresented.toggle()
+                                    }
                                     //                                isPresented.toggle()
                                 }
                             }

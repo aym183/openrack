@@ -15,7 +15,7 @@ class AuthUIViewModel: ObservableObject {
         if purpose == "Email" {
             response = ["Sign Up", "Sign up for email to access sales, exclusive drops & more from Openrack", "Submit", "Yes"]
         } else if purpose == "Phone Sign In"  {
-            response = ["Enter Phone Number", "Verification", "Verify", "Phone"]
+            response = ["Sign Up", "Verification", "Verify", "Phone"]
         } else {
             response = ["Login", "Remember Me", "Submit", "No"]
         }

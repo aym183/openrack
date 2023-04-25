@@ -25,13 +25,13 @@ class ReadDB : ObservableObject {
         let db = Firestore.firestore()
         let ref = db.collection("users")
         
-        ref.whereField("email", isEqualTo: userEmail)
+        ref.whereField("username", isEqualTo: userName)
             .getDocuments { (snapshot, error) in
                 if let error = error {
                     print("Error getting email in getUsername: \(error.localizedDescription)")
                 } else {
                     for document in snapshot!.documents {
-                        UserDefaults.standard.set(String(describing:document.data()["username"]!), forKey: "username")
+                        UserDefaults.standard.set(String(describing:document.data()["email"]!), forKey: "email")
                         UserDefaults.standard.set(String(describing:document.data()["full_name"]!), forKey: "full_name")
                         UserDefaults.standard.set(String(describing:document.data()["stripe_customer_id"]!), forKey: "stripe_customer_id")
                         UserDefaults.standard.set(String(describing:document.data()["stripe_payment_method"]!), forKey: "stripe_payment_method")
