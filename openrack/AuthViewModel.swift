@@ -52,12 +52,10 @@ class AuthViewModel : ObservableObject {
                     ReadDB().getUserDefaults()
                     print("Successful auth")
                     self.signedIn.toggle()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         print("I'm here \(self.userName)")
                         ReadDB().getCreatorShows()
                         ReadDB().getViewerLiveShows()
-                        ReadDB().getViewerScheduledShows()
-                        print("Viewer show ready")
                     }
             }
         }

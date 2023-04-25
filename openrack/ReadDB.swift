@@ -119,6 +119,7 @@ class ReadDB : ObservableObject {
                         viewerShows.append(document.data())
                     }
                 }
+                ReadDB().getViewerScheduledShows()
                 UserDefaults.standard.set(viewerShows, forKey: "viewer_shows")
 
             }
@@ -142,6 +143,7 @@ class ReadDB : ObservableObject {
                     }
                 }
                 UserDefaults.standard.set(viewerScheduledShows, forKey: "viewer_scheduled_shows")
+                print("We have scheduled shows")
 
             }
     }

@@ -94,21 +94,25 @@ struct SignInEmailView: View {
                     Button(action: {
                         withAnimation(.easeIn) {
                             if String(describing: userDetails[3]) == "Yes" {
-                                signupVM.signUpWithEmail(email: emailText, password: passwordText, username: usernameText, fullName: fullNameText)
+                                
+                                    signupVM.signUpWithEmail(email: emailText, password: passwordText, username: usernameText, fullName: fullNameText)
+                                
                                 
                             } else {
+                                
                                     signupVM.signIn(email: emailText, password: passwordText)
-                                }
+                                    isNavigationBarHidden.toggle()
+                                    isLoading.toggle()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                                        if emailText == "ayman.ali1302@gmail.com" {
+                                                isAdminPresented.toggle()
+                                        } else {
+                                                isUserPresented.toggle()
+                                        }
+                                
+                            }
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
-                            isNavigationBarHidden.toggle()
-                            isLoading.toggle()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                                if emailText == "ayman.ali1302@gmail.com" {
-                                    isAdminPresented.toggle()
-                                } else {
-                                    isUserPresented.toggle()
-                                }
-                        
+                            
 //                                isPresented.toggle()
                         }
                         }
