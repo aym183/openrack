@@ -25,6 +25,7 @@ struct LandingPage: View {
 struct LandingContent: View {
     var signupVM = AuthViewModel()
     var authUIText = AuthUIViewModel()
+    @State var showingPhoneBottomSheet = false
     @State var showingSignInBottomSheet = false
     @State var showingLoginBottomSheet = false
     @State var signedIn = false
@@ -38,7 +39,7 @@ struct LandingContent: View {
                     
                     Text("Openrack").font(Font.system(size: 70)).fontWeight(.heavy)
                         .foregroundColor(Color("Primary_color"))
-                        .padding(.top, 150)
+                        .padding(.top, 120)
                     
                     Text("Buy, Sell, Discover ✨").font(Font.system(size: 20)).font(.subheadline).fontWeight(.semibold).foregroundColor(.black)
                         .opacity(0.7)
@@ -52,7 +53,7 @@ struct LandingContent: View {
 //                        .multilineTextAlignment(.center)
 //
                     
-                    Button(action: { showingSignInBottomSheet.toggle() }) {
+                    Button(action: { showingPhoneBottomSheet.toggle() }) {
                         HStack {
                             Image(systemName: "iphone.homebutton")
                             Text("Sign in with Phone").font(.title3)
@@ -65,25 +66,25 @@ struct LandingContent: View {
                     )
                     .cornerRadius(50)
                     .padding(.horizontal)
-                    .navigationDestination(isPresented: $showingSignInBottomSheet) {
+                    .navigationDestination(isPresented: $showingPhoneBottomSheet) {
                         SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Phone Sign In"))
                     }
                     
                     
-                    Button(action: { DispatchQueue.global().async { signupVM.signUpWithGoogle() } })
-                    {
-                        HStack{
-                            Image("Google_Logo")
-                            Text("Sign in with Google").font(.title3)
-                        }
-                    }
-                    .frame(width: 360, height: 50)
-                    .background(Color("Google_color")).foregroundColor(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
-                    )
-                    .cornerRadius(50)
-                    .padding(.horizontal)
+//                    Button(action: { DispatchQueue.global().async { signupVM.signUpWithGoogle() } })
+//                    {
+//                        HStack{
+//                            Image("Google_Logo")
+//                            Text("Sign in with Google").font(.title3)
+//                        }
+//                    }
+//                    .frame(width: 360, height: 50)
+//                    .background(Color("Google_color")).foregroundColor(Color.white)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
+//                    )
+//                    .cornerRadius(50)
+//                    .padding(.horizontal)
                     
                     Button(action: { showingSignInBottomSheet.toggle() }) {
                         HStack {
@@ -99,7 +100,7 @@ struct LandingContent: View {
                     .cornerRadius(50)
                     .padding(.horizontal)
                     .navigationDestination(isPresented: $showingSignInBottomSheet) {
-                        SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Sign In"))
+                        SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Email"))
                     }
                     
                     Divider().frame(width: 300, height: 3).background(.black).padding(.top, 5).padding(.bottom, 5).opacity(0.7)
