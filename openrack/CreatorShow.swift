@@ -161,7 +161,7 @@ struct CreatorShow: View {
                             
                             Spacer()
                             
-                            Text(readListing.price!)
+                            Text("\(readListing.price!) AED")
                                 .font(Font.system(size: 18)).fontWeight(.bold).padding(.trailing,10)
                             
                         }

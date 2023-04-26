@@ -85,7 +85,7 @@ struct ListingsForm: View {
                         
                         Button(action: {
 //                            , "category": String(describing: selectedCategory!.option), "subcategory": String(describing: selectedSubCategory!.option),
-                            listing = ["name": listingName, "description": listingDescription, "quantity": listingQuantity, "type": selectedType!.option , "price": selectedType!.option == "Buy Now" ? listingPrice: "0" ]
+                            listing = ["name": listingName, "description": listingDescription, "quantity": listingQuantity, "type": selectedType!.option , "price": selectedType!.option == "Buy Now" ? listingPrice: "10" ]
                             
 //                            ImageSelector().getImage(category: String(describing: selectedCategory!.option)),
                             let newListing = Listing(image: "tshirt.fill", title: listingName, quantity: listingQuantity, price: selectedType!.option == "Buy Now" ? listingPrice: "0", type: selectedType!.option)
