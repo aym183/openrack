@@ -179,7 +179,7 @@ class UpdateDB : ObservableObject {
         
         let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
         
-        dbRef.updateChildValues(["title": listing.title, "price": listing.price == "0" ? "10" : listing.price, "is_sold": false]) { error, ref in
+        dbRef.updateChildValues(["title": listing.title, "price": listing.price == "0" ? "10" : listing.price, "is_sold": false, "type": listing.type]) { error, ref in
             if let error = error {
                 print("Error updating name: \(error.localizedDescription)")
             } else {

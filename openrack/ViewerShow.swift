@@ -152,31 +152,32 @@ struct ViewerShow: View {
                         }
                     }) {
                         Text("Buy Now")
-                            .font(.title3).fontWeight(.medium)
-                            .frame(width: 180, height: 50)
+                            .font(.title3).fontWeight(.semibold)
+                            .frame(width: 300, height: 50)
                             .padding(.trailing, 10)
                     }
                     .padding(.trailing, -20)
-                    .background((readListing.isSold != true) ? Color.white : Color.gray)
-                    .foregroundColor((readListing.isSold != true) ? Color("Primary_color") : Color.white)
+                    .background((readListing.isSold != true) ? Color("Primary_color") : Color.gray)
+                    .foregroundColor((readListing.isSold != true) ? Color.white : Color.white)
+                    .foregroundColor(.white)
                     .overlay(
                         RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
                     )
                     .cornerRadius(50)
                     .disabled(readListing.isSold != true ? false : true)
                     
-                    Button(action: { }) {
-                        Text("Make Offer")
-                            .font(.title3).fontWeight(.medium)
-                            .frame(width: 140, height: 50)
-                            .background(Color("Primary_color"))
-                            .foregroundColor(.white)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
-                            )
-                            .cornerRadius(50)
-                            .padding(.horizontal)
-                    }
+//                    Button(action: { }) {
+//                        Text("Make Offer")
+//                            .font(.title3).fontWeight(.medium)
+//                            .frame(width: 140, height: 50)
+//                            .background(Color("Primary_color"))
+//                            .foregroundColor(.white)
+//                            .overlay(
+//                                RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
+//                            )
+//                            .cornerRadius(50)
+//                            .padding(.horizontal)
+//                    }
                 }
                 .padding(.horizontal)
                     

@@ -11,6 +11,7 @@ import SwiftUI
 class ReadDB : ObservableObject {
     
     @Published var title: String? = nil
+    @Published var type: String? = nil
     @Published var price: String? = nil
     @Published var isSold: Bool? = nil
     @Published var address: [String: String]? = nil
@@ -240,11 +241,18 @@ class ReadDB : ObservableObject {
     func getListingSelected(listingID: String) {
         let titleDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("title")
         let priceDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("price")
+        let typeDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("type")
         let isSoldDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("is_sold")
         
         titleDB.observe(.value) { snapshot in
             if let title_text = snapshot.value as? String {
                     self.title = title_text
+            }
+        }
+        
+        typeDB.observe(.value) { snapshot in
+            if let type_text = snapshot.value as? String {
+                    self.type = type_text
             }
         }
         
