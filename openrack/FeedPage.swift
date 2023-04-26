@@ -43,6 +43,8 @@ struct FeedPage: View {
                             VStack (alignment: .leading){
                                 Button(action: {
                                     isShownShow.toggle()
+                                    print(viewerShows![index])
+                                    print(index)
                                 }) {
                                     VStack (alignment: .leading){
 
@@ -71,6 +73,11 @@ struct FeedPage: View {
                                         RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
                                     )
                                 } //Button
+                                .navigationDestination(isPresented: $isShownShow) {
+        //                            ViewerShow(username:viewerShows![index]["created_by"]!, playbackID: viewerShows![index]["playback_id"]!, listingID: viewerShows![index]["listings"]!).navigationBarHidden(true)
+                                        ViewerShow(retrievedShow: viewerShows![index]).navigationBarBackButtonHidden(true)
+                                }
+                                
                                 HStack {
                                     Image(systemName:"person.crop.circle")
                                     Text(String(describing:viewerShows![index]["created_by"]!)).fontWeight(.medium).padding(.leading, -5)
@@ -78,11 +85,6 @@ struct FeedPage: View {
                                 .font(Font.system(size: 15))
                             }
                         }
-                        .navigationDestination(isPresented: $isShownShow) {
-//                            ViewerShow(username:viewerShows![index]["created_by"]!, playbackID: viewerShows![index]["playback_id"]!, listingID: viewerShows![index]["listings"]!).navigationBarHidden(true)
-                                ViewerShow(retrievedShow: viewerShows![index]).navigationBarHidden(true)
-                        }
-
                         }
                         
                         
@@ -179,6 +181,7 @@ struct FeedPage: View {
         }
 //        .onAppear {
 //            print(viewerScheduledShows)
+//            print(viewerShows)
 //        }
         
     }
