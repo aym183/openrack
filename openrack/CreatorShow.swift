@@ -146,29 +146,40 @@ struct CreatorShow: View {
 
                                 Text("Settings").font(Font.system(size: 15)).fontWeight(.semibold) // Where creators can decide whether audience can bid or buy straight for an item, set timer for each item // Creators should be able to see each offer and choose to accept/deny
                             }
-                            .padding(.vertical, 50).padding(.trailing)
+                            .padding(.vertical, 40).padding(.trailing)
                             .foregroundColor(.white)
                         }
 
-                    if readListing.title != nil && readListing.isSold != true {
+                    if readListing.title != nil && readListing.price != nil && readListing.isSold != true {
                         HStack {
                             VStack(alignment: .leading) {
-                                Text(readListing.title!)
-                                    .font(Font.system(size: 15)).fontWeight(.bold)
+                                Text(readListing.title!).font(Font.system(size: 18)).fontWeight(.bold)
                                 
-                                Text("🇦🇪 Shipping & Tax").font(Font.system(size: 10)).opacity(0.7)
+                                Text("🇦🇪 Shipping & Tax").font(Font.system(size: 12)).opacity(0.7)
                             }
                             
                             Spacer()
                             
                             Text("\(readListing.price!) AED")
-                                .font(Font.system(size: 18)).fontWeight(.bold).padding(.trailing,10)
+                                .font(Font.system(size: 18)).fontWeight(.bold)
                             
                         }
                         .padding(.bottom)
                         .padding(.trailing)
                         .padding(.leading, 5)
                         .foregroundColor(Color.white)
+                        
+                        if readListing.type == "Auction" {
+                            HStack {
+                                Text("0:50").font(Font.system(size: 18)).fontWeight(.semibold)
+                                Spacer()
+                                Text("@aym1302").font(Font.system(size: 18)).fontWeight(.semibold)
+                            }
+                            .padding(.bottom).padding(.top, 0)
+                            .padding(.trailing)
+                            .padding(.leading, 5)
+                            .foregroundColor(Color.white)
+                        }
                         
                     } else if readListing.isSold == true {
                         Text("")
