@@ -15,6 +15,7 @@ struct ViewerShow: View {
 //    let playbackID: String
     let playerController = AVPlayerViewController()
     @AppStorage("email") var userEmail: String = ""
+    @AppStorage("username") var userName: String = ""
 //    let listingID: String
     @State var showingPaySheet = false
     @State var showingAddressSheet = false
@@ -152,13 +153,16 @@ struct ViewerShow: View {
                         
                         if readListing.type == "Auction" && readListing.price != nil {
                             HStack {
-                                Button(action: { readListing.price = "\(Int(readListing.price!)! + 5)" }) {
+                                Button(action: {
+                                    readListing.price = "\(Int(readListing.price!)! + 5)"
+                                    UpdateDB().updateHighestBid(listingID: String(describing: retrievedShow["listings"]!), bid: "\(Int(readListing.price!)! + 5)", bidder: userName)
+                                }) {
                                     HStack {
-                                        Text("BID").font(.title3).fontWeight(.semibold)
+                                        Text("Place Bid").font(.title3).fontWeight(.semibold)
                                         Spacer()
-                                        Text("\(Int(readListing.price!)! + 5)").font(Font.system(size: 18)).fontWeight(.semibold)
+                                        Text("\(Int(readListing.price!)! + 5)").font(Font.system(size: 18)).fontWeight(.bold)
                                     }
-                                    .frame(width: 140, height: 45)
+                                    .frame(width: 155, height: 45)
                                     .padding(.horizontal, 10)
                                 }
                                 .background((readListing.isSold != true) ? Color("Primary_color") : Color.gray)

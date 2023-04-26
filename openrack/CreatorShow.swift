@@ -160,7 +160,7 @@ struct CreatorShow: View {
                             
                             Spacer()
                             
-                            Text("\(readListing.price!) AED")
+                            Text("\(readListing.highest_bid! == "" ? readListing.price! : readListing.highest_bid!) AED")
                                 .font(Font.system(size: 18)).fontWeight(.bold)
                             
                         }
@@ -173,7 +173,7 @@ struct CreatorShow: View {
                             HStack {
                                 Text("0:50").font(Font.system(size: 18)).fontWeight(.semibold)
                                 Spacer()
-                                Text("@aym1302").font(Font.system(size: 18)).fontWeight(.semibold)
+                                Text(readListing.current_bidder!).font(Font.system(size: 18)).fontWeight(.semibold)
                             }
                             .padding(.bottom).padding(.top, 0)
                             .padding(.trailing)

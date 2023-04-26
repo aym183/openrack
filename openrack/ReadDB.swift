@@ -13,6 +13,8 @@ class ReadDB : ObservableObject {
     @Published var title: String? = nil
     @Published var type: String? = nil
     @Published var price: String? = nil
+    @Published var highest_bid: String? = nil
+    @Published var current_bidder: String? = nil
     @Published var isSold: Bool? = nil
     @Published var address: [String: String]? = nil
     @Published var cardDetails: [String: String]? = nil
@@ -243,6 +245,8 @@ class ReadDB : ObservableObject {
         let priceDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("price")
         let typeDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("type")
         let isSoldDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("is_sold")
+        let currentBidderDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("current_bidder")
+        let highestBidDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("highest_bid")
         
         titleDB.observe(.value) { snapshot in
             if let title_text = snapshot.value as? String {
@@ -267,7 +271,18 @@ class ReadDB : ObservableObject {
                     self.isSold = is_sold
             }
         }
+
+        currentBidderDB.observe(.value) { snapshot in
+            if let current_bidder_value = snapshot.value as? String {
+                    self.current_bidder = current_bidder_value
+            }
+        }
         
+        highestBidDB.observe(.value) { snapshot in
+            if let highest_bid_value = snapshot.value as? String {
+                    self.highest_bid = highest_bid_value
+            }
+        }
     }
     
 }

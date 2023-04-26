@@ -189,8 +189,19 @@ class UpdateDB : ObservableObject {
 
     }
     
-    
-    // ------------------------- Realtime Database ---------------------------------
+    func updateHighestBid(listingID: String, bid: String, bidder: String) {
+        
+        let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
+        
+        dbRef.updateChildValues(["highest_bid": bid, "current_bidder": bidder]) { error, ref in
+            if let error = error {
+                print("Error updating bid: \(error.localizedDescription)")
+            } else {
+                print("Realtime Current Bid Updated")
+            }
+        }
+
+    }
     
     func updateListingSold(listingID: String) {
         let showsRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
