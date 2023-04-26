@@ -22,6 +22,7 @@ struct ViewerShow: View {
     @State var isShowingAddressForm = false
     @State var showConfirmationOrder = false
     @State var showingFeedPage = false
+    @State var currentBid = 0
     @StateObject var readListing = ReadDB()
  
     
@@ -149,13 +150,13 @@ struct ViewerShow: View {
                     }
                     HStack{
                         
-                        if readListing.type == "Auction" {
+                        if readListing.type == "Auction" && readListing.price != nil {
                             HStack {
-                                Button(action: { }) {
+                                Button(action: { readListing.price = "\(Int(readListing.price!)! + 5)" }) {
                                     HStack {
                                         Text("BID").font(.title3).fontWeight(.semibold)
                                         Spacer()
-                                        Text("15 AED").font(Font.system(size: 18)).fontWeight(.semibold)
+                                        Text("\(Int(readListing.price!)! + 5)").font(Font.system(size: 18)).fontWeight(.semibold)
                                     }
                                     .frame(width: 140, height: 45)
                                     .padding(.horizontal, 10)
