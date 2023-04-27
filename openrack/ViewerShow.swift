@@ -27,12 +27,13 @@ struct ViewerShow: View {
     @State var currentBid = 0
     @StateObject var readListing = ReadDB()
     @State var updateDB = UpdateDB()
- 
+    @State var commentText = ""
     
     var body: some View {
         NavigationStack {
             let player = AVPlayer(url: URL(string: "https://stream.mux.com/\(retrievedShow["playback_id"]!).m3u8")!)
             ZStack {
+                
                 GeometryReader { geometry in
                     VideoPlayer (player: player)
                         .disabled(true)
@@ -84,6 +85,35 @@ struct ViewerShow: View {
                     Spacer()
                     
                     HStack {
+                        ScrollView {
+                            VStack {
+                                ForEach(1..<20) { index in
+                                    HStack {
+                                        
+                                        Image(systemName: "person.circle").font(Font.system(size: 20))
+                                        
+                                        VStack(alignment: .leading,spacing: 0) {
+                                            Text("aym1302").font(Font.system(size: 13)).padding(.top,10)
+                                            Text("Comment for me").font(Font.system(size: 16)).foregroundColor(Color("Primary_color"))
+                                        }
+                                        Spacer()
+                                    }
+                                    .fontWeight(.semibold)
+                                    
+                                }
+                                .foregroundColor(.white)
+                                
+                            }
+                            .frame(width: 250)
+                            
+
+                        }
+                        .frame(width: 250, height: 200)
+//                        .border(.white, width: 2)
+                        .cornerRadius(10)
+                        .padding(.leading,5).padding(.bottom)
+                        
+                        
                         Spacer()
                         VStack {
                             
@@ -125,9 +155,26 @@ struct ViewerShow: View {
                             }
                             .padding(.top)
                         }
-                        .padding(.vertical, 40).padding(.trailing,10)
                         .foregroundColor(.white)
                     }
+                    .padding(.vertical, 40).padding(.trailing,10).padding(.bottom, -45)
+                    
+                    HStack {
+                        TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white))
+                            .padding(.horizontal)
+                            .frame(width: 170, height: 35)
+                            .cornerRadius(50)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 50).stroke(.white, lineWidth: 2)
+                            )
+                            .opacity(0.7)
+                            .padding(.bottom, 40)
+
+                        
+                        Spacer()
+                    }.padding(.horizontal,10)
+
+                    
                     
                     if readListing.title != nil && readListing.price != nil && readListing.isSold != true {
                         HStack {
