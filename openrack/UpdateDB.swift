@@ -12,7 +12,7 @@ import SwiftUI
 
 class UpdateDB : ObservableObject {
     var miscData = MiscData()
-    var previousWorkItem: DispatchWorkItem?
+    var workItem: DispatchWorkItem? = nil
     
     func updateStatus(text: String, livestreamID: String) {
         let db = Firestore.firestore()
@@ -206,34 +206,37 @@ class UpdateDB : ObservableObject {
     
     func updateTimer(listingID: String, start_time: String, viewer_side: Bool) {
 
-        print(previousWorkItem)
+        print(workItem)
         
-        if previousWorkItem != nil {
-            previousWorkItem?.cancel()
-            print(previousWorkItem)
-            print("I cancelled")
+        if workItem != nil {
+            workItem?.cancel()
         }
         
-//        DispatchQueue.global(qos: .background).async {
-        let workItem = DispatchWorkItem {
-            let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-            let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
-            var count = 0
-            
-            let components = start_time.components(separatedBy: ":")
-            let minutes = Int(components[0]) ?? 0
-            let seconds = Int(components[1]) ?? 0
-            let totalSeconds = minutes * 60 + seconds
-            let newMinutes = totalSeconds / 60
-            var newSeconds = totalSeconds % 60
-            
-            if viewer_side {
-                newSeconds += 5
-            }
-            
+        let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+        let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
+        var count = 0
+        
+        let components = start_time.components(separatedBy: ":")
+        let minutes = Int(components[0]) ?? 0
+        let seconds = Int(components[1]) ?? 0
+        let totalSeconds = minutes * 60 + seconds
+        let newMinutes = totalSeconds / 60
+        var newSeconds = totalSeconds % 60
+        
+        if viewer_side {
+            newSeconds += 5
+        }
+        
+        workItem = DispatchWorkItem {
             print(newSeconds)
             while newSeconds >= 0 {
                 sleep(1)
+                
+//                if self.readListing.is_timer! {
+//                    self.readListing.is_timer! = false
+//                    break
+//                }
+                
                 if newSeconds < 10 {
                     dbRef.updateChildValues(["timer": "0\(newMinutes):0\(newSeconds)"]) { error, ref in
                         if let error = error {
@@ -251,14 +254,13 @@ class UpdateDB : ObservableObject {
                 newSeconds -= 1
             }
         }
-//        }
         
         
-        DispatchQueue.global(qos: .background).async(execute: workItem)
+        DispatchQueue.global(qos: .background).async(execute: workItem!)
         
-        previousWorkItem = workItem
+//        previousWorkItem = workItem
         
-        print(previousWorkItem)
+//        print(previousWorkItem)
     }
 
     

@@ -19,6 +19,7 @@ class ReadDB : ObservableObject {
     @Published var isSold: Bool? = nil
     @Published var address: [String: String]? = nil
     @Published var cardDetails: [String: String]? = nil
+//    @Published var is_timer: Bool? = false
     
     func getUserDefaults() {
         @AppStorage("username") var userName: String = ""
@@ -249,6 +250,7 @@ class ReadDB : ObservableObject {
         let currentBidderDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("current_bidder")
         let highestBidDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("highest_bid")
         let timerDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("timer")
+//        let istimerDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("is_timer")
         
         titleDB.observe(.value) { snapshot in
             if let title_text = snapshot.value as? String {
@@ -273,6 +275,12 @@ class ReadDB : ObservableObject {
                     self.isSold = is_sold
             }
         }
+        
+//        istimerDB.observe(.value) { snapshot in
+//            if let is_timer = snapshot.value as? Bool {
+//                    self.is_timer = is_timer
+//            }
+//        }
 
         currentBidderDB.observe(.value) { snapshot in
             if let current_bidder_value = snapshot.value as? String {

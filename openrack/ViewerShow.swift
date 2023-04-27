@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVKit
+import Firebase
 
 struct ViewerShow: View {
 //https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8
@@ -156,18 +157,21 @@ struct ViewerShow: View {
                                     readListing.price = "\(Int(readListing.price!)! + 5)"
                                     UpdateDB().updateHighestBid(listingID: String(describing: retrievedShow["listings"]!), bid: "\(Int(readListing.price!)! + 5)", bidder: userName)
                                     
-                                    if readListing.timer! == "00:00" && userName == readListing.current_bidder {
-                                        ReadServer().executeOrderTransaction(order_amount: readListing.price!) { response in
-                                            if response! == "success" {
-                                                UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
-                                                showConfirmationOrder.toggle()
-                                            }
-                                        }
-                                    }
+                                   
+                                    
+//                                    else if readListing.timer! != "00:00" {
+                                        updateDB.updateTimer(listingID: String(describing: retrievedShow["listings"]!), start_time: readListing.timer!, viewer_side: true)
+//
+//                                        Database.database().reference().child("shows").child(String(describing: retrievedShow["listings"]!)).child("selectedListing").child("timer").removeValue()
+//
+                                        
+//                                    }
                                     
                                     // Insert timer function here
 //                                    updateDB.updateTimer(listingID: String(describing: retrievedShow["listings"]!), start_time: readListing.timer!, viewer_side: true)
                                 }) {
+                                    
+                                    
                                     HStack {
                                         Text("Place Bid").font(.title3).fontWeight(.semibold)
                                         Spacer()
@@ -187,7 +191,10 @@ struct ViewerShow: View {
                                 
                                 Spacer()
                                 
+                                
                                 Text(readListing.timer!).foregroundColor(.white).fontWeight(.semibold).font(Font.system(size: 18)).padding(.trailing, 10)
+                                
+                                
                             }
                             .padding([.horizontal,.bottom])
                             
@@ -248,6 +255,18 @@ struct ViewerShow: View {
                     print(String(describing: retrievedShow))
                     readListing.getListingSelected(listingID: String(describing: retrievedShow["listings"]!))
                 }
+                .onReceive(readListing.$timer) { timer in
+                    if timer == "00:00" && userName == readListing.current_bidder {
+                        print("Auction Ended")
+                        
+                        ReadServer().executeOrderTransaction(order_amount: readListing.price!) { response in
+                                if response! == "success" {
+                                    showConfirmationOrder.toggle()
+                                    UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
+                                }
+                            }
+                    }
+                }
                 .sheet(isPresented: $showingPaySheet) {
                     PaymentDetails(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm, isShowingAddressForm: $isShowingAddressForm)
                         .presentationDetents([.height(320)])
@@ -261,6 +280,7 @@ struct ViewerShow: View {
                     }
                 }
             }
+            
             .SPAlert(
                 isPresent: $showConfirmationOrder,
                 title: "Success!",
