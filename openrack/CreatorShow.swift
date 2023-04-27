@@ -150,7 +150,7 @@ struct CreatorShow: View {
                             .foregroundColor(.white)
                         }
 
-                    if readListing.title != nil && readListing.price != nil && readListing.isSold != true && readListing.highest_bid != nil {
+                    if readListing.title != nil && readListing.price != nil && readListing.isSold != true && readListing.highest_bid != nil && readListing.timer != nil {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(readListing.title!).font(Font.system(size: 18)).fontWeight(.bold)
@@ -171,7 +171,7 @@ struct CreatorShow: View {
                         
                         if readListing.type == "Auction" {
                             HStack {
-                                Text("0:50").font(Font.system(size: 18)).fontWeight(.semibold)
+                                Text(readListing.timer!).font(Font.system(size: 18)).fontWeight(.semibold)
                                 Spacer()
                                 Text(readListing.current_bidder!).font(Font.system(size: 18)).fontWeight(.semibold)
                             }

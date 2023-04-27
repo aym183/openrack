@@ -220,7 +220,7 @@ class UpdateDB : ObservableObject {
             print(newSeconds)
             while newSeconds >= 0 {
                 sleep(1)
-                dbRef.updateChildValues(["timer": newSeconds]) { error, ref in
+                dbRef.updateChildValues(["timer": "\(newMinutes):\(newSeconds)"]) { error, ref in
                     if let error = error {
                         print("Error updating timer: \(error.localizedDescription)")
                     }
