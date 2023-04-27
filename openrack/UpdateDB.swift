@@ -203,6 +203,34 @@ class UpdateDB : ObservableObject {
 
     }
     
+    func updateTimer(listingID: String, start_time: String) {
+
+        DispatchQueue.global(qos: .background).async {
+            let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+            let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
+            var count = 0
+            
+            let components = start_time.components(separatedBy: ":")
+            let minutes = Int(components[0]) ?? 0
+            let seconds = Int(components[1]) ?? 0
+            let totalSeconds = minutes * 60 + seconds
+            let newMinutes = totalSeconds / 60
+            var newSeconds = totalSeconds % 60
+            
+            print(newSeconds)
+            while newSeconds >= 0 {
+                sleep(1)
+                dbRef.updateChildValues(["timer": newSeconds]) { error, ref in
+                    if let error = error {
+                        print("Error updating timer: \(error.localizedDescription)")
+                    }
+                }
+                newSeconds -= 1
+            }
+        }
+    }
+
+    
     func updateListingSold(listingID: String) {
         let showsRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
         showsRef.child("is_sold").setValue(true)

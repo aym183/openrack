@@ -47,7 +47,7 @@ struct CreatorShow: View {
                 if isTimerShown {
                     Text("\(countdownTimer)").font(Font.system(size: 100)).opacity(0.7).foregroundColor(.white)
                         .onReceive(timer) { _ in
-                            if countdownTimer >= 0 && timerRunning {
+                            if countdownTimer > 0 && timerRunning {
                                 countdownTimer -= 1
                             } else {
                                 timerRunning = false

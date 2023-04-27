@@ -97,9 +97,7 @@ struct ViewerShow: View {
                             
                             Text("Share").font(Font.system(size: 15)).fontWeight(.semibold)
                             
-                            Button(action: {
-                                showingPaySheet.toggle()
-                            }) {
+                            Button(action: { showingPaySheet.toggle() }) {
                                 Circle()
                                     .fill(Color("Primary_color"))
                                     .frame(height: 50)
