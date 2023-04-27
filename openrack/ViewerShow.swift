@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 09/04/2023.
 //
-
 import SwiftUI
 import AVKit
 import Firebase
@@ -157,15 +156,16 @@ struct ViewerShow: View {
                         }
                         .foregroundColor(.white)
                     }
-                    .padding(.vertical, 40).padding(.trailing,10).padding(.bottom, -45)
+                    .padding(.vertical, 40).padding(.trailing,10).padding(.bottom, -50)
                     
                     HStack {
-                        TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white))
+                        TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white).font(Font.system(size: 12)))
                             .padding(.horizontal)
-                            .frame(width: 170, height: 35)
-                            .cornerRadius(50)
+                            .foregroundColor(.white).font(Font.system(size: 12))
+                            .frame(width: 130, height: 37)
+                            .cornerRadius(20)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 50).stroke(.white, lineWidth: 2)
+                                RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 2)
                             )
                             .opacity(0.7)
                             .padding(.bottom, 40)

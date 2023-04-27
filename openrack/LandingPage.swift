@@ -26,8 +26,8 @@ struct LandingContent: View {
     var signupVM = AuthViewModel()
     var authUIText = AuthUIViewModel()
     @State var showingPhoneBottomSheet = false
-    @State var showingSignInBottomSheet = false
-    @State var showingLoginBottomSheet = false
+//    @State var showingSignInBottomSheet = false
+//    @State var showingLoginBottomSheet = false
     @State var signedIn = false
     // ------ Add @AppStorage("shouldShowOnboarding") instead of @State to persist not showing onbaording after  user's tried ------
     @AppStorage("shouldShowOnboarding") var shouldShowOnboarding: Bool = true
@@ -55,11 +55,13 @@ struct LandingContent: View {
                     
                     Button(action: { showingPhoneBottomSheet.toggle() }) {
                         HStack {
-                            Image(systemName: "iphone.homebutton")
-                            Text("Sign in with Phone").font(.title3)
+                            Text("Get Started")
+                            Image(systemName: "arrow.forward")
                         }
+                        .font(Font.system(size: 25))
+                        .fontWeight(.semibold)
                     }
-                    .frame(width: 360, height: 50)
+                    .frame(width: 360, height: 60)
                     .background(Color.black).foregroundColor(Color.white)
                     .overlay(
                         RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
@@ -86,42 +88,44 @@ struct LandingContent: View {
 //                    .cornerRadius(50)
 //                    .padding(.horizontal)
                     
-                    Button(action: { showingSignInBottomSheet.toggle() }) {
-                        HStack {
-                            Image(systemName: "envelope.fill")
-                            Text("Sign in with Email").font(.title3)
-                        }
-                    }
-                    .frame(width: 360, height: 50)
-                    .background(Color("Primary_color")).foregroundColor(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
-                    )
-                    .cornerRadius(50)
-                    .padding(.horizontal)
-                    .navigationDestination(isPresented: $showingSignInBottomSheet) {
-                        SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Email"))
-                    }
+//                    Button(action: { showingSignInBottomSheet.toggle() }) {
+//                        HStack {
+//                            Image(systemName: "envelope.fill")
+//                            Text("Sign in with Email").font(.title3)
+//                        }
+//                    }
+//                    .frame(width: 360, height: 50)
+//                    .background(Color("Primary_color")).foregroundColor(Color.white)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
+//                    )
+//                    .cornerRadius(50)
+//                    .padding(.horizontal)
+//                    .navigationDestination(isPresented: $showingSignInBottomSheet) {
+//                        SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Email"))
+//                    }
+//
+//                    Divider().frame(width: 300, height: 3).background(.black).padding(.top, 5).padding(.bottom, 5).opacity(0.7)
+//
+//                    Button(action: { showingLoginBottomSheet.toggle() }) {
+//                        HStack {
+//                            Image(systemName: "envelope.fill")
+//                            Text("Login with Email").font(.title3)
+//
+//                        }
+//                    }
+//                    .frame(width: 360, height: 50)
+//                    .background(.white).foregroundColor(.black)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
+//                    )
+//                    .cornerRadius(50)
+//                    .padding(.horizontal)
+//                    .navigationDestination(isPresented: $showingLoginBottomSheet) {
+//                        SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Login"))
+//                    }
                     
-                    Divider().frame(width: 300, height: 3).background(.black).padding(.top, 5).padding(.bottom, 5).opacity(0.7)
                     
-                    Button(action: { showingLoginBottomSheet.toggle() }) {
-                        HStack {
-                            Image(systemName: "envelope.fill")
-                            Text("Login with Email").font(.title3)
-                            
-                        }
-                    }
-                    .frame(width: 360, height: 50)
-                    .background(.white).foregroundColor(.black)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 50).stroke(Color.black, lineWidth: 2)
-                    )
-                    .cornerRadius(50)
-                    .padding(.horizontal)
-                    .navigationDestination(isPresented: $showingLoginBottomSheet) {
-                        SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Login"))
-                    }
                     //                    .sheet(isPresented: $showingLoginBottomSheet) { SignInEmailView(userDetails: authUIText.UIDetails(purpose: "Login")) }
                     
                     Text("By continuing you agree to our Terms of Service.\nOpenrack services are subject to our Privacy Policy.")
