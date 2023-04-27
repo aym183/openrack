@@ -150,7 +150,7 @@ struct CreatorShow: View {
                             .foregroundColor(.white)
                         }
 
-                    if readListing.title != nil && readListing.price != nil && readListing.isSold != true {
+                    if readListing.title != nil && readListing.price != nil && readListing.isSold != true && readListing.highest_bid != nil {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(readListing.title!).font(Font.system(size: 18)).fontWeight(.bold)
