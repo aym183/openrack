@@ -67,7 +67,7 @@ struct CreateListings: View {
                             Button(action: {
                                 listingSelected = preSelected!
                                 if preSelected!.type == "Auction" {
-                                    UpdateDB().updateTimer(listingID: listingID, start_time: "0:30")
+                                    UpdateDB().updateTimer(listingID: listingID, start_time: "0:59", viewer_side: false)
                                 }
                             }) {
                                               HStack { Text("Start Selling").font(.title3) }

@@ -25,6 +25,7 @@ struct ViewerShow: View {
     @State var showingFeedPage = false
     @State var currentBid = 0
     @StateObject var readListing = ReadDB()
+    @State var updateDB = UpdateDB()
  
     
     var body: some View {
@@ -139,21 +140,33 @@ struct ViewerShow: View {
                             Spacer()
                             
                             Text("\(readListing.price!) AED")
-                                .font(Font.system(size: 18)).fontWeight(.bold)
+                                .font(Font.system(size: 18)).fontWeight(.bold).padding(.trailing, 10)
                             
                         }
                         .padding(.bottom)
-                        .padding(.leading).padding(.trailing)
+                        .padding(.horizontal)
                         .foregroundColor(Color.white)
                         
                     }
                     HStack{
                         
-                        if readListing.type == "Auction" && readListing.price != nil {
+                        if readListing.type == "Auction" && readListing.price != nil && readListing.timer != nil  && readListing.isSold != true {
                             HStack {
                                 Button(action: {
                                     readListing.price = "\(Int(readListing.price!)! + 5)"
                                     UpdateDB().updateHighestBid(listingID: String(describing: retrievedShow["listings"]!), bid: "\(Int(readListing.price!)! + 5)", bidder: userName)
+                                    
+                                    if readListing.timer! == "00:00" && userName == readListing.current_bidder {
+                                        ReadServer().executeOrderTransaction(order_amount: readListing.price!) { response in
+                                            if response! == "success" {
+                                                UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
+                                                showConfirmationOrder.toggle()
+                                            }
+                                        }
+                                    }
+                                    
+                                    // Insert timer function here
+//                                    updateDB.updateTimer(listingID: String(describing: retrievedShow["listings"]!), start_time: readListing.timer!, viewer_side: true)
                                 }) {
                                     HStack {
                                         Text("Place Bid").font(.title3).fontWeight(.semibold)
@@ -174,7 +187,7 @@ struct ViewerShow: View {
                                 
                                 Spacer()
                                 
-                                Text("0:50").foregroundColor(.white).fontWeight(.semibold).font(Font.system(size: 18))
+                                Text(readListing.timer!).foregroundColor(.white).fontWeight(.semibold).font(Font.system(size: 18)).padding(.trailing, 10)
                             }
                             .padding([.horizontal,.bottom])
                             

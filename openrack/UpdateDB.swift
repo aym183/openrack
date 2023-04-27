@@ -12,6 +12,7 @@ import SwiftUI
 
 class UpdateDB : ObservableObject {
     var miscData = MiscData()
+    var previousWorkItem: DispatchWorkItem?
     
     func updateStatus(text: String, livestreamID: String) {
         let db = Firestore.firestore()
@@ -203,9 +204,18 @@ class UpdateDB : ObservableObject {
 
     }
     
-    func updateTimer(listingID: String, start_time: String) {
+    func updateTimer(listingID: String, start_time: String, viewer_side: Bool) {
 
-        DispatchQueue.global(qos: .background).async {
+        print(previousWorkItem)
+        
+        if previousWorkItem != nil {
+            previousWorkItem?.cancel()
+            print(previousWorkItem)
+            print("I cancelled")
+        }
+        
+//        DispatchQueue.global(qos: .background).async {
+        let workItem = DispatchWorkItem {
             let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
             let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
             var count = 0
@@ -217,17 +227,38 @@ class UpdateDB : ObservableObject {
             let newMinutes = totalSeconds / 60
             var newSeconds = totalSeconds % 60
             
+            if viewer_side {
+                newSeconds += 5
+            }
+            
             print(newSeconds)
             while newSeconds >= 0 {
                 sleep(1)
-                dbRef.updateChildValues(["timer": "\(newMinutes):\(newSeconds)"]) { error, ref in
-                    if let error = error {
-                        print("Error updating timer: \(error.localizedDescription)")
+                if newSeconds < 10 {
+                    dbRef.updateChildValues(["timer": "0\(newMinutes):0\(newSeconds)"]) { error, ref in
+                        if let error = error {
+                            print("Error updating timer: \(error.localizedDescription)")
+                        }
+                    }
+                } else {
+                    dbRef.updateChildValues(["timer": "0\(newMinutes):\(newSeconds)"]) { error, ref in
+                        if let error = error {
+                            print("Error updating timer: \(error.localizedDescription)")
+                        }
                     }
                 }
+                
                 newSeconds -= 1
             }
         }
+//        }
+        
+        
+        DispatchQueue.global(qos: .background).async(execute: workItem)
+        
+        previousWorkItem = workItem
+        
+        print(previousWorkItem)
     }
 
     
