@@ -75,8 +75,6 @@ struct AccountPage: View {
                             .background(.gray)
                             .opacity(0.5)
                             .border(Color.black, width: 2)
-                            .disableAutocorrection(true)
-                            .autocapitalization(.none)
                             .disabled(true)
                             
                         
@@ -87,37 +85,37 @@ struct AccountPage: View {
                     .padding()
                     
                     
-                    HStack {
-                        Text("Email").padding(.trailing, 58)
-                        TextField("", text: $emailText)
-                            .font(Font.system(size: 13))
-                            .padding(.horizontal, 8)
-                            .frame(width: 200, height: 35)
-                            .background(.gray)
-                            .opacity(0.5)
-                            .border(Color.black, width: 2)
-                            .disabled(true)
-//                        Text(userEmail).font(Font.system(size: 15)).padding(.leading, 60)
-                    }
-                    .foregroundColor(.black)
-                    .fontWeight(.semibold)
-                    .padding()
+//                    HStack {
+//                        Text("Email").padding(.trailing, 58)
+//                        TextField("", text: $emailText)
+//                            .font(Font.system(size: 13))
+//                            .padding(.horizontal, 8)
+//                            .frame(width: 200, height: 35)
+//                            .background(.gray)
+//                            .opacity(0.5)
+//                            .border(Color.black, width: 2)
+//                            .disabled(true)
+////                        Text(userEmail).font(Font.system(size: 15)).padding(.leading, 60)
+//                    }
+//                    .foregroundColor(.black)
+//                    .fontWeight(.semibold)
+//                    .padding()
                     
-                    HStack {
-                        Text("Name").padding(.trailing, 55)
-                        TextField("", text: $nameText)
-                            .font(Font.system(size: 13))
-                            .padding(.horizontal, 8)
-                            .frame(width: 200, height: 35)
-                            .background(disableFields ? .gray : .white)
-                            .opacity(disableFields ? 0.5 : 1)
-                            .border(Color.black, width: 2)
-                            .disabled(disableFields)
-//                        Text(fullName).padding(.leading, 56)
-                    }
-                    .foregroundColor(.black)
-                    .fontWeight(.semibold)
-                    .padding()
+//                    HStack {
+//                        Text("Name").padding(.trailing, 55)
+//                        TextField("", text: $nameText)
+//                            .font(Font.system(size: 13))
+//                            .padding(.horizontal, 8)
+//                            .frame(width: 200, height: 35)
+//                            .background(disableFields ? .gray : .white)
+//                            .opacity(disableFields ? 0.5 : 1)
+//                            .border(Color.black, width: 2)
+//                            .disabled(disableFields)
+////                        Text(fullName).padding(.leading, 56)
+//                    }
+//                    .foregroundColor(.black)
+//                    .fontWeight(.semibold)
+//                    .padding()
                     
                     HStack {
                         Text("Phone").padding(.trailing, 51)
@@ -125,10 +123,10 @@ struct AccountPage: View {
                             .font(Font.system(size: 13))
                             .padding(.horizontal, 8)
                             .frame(width: 200, height: 35)
-                            .background(disableFields ? .gray : .white)
-                            .opacity(disableFields ? 0.5 : 1)
+                            .background(.gray)
+                            .opacity(0.5)
                             .border(Color.black, width: 2)
-                            .disabled(disableFields)
+                            .disabled(true)
 //                        Text("+447859234405").padding(.leading, 53)
                     }
                     .foregroundColor(.black)
