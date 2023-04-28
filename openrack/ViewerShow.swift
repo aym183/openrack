@@ -90,12 +90,11 @@ struct ViewerShow: View {
                                 ForEach(1..<20, id: \.self) { index in
                                     HStack {
                                         
-                                        Image(systemName: "person.circle").font(Font.system(size: 20))
-                                        
                                         VStack(alignment: .leading,spacing: 0) {
-                                            Text("aym1302").font(Font.system(size: 13)).padding(.top,10)
-                                            Text("Comment for me \(index)").font(Font.system(size: 16)).foregroundColor(Color("Primary_color"))
+                                            Text("aym1302").font(Font.system(size: 11)).fontWeight(.bold).padding(.top,10)
+                                            Text("Comment for me \(index)").font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2)
                                         }
+                                        .padding(.leading, 5)
                                         Spacer()
                                     }
                                     .fontWeight(.semibold)
@@ -177,7 +176,7 @@ struct ViewerShow: View {
                     
                     HStack {
                         TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white).font(Font.system(size: 12)))
-                            .padding(.horizontal)
+                            .padding(.leading, 20)
                             .foregroundColor(.white).font(Font.system(size: 12))
                             .frame(width: 130, height: 37)
                             .cornerRadius(20)
@@ -193,8 +192,8 @@ struct ViewerShow: View {
 
                         
                         Spacer()
-                    }.padding(.horizontal,10)
-
+                    }
+                    .padding(.leading, 10)
                     
                     
                     if readListing.title != nil && readListing.price != nil && readListing.isSold != true {
