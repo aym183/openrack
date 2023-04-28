@@ -84,6 +84,7 @@ struct FeedPage: View {
                                     Text(String(describing:viewerShows![index]["created_by"]!)).fontWeight(.medium).padding(.leading, -5)
                                 }
                                 .font(Font.system(size: 15))
+                                .foregroundColor(.black)
                             }
                         }
                         }
@@ -143,6 +144,7 @@ struct FeedPage: View {
                                             Text(String(describing:viewerScheduledShows![index]["created_by"]!)).fontWeight(.medium).padding(.leading, -5)
                                         }
                                         .font(Font.system(size: 15))
+                                        .foregroundColor(.black)
                                     }
                                 }
                             }

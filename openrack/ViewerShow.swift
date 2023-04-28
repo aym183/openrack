@@ -14,7 +14,6 @@ struct ViewerShow: View {
 //    let username: String
 //    let playbackID: String
     let playerController = AVPlayerViewController()
-    @AppStorage("email") var userEmail: String = ""
     @AppStorage("username") var userName: String = ""
 //    let listingID: String
     @State var showingPaySheet = false
@@ -27,6 +26,7 @@ struct ViewerShow: View {
     @StateObject var readListing = ReadDB()
     @State var updateDB = UpdateDB()
     @State var commentText = ""
+
     
     var body: some View {
         NavigationStack {
@@ -84,33 +84,50 @@ struct ViewerShow: View {
                     Spacer()
                     
                     HStack {
-                        ScrollView {
-                            VStack {
-                                ForEach(1..<20) { index in
+                        ScrollView(.vertical, showsIndicators: false) {
+//                            VStack {
+                            ScrollViewReader { proxy in
+                                ForEach(1..<20, id: \.self) { index in
                                     HStack {
                                         
                                         Image(systemName: "person.circle").font(Font.system(size: 20))
                                         
                                         VStack(alignment: .leading,spacing: 0) {
                                             Text("aym1302").font(Font.system(size: 13)).padding(.top,10)
-                                            Text("Comment for me").font(Font.system(size: 16)).foregroundColor(Color("Primary_color"))
+                                            Text("Comment for me \(index)").font(Font.system(size: 16)).foregroundColor(Color("Primary_color"))
                                         }
                                         Spacer()
                                     }
                                     .fontWeight(.semibold)
+                                    .id(index)
                                     
                                 }
                                 .foregroundColor(.white)
+                                .onAppear {
+                                    proxy.scrollTo(19)
+                                }
                                 
                             }
-                            .frame(width: 250)
+                                
+//                            }
+//                            .frame(width: 250)
                             
-
+                            
                         }
                         .frame(width: 250, height: 200)
 //                        .border(.white, width: 2)
                         .cornerRadius(10)
                         .padding(.leading,5).padding(.bottom)
+                        
+//                        .onAppear {
+//                            // Scroll to the bottom when the view appears
+//                            DispatchQueue.main.async {
+//                                withAnimation {
+//                                    index.scrollTo(19)
+////                                    ScrollViewProxy.scrollTo(19, anchor: .bottom)
+//                                }
+//                            }
+//                        }
                         
                         
                         Spacer()
@@ -169,6 +186,10 @@ struct ViewerShow: View {
                             )
                             .opacity(0.7)
                             .padding(.bottom, 40)
+                            .onSubmit {
+                                print("\(commentText), \(userName)")
+                                commentText = ""
+                            }
 
                         
                         Spacer()
@@ -319,7 +340,7 @@ struct ViewerShow: View {
                         .presentationDetents([.height(320)])
                 }
                 .navigationDestination(isPresented: $showingFeedPage) {
-                    if userEmail != "ayman.ali1302@gmail.com" {
+                    if userName != "aali183" {
                         FeedPage()
                             .navigationBarBackButtonHidden(true)
                     } else {

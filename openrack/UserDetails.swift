@@ -59,6 +59,7 @@ struct UserDetails: View {
                     
                 }
             }
+            .foregroundColor(.black)
             .onAppear {
                 print("\(phoneText), \(user_credentials)")
             }
@@ -151,6 +152,7 @@ struct FullNameDetails: View {
                     // Add error check for admin user redirection
                 }
                 .opacity(isLoading ? 0 : 1)
+                .foregroundColor(.black)
             }
             .navigationBarHidden(isNavigationBarHidden)
     }
