@@ -30,6 +30,8 @@ struct UserDetails: View {
                         .padding(.horizontal, 8)
                         .frame(width: 360, height: 50).border(Color.black, width: 2)
                         .background(.white)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
                     
                     Spacer()
                     
@@ -103,6 +105,8 @@ struct FullNameDetails: View {
                         .padding(.horizontal, 8)
                         .frame(width: 360, height: 50).border(Color.black, width: 2)
                         .background(.white)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
                     
                     Spacer()
                     
@@ -112,7 +116,7 @@ struct FullNameDetails: View {
                         isLoading.toggle()
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            if usernameText == "aym1302" {
+                            if usernameText == "aali183" {
                                 isAdminPage.toggle()
                             } else {
                                 isUserPage.toggle()

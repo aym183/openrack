@@ -13,41 +13,26 @@ struct LandingPage: View {
 //    AppStorage("username")
 //    : String
     
-    @State var userName = "aym1302"
+    @AppStorage("username") var userName: String = ""
     @State var userIsLoggedIn = false
     var body: some View {
         ZStack {
-            
-//            if userIsLoggedIn {
-//
-//                VStack {
-//                        ProgressView()
-//                            .scaleEffect(2.5)
-//                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-//
-//                        Text("Getting Openrack Ready...🥳").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
-//                }
-                
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
-//                    if userName == "aym1302" {
-//                        BottomNavbar()
-//                    } else {
-//                        FeedPage()
-//                    }
-//                }
-                
-//            } else {
-                LandingContent(userIsLoggedIn: $userIsLoggedIn)
-//            }
+            VStack {
+        
+                if userIsLoggedIn {
+                    if userName == "aali183" {
+                            BottomNavbar()
+                    } else {
+                            FeedPage()
+                    }
+                } else {
+                    LandingContent(userIsLoggedIn: $userIsLoggedIn)
+                }
+            }
         }
-//        .opacity(userIsLoggedIn ? 0 : 1)
-//        .onAppear {
-//            print(userName)
-//            if userName != nil {
-//                ReadDB().getCreatorShows()
-//                ReadDB().getViewerLiveShows()
-//            }
-//        }
+        .onAppear {
+            print(userName)
+        }
     }
     }
 

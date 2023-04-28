@@ -19,6 +19,7 @@ struct FeedPage: View {
     var viewerShows = UserDefaults.standard.array(forKey: "viewer_shows") as? [[String: Any]]
     var viewerScheduledShows = UserDefaults.standard.array(forKey: "viewer_scheduled_shows") as? [[String: Any]]
     @AppStorage("email") var userEmail: String = ""
+    @AppStorage("username") var userName: String = ""
     
     var body: some View {
         var noOfShows = viewerShows?.count ?? 0
@@ -93,7 +94,7 @@ struct FeedPage: View {
                 }
                 .frame(height: 300)
                 
-                if userEmail != "ayman.ali1302@gmail.com" {
+                if userName != "aali183" {
                     
                     HStack {
                         Text("Upcoming Shows")
@@ -157,7 +158,7 @@ struct FeedPage: View {
                         
 
 
-                if userEmail == "ayman.ali1302@gmail.com" {
+                if userName == "aali183" {
                     Button(action: { showingBottomSheet.toggle() }, label: {
                             Text("+")
                                 .font(.system(.largeTitle)).frame(width: 50, height: 40)
