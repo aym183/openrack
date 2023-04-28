@@ -42,24 +42,24 @@ struct AccountPage: View {
                         
                         Spacer()
                         
-                        Button(action: {
-                            if disableFields == false {
-                                // Add phone number update
-                                UpdateDB().updateUserDetails(inputs: ["full_name": nameText])
-                                disableFields.toggle()
-                            } else {
-                                disableFields.toggle()
-                            }
-                            
-                        }) {
-                            if disableFields == false {
-                                Text(String("Save Details")).font(Font.system(size: 15)).frame(width: 100, height: 30).background(Color("Primary_color"))
-                                    .foregroundColor(.white)
-                                    .border(Color.black, width: 2)
-                            } else {
-                                Image(systemName: "applepencil").font(Font.system(size: 20)).fontWeight(.bold).foregroundColor(.black).opacity(0.7)
-                            }
-                        }
+//                        Button(action: {
+//                            if disableFields == false {
+//                                // Add phone number update
+//                                UpdateDB().updateUserDetails(inputs: ["full_name": nameText])
+//                                disableFields.toggle()
+//                            } else {
+//                                disableFields.toggle()
+//                            }
+//                            
+//                        }) {
+//                            if disableFields == false {
+//                                Text(String("Save Details")).font(Font.system(size: 15)).frame(width: 100, height: 30).background(Color("Primary_color"))
+//                                    .foregroundColor(.white)
+//                                    .border(Color.black, width: 2)
+//                            } else {
+//                                Image(systemName: "applepencil").font(Font.system(size: 20)).fontWeight(.bold).foregroundColor(.black).opacity(0.7)
+//                            }
+//                        }
                         .padding(.trailing)
                     }
 
