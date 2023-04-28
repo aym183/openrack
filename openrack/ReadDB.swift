@@ -24,7 +24,7 @@ class ReadDB : ObservableObject {
     func getUserDefaults() {
         @AppStorage("username") var userName: String = ""
         @AppStorage("full_name") var fullName: String = ""
-        @AppStorage("email") var userEmail: String = ""
+//        @AppStorage("email") var userEmail: String = ""
         @AppStorage("stripe_customer_id") var stripeCustomerID: String = ""
         @AppStorage("phone_number") var phoneNumber: String = ""
         
@@ -37,7 +37,7 @@ class ReadDB : ObservableObject {
                     print("Error getting email in getUsername: \(error.localizedDescription)")
                 } else {
                     for document in snapshot!.documents {
-                        UserDefaults.standard.set(String(describing:document.data()["email"]!), forKey: "email")
+//                        UserDefaults.standard.set(String(describing:document.data()["email"]!), forKey: "email")
                         UserDefaults.standard.set(String(describing:document.data()["full_name"]!), forKey: "full_name")
                         UserDefaults.standard.set(String(describing:document.data()["phone_number"]!), forKey: "phone_number")
                         UserDefaults.standard.set(String(describing:document.data()["stripe_customer_id"]!), forKey: "stripe_customer_id")

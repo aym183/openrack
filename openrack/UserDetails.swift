@@ -18,48 +18,48 @@ struct UserDetails: View {
     }
     
     var body: some View {
-        ZStack {
-            Color("Secondary_color").ignoresSafeArea()
-            
-            VStack(alignment: .leading) {
-                Text("User Details").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
+            ZStack {
+                Color("Secondary_color").ignoresSafeArea()
                 
-                Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                
-                TextField("", text: $usernameText)
-                    .padding(.horizontal, 8)
-                    .frame(width: 360, height: 50).border(Color.black, width: 2)
-                    .background(.white)
-                
-                Spacer()
-                
-                Button(action: {
-                    isFullNameDetails.toggle()
-//                    AuthViewModel().phoneSignIn(phoneNumber: phoneText, username: usernameText, fullName: fullNameText, credential: credential)
+                VStack(alignment: .leading) {
+                    Text("User Details").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
                     
-                }) {
-                    HStack {
-                        Text("Next").font(.title3).frame(width: 360, height: 50)
+                    Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                    
+                    TextField("", text: $usernameText)
+                        .padding(.horizontal, 8)
+                        .frame(width: 360, height: 50).border(Color.black, width: 2)
+                        .background(.white)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        isFullNameDetails.toggle()
+                        //                    AuthViewModel().phoneSignIn(phoneNumber: phoneText, username: usernameText, fullName: fullNameText, credential: credential)
+                        
+                    }) {
+                        HStack {
+                            Text("Next").font(.title3).frame(width: 360, height: 50)
+                        }
                     }
+                    .disabled(isUsernameEmpty)
+                    //                    .frame(width: 360, height: 50)
+                    .background(isUsernameEmpty ? Color.gray : Color("Primary_color"))
+                    .foregroundColor(.white)
+                    .border(Color.black, width: 2)
+                    .padding(.vertical)
+                    .navigationDestination(isPresented: $isFullNameDetails) {
+                        FullNameDetails(phoneText: $phoneText, user_credentials: $user_credentials, usernameText: $usernameText)
+                        //                    if user_credentials != nil {
+                        //                        UserDetails(phoneText: $phoneText, phoneID: $phoneID, user_credentials: $user_credentials)
+                        //                    }
+                    }
+                    
                 }
-                .disabled(isUsernameEmpty)
-//                    .frame(width: 360, height: 50)
-                .background(isUsernameEmpty ? Color.gray : Color("Primary_color"))
-                .foregroundColor(.white)
-                .border(Color.black, width: 2)
-                .padding(.vertical)
-                .navigationDestination(isPresented: $isFullNameDetails) {
-                    FullNameDetails(phoneText: $phoneText, user_credentials: $user_credentials, usernameText: $usernameText)
-//                    if user_credentials != nil {
-//                        UserDetails(phoneText: $phoneText, phoneID: $phoneID, user_credentials: $user_credentials)
-//                    }
-                }
-                
             }
-        }
-        .onAppear {
-            print("\(phoneText), \(user_credentials)")
-        }
+            .onAppear {
+                print("\(phoneText), \(user_credentials)")
+            }
     }
    
 }
@@ -68,45 +68,87 @@ struct FullNameDetails: View {
     @State var fullNameText = ""
     @Binding var phoneText: String
     @Binding var user_credentials: PhoneAuthCredential?
-    @State private var isHomePage = false
+//    @State private var isHomePage = false
+    @State private var isAdminPage = false
+    @State private var isUserPage = false
+    @State private var isNavigationBarHidden = false
     @Binding var usernameText: String
+    @State var isLoading  = false
     
     var isFullNameEmpty: Bool {
         return fullNameText.isEmpty
     }
     var body: some View {
-        ZStack {
-            Color("Secondary_color").ignoresSafeArea()
-            
-            VStack(alignment: .leading) {
-                Text("Full Name").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
-                
-                TextField("", text: $fullNameText)
-                    .padding(.horizontal, 8)
-                    .frame(width: 360, height: 50).border(Color.black, width: 2)
-                    .background(.white)
-                
-                Spacer()
-                
-                Button(action: {
-                    AuthViewModel().phoneSignIn(phoneNumber: phoneText, username: usernameText, fullName: fullNameText, credential: user_credentials!)
-                    isHomePage.toggle()
-                }) {
-                    HStack {
-                        Text("Lets Go!").font(.title3).frame(width: 360, height: 50)
+            ZStack {
+                Color("Secondary_color").ignoresSafeArea()
+                if isLoading {
+                    
+                    VStack {
+                        ProgressView()
+                            .scaleEffect(2.5)
+                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                        
+                        Text("Getting Openrack Ready...🥳").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
                     }
                 }
-                .disabled(isFullNameEmpty)
-                .background(isFullNameEmpty ? Color.gray : Color("Primary_color"))
-                .foregroundColor(.white)
-                .border(Color.black, width: 2)
-                .padding(.vertical)
-                .navigationDestination(isPresented: $isHomePage) {
-                    FeedPage().navigationBarBackButtonHidden(true)
+                
+                
+                
+                VStack(alignment: .leading) {
+                    Text("User Details").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
+                    
+                    Text("Full Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+                    
+                    TextField("", text: $fullNameText)
+                        .padding(.horizontal, 8)
+                        .frame(width: 360, height: 50).border(Color.black, width: 2)
+                        .background(.white)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        AuthViewModel().phoneSignIn(phoneNumber: phoneText, username: usernameText, fullName: fullNameText, credential: user_credentials!)
+                        isNavigationBarHidden.toggle()
+                        isLoading.toggle()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            if usernameText == "aym1302" {
+                                isAdminPage.toggle()
+                            } else {
+                                isUserPage.toggle()
+                            }
+                        }
+                        
+                    }) {
+                        HStack {
+                            Text("Lets Go!").font(.title3).frame(width: 360, height: 50)
+                        }
+                    }
+                    .disabled(isFullNameEmpty)
+                    .background(isFullNameEmpty ? Color.gray : Color("Primary_color"))
+                    .foregroundColor(.white)
+                    .border(Color.black, width: 2)
+                    .padding(.vertical)
+                    .navigationDestination(isPresented: $isAdminPage) {
+                        withAnimation(.easeIn(duration: 2)) {
+                            BottomNavbar()
+                                .navigationBarBackButtonHidden(true)
+                        }
+                    }
+                    .navigationDestination(isPresented: $isUserPage) {
+                        withAnimation(.easeIn(duration: 2)) {
+                            FeedPage()
+                                .navigationBarBackButtonHidden(true)
+                        }
+                    }
+                    //                .navigationDestination(isPresented: $isHomePage) {
+                    //                    FeedPage().navigationBarBackButtonHidden(true)
+                    //                }
+                    // Add error check for admin user redirection
                 }
-                // Add error check for admin user redirection
+                .opacity(isLoading ? 0 : 1)
             }
-        }
+            .navigationBarHidden(isNavigationBarHidden)
     }
 }
 

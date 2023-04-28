@@ -10,15 +10,44 @@ import _AuthenticationServices_SwiftUI
 import Firebase
 
 struct LandingPage: View {
+//    AppStorage("username")
+//    : String
+    
+    @State var userName = "aym1302"
+    @State var userIsLoggedIn = false
     var body: some View {
-        
-        LandingContent()
-//        if Auth.auth().currentUser == nil {
-//            BottomNavbar()
-//        } else {
-//            LandingContent()
+        ZStack {
+            
+//            if userIsLoggedIn {
+//
+//                VStack {
+//                        ProgressView()
+//                            .scaleEffect(2.5)
+//                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+//
+//                        Text("Getting Openrack Ready...🥳").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
+//                }
+                
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+//                    if userName == "aym1302" {
+//                        BottomNavbar()
+//                    } else {
+//                        FeedPage()
+//                    }
+//                }
+                
+//            } else {
+                LandingContent(userIsLoggedIn: $userIsLoggedIn)
+//            }
+        }
+//        .opacity(userIsLoggedIn ? 0 : 1)
+//        .onAppear {
+//            print(userName)
+//            if userName != nil {
+//                ReadDB().getCreatorShows()
+//                ReadDB().getViewerLiveShows()
+//            }
 //        }
-//        .navigationViewStyle(StackNavigationViewStyle())
     }
     }
 
@@ -29,6 +58,7 @@ struct LandingContent: View {
 //    @State var showingSignInBottomSheet = false
 //    @State var showingLoginBottomSheet = false
     @State var signedIn = false
+    @Binding var userIsLoggedIn: Bool
     // ------ Add @AppStorage("shouldShowOnboarding") instead of @State to persist not showing onbaording after  user's tried ------
     @AppStorage("shouldShowOnboarding") var shouldShowOnboarding: Bool = true
     var body: some View {
@@ -138,6 +168,15 @@ struct LandingContent: View {
                 }
             }
             
+        }
+        .onAppear {
+            Auth.auth().addStateDidChangeListener { auth, user in
+                if user != nil {
+                    print("User is \(user)")
+                    userIsLoggedIn.toggle()
+                    
+                }
+            }
         }
         // ------ Add to replace loginview ka bs and add bottomcard ? ------
         .fullScreenCover(isPresented: $shouldShowOnboarding , content: {
