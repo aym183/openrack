@@ -115,7 +115,7 @@ struct FullNameDetails: View {
                         isNavigationBarHidden.toggle()
                         isLoading.toggle()
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                             if usernameText == "aali183" {
                                 isAdminPage.toggle()
                             } else {

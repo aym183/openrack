@@ -87,6 +87,8 @@ struct SignInEmailView: View {
                             .background(.white)
                             .keyboardType(.numberPad)
                         
+                        Spacer()
+                        
                         if !isVerification {
                             Button(action: {
                                 print(phoneText)
@@ -173,27 +175,27 @@ struct SignInEmailView: View {
 //                            .background(.white)
 //                    }
                     
-                    if String(describing: userDetails[3]) == "No" {
-                        Text("Password").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                        
-                        SecureField("", text: $passwordText)
-                            .padding(.horizontal, 8)
-                            .frame(width: 360, height: 50).border(Color.black, width: 2)
-                            .background(.white)
-                            .disableAutocorrection(true)
-                            .autocapitalization(.none)
-                    }
-                    
-                    if String(describing: userDetails[3]) != "Phone" {
-                        HStack (spacing: 30) {
-                            Toggle(isOn: $isOn) {}.frame(width: 50, height: 50)
-                            Text(String(describing: userDetails[1]))
-                                .font(Font.system(size: 14))
-                                .fontWeight(.medium)
-                        }
-                    }
-                    Spacer()
-                    
+//                    if String(describing: userDetails[3]) == "No" {
+//                        Text("Password").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
+//                        
+//                        SecureField("", text: $passwordText)
+//                            .padding(.horizontal, 8)
+//                            .frame(width: 360, height: 50).border(Color.black, width: 2)
+//                            .background(.white)
+//                            .disableAutocorrection(true)
+//                            .autocapitalization(.none)
+//                    }
+//                    
+//                    if String(describing: userDetails[3]) != "Phone" {
+//                        HStack (spacing: 30) {
+//                            Toggle(isOn: $isOn) {}.frame(width: 50, height: 50)
+//                            Text(String(describing: userDetails[1]))
+//                                .font(Font.system(size: 14))
+//                                .fontWeight(.medium)
+//                        }
+//                    }
+//                    Spacer()
+//                    
 //                    if String(describing: userDetails[3]) != "Phone" || isVerification {
 //                        Button(action: {
 //                            print(String(describing: userDetails[3]))

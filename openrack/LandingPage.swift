@@ -18,12 +18,11 @@ struct LandingPage: View {
     var body: some View {
         ZStack {
             VStack {
-        
                 if userIsLoggedIn {
                     if userName == "aali183" {
-                            BottomNavbar()
+                        BottomNavbar()
                     } else {
-                            FeedPage()
+                        FeedPage()
                     }
                 } else {
                     LandingContent(userIsLoggedIn: $userIsLoggedIn)
