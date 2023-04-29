@@ -29,7 +29,7 @@ struct BottomNavbar: View {
                             .scaleEffect(2.5)
                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                         
-                        Text("Getting Openrack Ready! 🥳").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
+                        Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
                     }
                 }
                 
@@ -40,12 +40,11 @@ struct BottomNavbar: View {
                             Text("My Feed")
                         }
                     
-                    
                     ShowsPage()
-                        .tabItem {
-                            Image(systemName: "video.fill")
-                            Text("My Shows")
-                        }
+                            .tabItem {
+                                Image(systemName: "video.fill")
+                                Text("My Shows")
+                            }
                 }
                 .accentColor(Color("Primary_color"))
                 .onAppear {

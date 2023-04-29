@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AccountPage: View {
-    @AppStorage("email") var userEmail: String = ""
     @AppStorage("username") var userName: String = ""
     @AppStorage("full_name") var fullName: String = ""
     @AppStorage("phone_number") var phoneNumber: String = ""
@@ -216,17 +215,15 @@ struct AccountPage: View {
                 }
             }
             .navigationDestination(isPresented: $showingFeedPage) {
-                if userEmail != "ayman.ali1302@gmail.com" {
-                    FeedPage()
-                        .navigationBarBackButtonHidden(true)
+                if userName != "aali183" {
+                    FeedPage(isShownFeed: false).navigationBarBackButtonHidden(true)
                 } else {
-                    BottomNavbar().navigationBarBackButtonHidden(true)
+                    BottomNavbar(isShownFeed: false).navigationBarBackButtonHidden(true)
                 }
             }
             .onAppear {
                 usernameText = userName
                 nameText = fullName
-                emailText = userEmail
                 phoneText = phoneNumber
             }
             
