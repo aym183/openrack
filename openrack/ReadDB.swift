@@ -10,6 +10,7 @@ import SwiftUI
 
 class ReadDB : ObservableObject {
     
+    @Published var userOrders: [[String: Any]]? = []
     @Published var creatorShows: [[String: Any]]? = []
     @Published var viewerShows: [[String: Any]]? = []
     @Published var viewerScheduledShows: [[String: Any]]? = []
@@ -197,6 +198,7 @@ class ReadDB : ObservableObject {
                 UserDefaults.standard.set(listingIDs, forKey: "listing_ids")
             }
     }
+    
     func getListings() {
          
         var listingIDs = UserDefaults.standard.array(forKey: "listing_ids") as? [String]
@@ -245,6 +247,28 @@ class ReadDB : ObservableObject {
             }
         }
     }
+    
+    func getUserOrders() {
+        @AppStorage("username") var userName: String = ""
+        var orders = UserDefaults.standard.array(forKey: "myViewerKey") as? [[String:Any]] ?? []
+        
+        let db = Firestore.firestore()
+        let ref = db.collection("orders")
+        ref.whereField("buyer", isEqualTo: userName)
+        
+            .getDocuments { (snapshot, error) in
+                if let error = error {
+                    print("Error getting orders: \(error.localizedDescription)")
+                } else {
+                    for document in snapshot!.documents {
+                        orders.append(document.data())
+                    }
+                }
+                self.userOrders = orders
+                print(self.userOrders)
+            }
+    }
+    
     
     // ------------------------- Realtime Database ---------------------------------
     

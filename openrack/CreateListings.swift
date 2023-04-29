@@ -36,7 +36,7 @@ struct CreateListings: View {
                             Text("Select One").font(Font.system(size: 15)).fontWeight(.semibold).opacity(0.7)
                         }
                     }
-                    .padding(.top, 20).padding(.horizontal, 20).foregroundColor(.black)
+                    .padding(.top, 20).padding(.horizontal).foregroundColor(.black)
                     
 //                    List {
                     ScrollView {

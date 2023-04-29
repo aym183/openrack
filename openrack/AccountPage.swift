@@ -20,6 +20,7 @@ struct AccountPage: View {
     @State var phoneText = ""
     @State var isShowingPaymentsForm = false
     @State var isShowingAddressForm = false
+    @State var isShowingOrders = false
     @StateObject var addressDetails = ReadDB()
     
     var body: some View {
@@ -134,9 +135,29 @@ struct AccountPage: View {
                     
                     //                Spacer()
                     
-                    Button(action: {
-                        isShowingAddressForm.toggle()
-                    }) {
+                    
+                    Button(action: { isShowingOrders.toggle() }) {
+                        HStack {
+                            Image(systemName: "tshirt.fill").padding(.trailing, 10).padding(.leading, 5)
+                            VStack(alignment: .leading) {
+                                Text("Orders")
+                                    .fontWeight(.bold).font(Font.system(size: 20)).padding(.top)
+                                Text("Have a look at your orders!")
+                                        .fontWeight(.semibold).font(Font.system(size: 14)).padding(.top, 0)
+                            }
+                            Spacer()
+                        }
+                        .padding().padding(.bottom)
+                        .frame(width: 370)
+                        .background(Color("Primary_color")).cornerRadius(15)
+                        .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
+                    }
+                    .padding(.top, 10).padding(.bottom, -10)
+                    .sheet(isPresented: $isShowingOrders) {
+                        OrdersPage(orders: addressDetails.userOrders!).presentationDetents([.height(500)])
+                    }
+                    
+                    Button(action: { isShowingAddressForm.toggle() }) {
                         HStack {
                             Image(systemName: "shippingbox.fill").padding(.trailing, 10).padding(.leading, 5)
                             VStack(alignment: .leading) {
@@ -203,6 +224,7 @@ struct AccountPage: View {
                     }
                     .padding(.top,5).padding(.bottom, 30)
                     
+                    
                     Spacer()
                     
                     
@@ -212,6 +234,7 @@ struct AccountPage: View {
                 .onAppear {
                     addressDetails.getAddress()
                     addressDetails.getCardDetails()
+                    addressDetails.getUserOrders()
                 }
             }
             .navigationDestination(isPresented: $showingFeedPage) {

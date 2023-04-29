@@ -88,7 +88,7 @@ struct showName: View {
     var body: some View {
         HStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(ColorSelector().getStatusColor(status: statusColor))
+                .fill(ColorSelector().getShowStatusColor(status: statusColor))
                 .frame(width: 60, height: 20)
                 .overlay(
                     Text(String(describing: retrievedShow["status"]!)).textCase(.uppercase).font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
