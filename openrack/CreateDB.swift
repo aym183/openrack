@@ -253,6 +253,7 @@ class CreateDB : ObservableObject {
         showsRef.child("highest_bid").setValue("")
         showsRef.child("current_bidder").setValue("")
         showsRef.child("is_sold").setValue(false)
+        showsRef.child("comments").setValue("")
     }
     
     

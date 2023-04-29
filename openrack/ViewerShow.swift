@@ -29,6 +29,7 @@ struct ViewerShow: View {
 
     
     var body: some View {
+        var noOfComments = readListing.comments?.count ?? 0
         NavigationStack {
             let player = AVPlayer(url: URL(string: "https://stream.mux.com/\(retrievedShow["playback_id"]!).m3u8")!)
             ZStack {
@@ -87,27 +88,30 @@ struct ViewerShow: View {
                         ScrollView(.vertical, showsIndicators: false) {
 //                            VStack {
                             ScrollViewReader { proxy in
-                                ForEach(1..<20, id: \.self) { index in
-                                    HStack {
-                                        
-                                        VStack(alignment: .leading,spacing: 0) {
-                                            Text("aym1302").font(Font.system(size: 11)).fontWeight(.bold).padding(.top,10)
-                                            Text("Comment for me \(index)").font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2)
-                                        }
-                                        .padding(.leading, 5)
-                                        Spacer()
-                                    }
-                                    .fontWeight(.semibold)
-                                    .id(index)
+                                if readListing.comments != [] {
                                     
+                                    ForEach(0..<noOfComments, id: \.self) { index in
+                                        HStack {
+                                            
+                                            VStack(alignment: .leading,spacing: 0) {
+                                                Text(String(describing: readListing.comments![index]["username"]!)).font(Font.system(size: 11)).fontWeight(.bold).padding(.top,10)
+                                                Text(String(describing: readListing.comments![index]["comment"]!)).font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2)
+                                            }
+                                            .padding(.leading, 5)
+                                            Spacer()
+                                        }
+                                        .fontWeight(.semibold)
+                                        .id(index)
+                                        
+                                    }
+                                    .foregroundColor(.white)
+                                    .onReceive(readListing.$comments) { _ in
+                                        withAnimation(.easeOut(duration: 0.5)) {
+                                            proxy.scrollTo(noOfComments-1, anchor: .bottom)
+                                        }
+                                    }
                                 }
-                                .foregroundColor(.white)
-                                .onAppear {
-                                    proxy.scrollTo(19)
-                                }
-                                
                             }
-                                
 //                            }
 //                            .frame(width: 250)
                             
@@ -184,10 +188,15 @@ struct ViewerShow: View {
                                 RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 2)
                             )
                             .opacity(0.7)
-                            .padding(.bottom, 40)
+                            .padding(.bottom, 50)
                             .onSubmit {
-                                print("\(commentText), \(userName)")
-                                commentText = ""
+                                if commentText != "" {
+                                    readListing.comments = []
+                                    UpdateDB().updateComments(listingID: String(describing: retrievedShow["listings"]!), comment: commentText, username: userName)
+//                                    noOfComments += 1
+                                    print(noOfComments)
+                                    commentText = ""
+                                }
                             }
 
                         

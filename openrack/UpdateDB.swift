@@ -204,6 +204,36 @@ class UpdateDB : ObservableObject {
 
     }
     
+    func updateComments(listingID: String, comment: String, username: String) {
+        
+        let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
+        
+        let newCommentKey = dbRef.child("comments").childByAutoId().key
+        
+        let newCommentData = ["username": username, "comment": comment, "time_created": MiscData().getPresentDateTime()]
+        
+        let updateObj = [newCommentKey: newCommentData]
+        
+        dbRef.child("comments").updateChildValues(updateObj) { (error, _) in
+          if let error = error {
+            print("Comment add failed: \(error.localizedDescription)")
+          } else {
+            print("Comment added successfully.")
+          }
+        }
+        
+        
+//        dbRef.updateChildValues() { error, ref in
+//            if let error = error {
+//                print("Error updating comment: \(error.localizedDescription)")
+//            } else {
+//                print("Realtime Comment Updated")
+//            }
+//        }
+
+    }
+    
+    
     func updateTimer(listingID: String, start_time: String, viewer_side: Bool) {
 
         print(workItem)

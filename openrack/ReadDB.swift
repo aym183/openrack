@@ -19,6 +19,7 @@ class ReadDB : ObservableObject {
     @Published var isSold: Bool? = nil
     @Published var address: [String: String]? = nil
     @Published var cardDetails: [String: String]? = nil
+    @Published var comments: [[String: String]]? = []
 //    @Published var is_timer: Bool? = false
     
     func getUserDefaults() {
@@ -242,6 +243,7 @@ class ReadDB : ObservableObject {
     
     // ------------------------- Realtime Database ---------------------------------
     
+    
     func getListingSelected(listingID: String) {
         let titleDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("title")
         let priceDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("price")
@@ -250,6 +252,7 @@ class ReadDB : ObservableObject {
         let currentBidderDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("current_bidder")
         let highestBidDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("highest_bid")
         let timerDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("timer")
+        let commentDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("comments")
 //        let istimerDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("is_timer")
         
         titleDB.observe(.value) { snapshot in
@@ -268,6 +271,23 @@ class ReadDB : ObservableObject {
             if let price_text = snapshot.value as? String {
                     self.price = price_text
             }
+        }
+        
+        commentDB.observe(.value) { snapshot in
+            
+            if snapshot.value != nil {
+                for child in snapshot.children {
+                    guard let commentSnapshot = child as? DataSnapshot else { continue }
+                    let commentKey = commentSnapshot.key
+                        let commentData = commentSnapshot.value as? [String: Any]
+                        let username = commentData?["username"] as? String ?? ""
+                        let comment = commentData?["comment"] as? String ?? ""
+                        self.comments?.append(["username": username, "comment": comment])
+                }
+            }
+//            if let comments_value = snapshot.value as? [[String: String]] {
+//                    self.comments = comments_value
+//            }
         }
         
         isSoldDB.observe(.value) { snapshot in
