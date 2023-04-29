@@ -203,7 +203,9 @@ struct FeedPage: View {
                     readListing.getViewerScheduledShows()
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        isShownFeed = false
+                        withAnimation(.easeOut(duration: 0.5)) {
+                            isShownFeed = false
+                        }
                     }
                 }
                 .opacity(isShownFeed ? 0 : 1)
