@@ -18,21 +18,23 @@ struct BottomNavbar: View {
     @AppStorage("email") var userEmail: String = ""
 
     var body: some View {
-        TabView(selection: $selectedTab){
-             FeedPage()
-                .tabItem {
-                    Image(systemName: "rectangle.3.offgrid")
-                    Text("My Feed")
-                }
-
-            
-            ShowsPage()
-                .tabItem {
-                    Image(systemName: "video.fill")
-                    Text("My Shows")
-                }
+        NavigationStack {
+            TabView(selection: $selectedTab){
+                FeedPage()
+                    .tabItem {
+                        Image(systemName: "rectangle.3.offgrid")
+                        Text("My Feed")
+                    }
+                
+                
+                ShowsPage()
+                    .tabItem {
+                        Image(systemName: "video.fill")
+                        Text("My Shows")
+                    }
+            }
+            .accentColor(Color("Primary_color"))
         }
-        .accentColor(Color("Primary_color"))
 //        .overlay(
 //            Rectangle()
 //                .frame(height: 0.5)

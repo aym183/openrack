@@ -10,6 +10,8 @@ import Firebase
 
 struct ViewerShow: View {
 //https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8
+    
+    // could be what's making the discrepancy in viewer show, try passing listing id akele as a parameter
     let retrievedShow: [String: Any]
 //    let username: String
 //    let playbackID: String
@@ -96,7 +98,13 @@ struct ViewerShow: View {
                                                 HStack {
                                                     VStack(alignment: .leading,spacing: 0) {
                                                         Text(String(describing: readListing.comments![index]["username"]!)).font(Font.system(size: 11)).fontWeight(.bold).padding(.top,10)
-                                                        Text(String(describing: readListing.comments![index]["comment"]!)).font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2)
+                                                        
+//                                                        if readListing.comments![index]["username"]! == retrievedShow["created_by"]! {
+//                                                            Text(String(describing: readListing.comments![index]["comment"]!)).font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2).foregroundColor("Primary_color")
+//                                                        } else {
+                                                            Text(String(describing: readListing.comments![index]["comment"]!)).font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2)
+//                                                        }
+                                                        
                                                     }
                                                     .padding(.leading, 5)
                                                     Spacer()

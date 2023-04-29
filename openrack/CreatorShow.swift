@@ -31,6 +31,8 @@ struct CreatorShow: View {
     @Binding var listingSelected: Listing
     @StateObject var readListing = ReadDB()
     @State var showConfirmationOrder = false
+    @State var commentText = ""
+    @AppStorage("username") var userName: String = ""
     
 //    @State var rtmpStream: RTMPStream?
 //    private var defaultCamera: AVCaptureDevice.Position = .front
@@ -38,6 +40,7 @@ struct CreatorShow: View {
     @StateObject private var model = FrameHandler()
 
         var body: some View {
+            var noOfComments = readListing.comments?.count ?? 0
             ZStack {
                 
                   FrameView(image: model.frame)
@@ -94,6 +97,71 @@ struct CreatorShow: View {
                     Spacer()
 
                     HStack {
+                        ScrollViewReader { proxy in
+                            
+                            VStack{
+                                ScrollView(.vertical, showsIndicators: false) {
+                                    if readListing.comments != [] {
+                                        
+                                        ForEach(0..<noOfComments, id: \.self) { index in
+                                            HStack {
+                                                VStack(alignment: .leading,spacing: 0) {
+                                                    
+                                                    Text(String(describing: readListing.comments![index]["username"]!)).font(Font.system(size: 11)).fontWeight(.bold).padding(.top,10)
+                                                    
+                                                    Text(String(describing: readListing.comments![index]["comment"]!)).font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2)
+                                                }
+                                                .padding(.leading, 5)
+                                                Spacer()
+                                            }
+                                            .fontWeight(.semibold)
+                                            .id(index)
+                                        }
+                                        .foregroundColor(.white)
+                                        .onAppear {
+                                            withAnimation(.easeOut(duration: 0.5)) {
+                                                proxy.scrollTo(noOfComments-1, anchor: .bottom)
+                                            }
+                                        }
+                                        //                                    .onReceive(readListing.$comments) { _ in
+                                        //                                        withAnimation(.easeOut(duration: 0.5)) {
+                                        //                                            proxy.scrollTo(noOfComments-1, anchor: .bottom)
+                                        //                                        }
+                                        //                                    }
+                                    }
+                                }
+                                .frame(width: 250, height: 200)
+                                .cornerRadius(10)
+                                .padding(.leading,5).padding(.top, 70).padding(.bottom)
+                                
+                                TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white).font(Font.system(size: 12)))
+                                    .padding(.horizontal)
+                                    .foregroundColor(.white).font(Font.system(size: 12))
+                                    .frame(width: 130, height: 37)
+                                    .cornerRadius(20)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 2)
+                                    )
+                                    .opacity(0.7)
+                                    .padding(.bottom, 50).padding(.trailing, 100)
+                                    .onSubmit {
+                                        if commentText != "" {
+                                            print(noOfComments)
+                                            UpdateDB().updateComments(listingID: listingID, comment: commentText, username: userName)
+                                            print(noOfComments)
+                                            commentText = ""
+                                            
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                                withAnimation(.easeOut(duration: 0.5)) {
+                                                    proxy.scrollTo(noOfComments, anchor: .bottom)
+                                                }
+                                            }
+                                        }
+                                    }
+                            }
+                            
+                        }
+                        
                             Spacer()
                             VStack {
                                 

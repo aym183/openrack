@@ -27,38 +27,41 @@ struct ShowsPage: View {
     }
     
     var body: some View {
-        ZStack {
-            Color("Secondary_color").ignoresSafeArea()
-            
-            VStack (alignment: .leading) {
-
-                Text("Shows").font(Font.system(size: 30)).fontWeight(.bold).padding(.vertical, 20).foregroundColor(.black)
-                Spacer()
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 20) {
-                        // Change to length of response array
-//                        noOfShows
-                        ForEach(0..<noOfShows) { index in
-                            VStack {
-                                
-                                showName(name: String(describing: retrievedShows[index]["name"]!), status: String(describing: retrievedShows[index]["status"]!), date_sched: String(describing: retrievedShows[index]["date_scheduled"]!), description: String(describing: retrievedShows[index]["description"]!))
-
-                                ShowsPageButtons(retrievedShow: retrievedShows[index])
-//                                String(describing: retrievedShows[index]["name"]!), stream_key: String(describing: retrievedShows[index]["stream_key"]!), stream_id: String(describing: retrievedShows[index]["livestream_id"]!), liveStreamID: String(describing: retrievedShows[index]["livestream_id"]!), listingID: String(describing: retrievedShows[index]["listings"]!)
-
+        NavigationStack {
+            ZStack {
+                Color("Secondary_color").ignoresSafeArea()
+                
+                VStack (alignment: .leading) {
+                    
+                    Text("Shows").font(Font.system(size: 30)).fontWeight(.bold).padding(.vertical, 20).foregroundColor(.black)
+                    Spacer()
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 20) {
+                            // Change to length of response array
+                            //                        noOfShows
+                            ForEach(0..<noOfShows) { index in
+                                VStack {
+                                    
+                                    showName(name: String(describing: retrievedShows[index]["name"]!), status: String(describing: retrievedShows[index]["status"]!), date_sched: String(describing: retrievedShows[index]["date_scheduled"]!), description: String(describing: retrievedShows[index]["description"]!))
+                                    
+                                    ShowsPageButtons(retrievedShow: retrievedShows[index])
+                                    //                                String(describing: retrievedShows[index]["name"]!), stream_key: String(describing: retrievedShows[index]["stream_key"]!), stream_id: String(describing: retrievedShows[index]["livestream_id"]!), liveStreamID: String(describing: retrievedShows[index]["livestream_id"]!), listingID: String(describing: retrievedShows[index]["listings"]!)
+                                    
+                                }
+                                .frame(width: 360, height: 110)
+                                .border(Color.black, width: 2)
+                                .background(.white)
                             }
-                            .frame(width: 360, height: 110)
-                            .border(Color.black, width: 2)
-                            .background(.white)
                         }
                     }
                 }
+                .padding(.horizontal)
+                //            .onAppear {
+                //
+                //            }
             }
-            .padding(.horizontal)
-//            .onAppear {
-//
-//            }
         }
+        
     }
 }
 

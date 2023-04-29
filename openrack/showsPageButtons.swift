@@ -110,6 +110,9 @@ struct ShowsPageButtons: View {
             .padding(.leading, 5)
             .padding(.top, 0)
             .foregroundColor(.black)
+            .onAppear {
+                print("Print retrieved show \(retrievedShow)")
+            }
         }
 }
 
