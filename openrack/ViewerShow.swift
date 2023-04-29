@@ -85,44 +85,73 @@ struct ViewerShow: View {
                     Spacer()
                     
                     HStack {
-                        ScrollView(.vertical, showsIndicators: false) {
 //                            VStack {
                             ScrollViewReader { proxy in
-                                if readListing.comments != [] {
-                                    
-                                    ForEach(0..<noOfComments, id: \.self) { index in
-                                        HStack {
+                                
+                                VStack{
+                                    ScrollView(.vertical, showsIndicators: false) {
+                                        if readListing.comments != [] {
                                             
-                                            VStack(alignment: .leading,spacing: 0) {
-                                                Text(String(describing: readListing.comments![index]["username"]!)).font(Font.system(size: 11)).fontWeight(.bold).padding(.top,10)
-                                                Text(String(describing: readListing.comments![index]["comment"]!)).font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2)
+                                            ForEach(0..<noOfComments, id: \.self) { index in
+                                                HStack {
+                                                    VStack(alignment: .leading,spacing: 0) {
+                                                        Text(String(describing: readListing.comments![index]["username"]!)).font(Font.system(size: 11)).fontWeight(.bold).padding(.top,10)
+                                                        Text(String(describing: readListing.comments![index]["comment"]!)).font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2)
+                                                    }
+                                                    .padding(.leading, 5)
+                                                    Spacer()
+                                                }
+                                                .fontWeight(.semibold)
+                                                .id(index)
                                             }
-                                            .padding(.leading, 5)
-                                            Spacer()
+                                            .foregroundColor(.white)
+                                            .onAppear {
+                                                withAnimation(.easeOut(duration: 0.5)) {
+                                                    proxy.scrollTo(noOfComments-1, anchor: .bottom)
+                                                }
+                                            }
+                                            //                                    .onReceive(readListing.$comments) { _ in
+                                            //                                        withAnimation(.easeOut(duration: 0.5)) {
+                                            //                                            proxy.scrollTo(noOfComments-1, anchor: .bottom)
+                                            //                                        }
+                                            //                                    }
                                         }
-                                        .fontWeight(.semibold)
-                                        .id(index)
-                                        
                                     }
-                                    .foregroundColor(.white)
-                                    .onReceive(readListing.$comments) { _ in
-                                        withAnimation(.easeOut(duration: 0.5)) {
-                                            proxy.scrollTo(noOfComments-1, anchor: .bottom)
+                                    .frame(width: 250, height: 200)
+                                    .cornerRadius(10)
+                                    .padding(.leading,5).padding(.bottom)
+                                    
+                                    TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white).font(Font.system(size: 12)))
+                                        .padding(.horizontal)
+                                        .foregroundColor(.white).font(Font.system(size: 12))
+                                        .frame(width: 130, height: 37)
+                                        .cornerRadius(20)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 2)
+                                        )
+                                        .opacity(0.7)
+                                        .padding(.bottom, 50).padding(.trailing, 100)
+                                        .onSubmit {
+                                            if commentText != "" {
+                                                print(noOfComments)
+                                                UpdateDB().updateComments(listingID: String(describing: retrievedShow["listings"]!), comment: commentText, username: userName)
+                                                print(noOfComments)
+                                                commentText = ""
+                                                
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                                    withAnimation(.easeOut(duration: 0.5)) {
+                                                        proxy.scrollTo(noOfComments, anchor: .bottom)
+                                                    }
+                                                }
+                                            }
                                         }
-                                    }
                                 }
+                                
                             }
 //                            }
 //                            .frame(width: 250)
                             
                             
-                        }
-                        .frame(width: 250, height: 200)
-//                        .border(.white, width: 2)
-                        .cornerRadius(10)
-                        .padding(.leading,5).padding(.bottom)
-                        
-//                        .onAppear {
 //                            // Scroll to the bottom when the view appears
 //                            DispatchQueue.main.async {
 //                                withAnimation {
@@ -178,31 +207,34 @@ struct ViewerShow: View {
                     }
                     .padding(.vertical, 40).padding(.trailing,10).padding(.bottom, -50)
                     
-                    HStack {
-                        TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white).font(Font.system(size: 12)))
-                            .padding(.leading, 20)
-                            .foregroundColor(.white).font(Font.system(size: 12))
-                            .frame(width: 130, height: 37)
-                            .cornerRadius(20)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 2)
-                            )
-                            .opacity(0.7)
-                            .padding(.bottom, 50)
-                            .onSubmit {
-                                if commentText != "" {
-                                    readListing.comments = []
-                                    UpdateDB().updateComments(listingID: String(describing: retrievedShow["listings"]!), comment: commentText, username: userName)
-//                                    noOfComments += 1
-                                    print(noOfComments)
-                                    commentText = ""
-                                }
-                            }
-
-                        
-                        Spacer()
-                    }
-                    .padding(.leading, 10)
+//                    HStack {
+//                        TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white).font(Font.system(size: 12)))
+//                            .padding(.horizontal)
+//                            .foregroundColor(.white).font(Font.system(size: 12))
+//                            .frame(width: 130, height: 37)
+//                            .cornerRadius(20)
+//                            .overlay(
+//                                RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 2)
+//                            )
+//                            .opacity(0.7)
+//                            .padding(.bottom, 50)
+//                            .onSubmit {
+//                                if commentText != "" {
+//                                    UpdateDB().updateComments(listingID: String(describing: retrievedShow["listings"]!), comment: commentText, username: userName)
+//                                    print(noOfComments)
+//                                    commentText = ""
+//
+//                                    withAnimation(.easeOut(duration: 0.5)) {
+//                                        print("Scrolling")
+//                                            scrollProxy!.scrollTo(noOfComments+1, anchor: .bottom)
+//                                        }
+//                                }
+//                            }
+//
+//
+//                        Spacer()
+//                    }
+//                    .padding(.leading, 10)
                     
                     
                     if readListing.title != nil && readListing.price != nil && readListing.isSold != true {

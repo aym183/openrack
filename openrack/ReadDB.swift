@@ -253,6 +253,8 @@ class ReadDB : ObservableObject {
         let highestBidDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("highest_bid")
         let timerDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("timer")
         let commentDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("comments")
+        
+        var temp_comments: [[String: String]] = []
 //        let istimerDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("is_timer")
         
         titleDB.observe(.value) { snapshot in
@@ -273,17 +275,28 @@ class ReadDB : ObservableObject {
             }
         }
         
+        
         commentDB.observe(.value) { snapshot in
             
             if snapshot.value != nil {
-                for child in snapshot.children {
-                    guard let commentSnapshot = child as? DataSnapshot else { continue }
-                    let commentKey = commentSnapshot.key
+                for (index, child) in snapshot.children.enumerated() {
+                    if index >= self.comments!.count {
+                        guard let commentSnapshot = child as? DataSnapshot else { continue }
+                        let commentKey = commentSnapshot.key
                         let commentData = commentSnapshot.value as? [String: Any]
                         let username = commentData?["username"] as? String ?? ""
                         let comment = commentData?["comment"] as? String ?? ""
+                        
+                        let containsValueXAndY = self.comments!.contains { dict in
+                            dict["username"] == username && dict["comment"] == comment
+                        }
+                        
                         self.comments?.append(["username": username, "comment": comment])
-                }
+                    }
+                    }
+                
+//                self.comments = temp_comments
+//                temp_comments = []
             }
 //            if let comments_value = snapshot.value as? [[String: String]] {
 //                    self.comments = comments_value
