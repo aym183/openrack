@@ -62,6 +62,11 @@ struct ShowsPage: View {
                 //
                 //            }
             }
+            .refreshable {
+                readListing.getCreatorShows()
+                readListing.getListingIDs()
+                readListing.getListings()
+            }
             .onAppear {
                 readListing.getCreatorShows()
                 readListing.getListingIDs()

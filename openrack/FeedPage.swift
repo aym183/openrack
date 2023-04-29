@@ -173,10 +173,7 @@ struct FeedPage: View {
                     }
                     
                     Spacer()
-                    
-                    
-                    
-                    
+                       
                     if userName == "aali183" {
                         Button(action: { showingBottomSheet.toggle() }, label: {
                             Text("+")
@@ -210,13 +207,7 @@ struct FeedPage: View {
                 }
                 .opacity(isShownFeed ? 0 : 1)
             }
-            
         }
-//        .onAppear {
-//            print(viewerScheduledShows)
-//            print(viewerShows)
-//        }
-        
     }
 }
 
