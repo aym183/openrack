@@ -276,7 +276,7 @@ struct ViewerShow: View {
                                    
                                     
 //                                    else if readListing.timer! != "00:00" {
-                                        updateDB.updateTimer(listingID: String(describing: retrievedShow["listings"]!), start_time: readListing.timer!, viewer_side: true)
+//                                        updateDB.updateTimer(listingID: String(describing: retrievedShow["listings"]!), start_time: readListing.timer!, viewer_side: true)
 //
 //                                        Database.database().reference().child("shows").child(String(describing: retrievedShow["listings"]!)).child("selectedListing").child("timer").removeValue()
 //
@@ -321,6 +321,7 @@ struct ViewerShow: View {
                                     if response! == "success" {
                                         UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
                                         showConfirmationOrder.toggle()
+                                        CreateDB().addUserOrders(item: readListing.title!, purchase_price: readListing.price!, buyer: userName)
                                     }
                                 }
                             }) {
@@ -392,7 +393,7 @@ struct ViewerShow: View {
                         FeedPage(isShownFeed: false)
                             .navigationBarBackButtonHidden(true)
                     } else {
-                        BottomNavbar().navigationBarBackButtonHidden(true)
+                        BottomNavbar(isShownFeed: false).navigationBarBackButtonHidden(true)
                     }
                 }
             }

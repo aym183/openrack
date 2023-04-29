@@ -171,6 +171,32 @@ class CreateDB : ObservableObject {
                 }
     }
     
+    func addUserOrders(item: String, purchase_price: String, buyer: String) {
+        @AppStorage("username") var userName: String = ""
+        let db = Firestore.firestore()
+        let ref = db.collection("orders")
+        
+        let data: [String: Any] = [
+            "item": item,
+            "order_total": "\(purchase_price) AED",
+            "buyer": userName,
+            "purchased_at": miscData.getPresentDateTime(),
+            "status": "Processing"
+        ]
+        
+        
+        DispatchQueue.global(qos: .background).async {
+            ref.addDocument(data: data) { error in
+                if let error = error {
+                    print("Error adding order: \(error.localizedDescription)")
+                } else {
+                    print("Order added")
+                }
+            }
+        }
+        
+    }
+    
     
     
     func createLiveStream(completion: @escaping (Result<[String], Error>) -> Void) {
