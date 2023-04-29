@@ -21,7 +21,7 @@ struct FeedPage: View {
     @AppStorage("email") var userEmail: String = ""
     @AppStorage("username") var userName: String = ""
     @StateObject var readListing = ReadDB()
-    @State var isShownFeed = true
+    @State var isShownFeed: Bool = true
     
     var body: some View {
         var noOfShows = readListing.viewerShows?.count ?? 0

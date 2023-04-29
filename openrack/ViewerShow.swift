@@ -389,7 +389,7 @@ struct ViewerShow: View {
                 }
                 .navigationDestination(isPresented: $showingFeedPage) {
                     if userName != "aali183" {
-                        FeedPage()
+                        FeedPage(isShownFeed: false)
                             .navigationBarBackButtonHidden(true)
                     } else {
                         BottomNavbar().navigationBarBackButtonHidden(true)

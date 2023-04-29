@@ -114,15 +114,15 @@ struct FullNameDetails: View {
                     Button(action: {
                         AuthViewModel().phoneSignIn(phoneNumber: phoneText, username: usernameText, fullName: fullNameText, credential: user_credentials!)
                         isNavigationBarHidden.toggle()
-                        isLoading.toggle()
+//                        isLoading.toggle()
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                             if usernameText == "aali183" {
                                 isAdminPage.toggle()
                             } else {
                                 isUserPage.toggle()
                             }
-                        }
+//                        }
                         
                     }) {
                         HStack {

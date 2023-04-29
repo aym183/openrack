@@ -10,6 +10,7 @@ import SwiftUI
 
 class ReadDB : ObservableObject {
     
+    @Published var creatorShows: [[String: Any]]? = []
     @Published var viewerShows: [[String: Any]]? = []
     @Published var viewerScheduledShows: [[String: Any]]? = []
     @Published var title: String? = nil
@@ -107,7 +108,8 @@ class ReadDB : ObservableObject {
                         userShows.append(document.data())
                     }
                 }
-                UserDefaults.standard.set(userShows, forKey: "shows")
+//                UserDefaults.standard.set(userShows, forKey: "shows")
+                self.creatorShows = userShows
             }
         
     }
