@@ -10,6 +10,8 @@ import SwiftUI
 
 class ReadDB : ObservableObject {
     
+    @Published var viewerShows: [[String: Any]]? = []
+    @Published var viewerScheduledShows: [[String: Any]]? = []
     @Published var title: String? = nil
     @Published var type: String? = nil
     @Published var price: String? = nil
@@ -127,15 +129,15 @@ class ReadDB : ObservableObject {
                         viewerShows.append(document.data())
                     }
                 }
-                ReadDB().getViewerScheduledShows()
-                UserDefaults.standard.set(viewerShows, forKey: "viewer_shows")
+                self.viewerShows = viewerShows
+//                UserDefaults.standard.set(viewerShows, forKey: "viewer_shows")
 
             }
     }
     
     func getViewerScheduledShows() {
         @AppStorage("username") var userName: String = ""
-        var viewerScheduledShows = UserDefaults.standard.array(forKey: "myViewerKey2") as? [[String:Any]] ?? []
+        var scheduledShows = UserDefaults.standard.array(forKey: "myViewerKey2") as? [[String:Any]] ?? []
         
         let db = Firestore.firestore()
         let ref = db.collection("shows")
@@ -147,10 +149,11 @@ class ReadDB : ObservableObject {
                     print("Error getting email in getViewerShows: \(error.localizedDescription)")
                 } else {
                     for document in snapshot!.documents {
-                        viewerScheduledShows.append(document.data())
+                        scheduledShows.append(document.data())
                     }
                 }
-                UserDefaults.standard.set(viewerScheduledShows, forKey: "viewer_scheduled_shows")
+//                UserDefaults.standard.set(viewerScheduledShows, forKey: "viewer_scheduled_shows")
+                self.viewerScheduledShows = scheduledShows
                 print("We have scheduled shows")
 
             }
