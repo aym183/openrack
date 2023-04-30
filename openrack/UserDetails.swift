@@ -18,6 +18,8 @@ struct UserDetails: View {
     }
     
     var body: some View {
+        GeometryReader { geometry in
+            var varWidth = geometry.size.width - 40
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 
@@ -28,7 +30,7 @@ struct UserDetails: View {
                     
                     TextField("", text: $usernameText)
                         .padding(.horizontal, 8)
-                        .frame(width: 360, height: 50).border(Color.black, width: 2)
+                        .frame(width: varWidth, height: 50).border(Color.black, width: 2)
                         .background(.white)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
@@ -41,7 +43,7 @@ struct UserDetails: View {
                         
                     }) {
                         HStack {
-                            Text("Next").font(.title3).frame(width: 360, height: 50)
+                            Text("Next").font(.title3).frame(width: varWidth, height: 50)
                         }
                     }
                     .disabled(isUsernameEmpty)
@@ -63,6 +65,7 @@ struct UserDetails: View {
             .onAppear {
                 print("\(phoneText), \(user_credentials)")
             }
+        }
     }
    
 }
@@ -82,6 +85,8 @@ struct FullNameDetails: View {
         return fullNameText.isEmpty
     }
     var body: some View {
+        GeometryReader { geometry in
+            var varWidth = geometry.size.width - 40
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 if isLoading {
@@ -104,7 +109,7 @@ struct FullNameDetails: View {
                     
                     TextField("", text: $fullNameText)
                         .padding(.horizontal, 8)
-                        .frame(width: 360, height: 50).border(Color.black, width: 2)
+                        .frame(width: varWidth, height: 50).border(Color.black, width: 2)
                         .background(.white)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
@@ -114,19 +119,19 @@ struct FullNameDetails: View {
                     Button(action: {
                         AuthViewModel().phoneSignIn(phoneNumber: phoneText, username: usernameText, fullName: fullNameText, credential: user_credentials!)
                         isNavigationBarHidden.toggle()
-//                        isLoading.toggle()
+                        //                        isLoading.toggle()
                         
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                            if usernameText == "aali183" {
-                                isAdminPage.toggle()
-                            } else {
-                                isUserPage.toggle()
-                            }
-//                        }
+                        //                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        if usernameText == "aali183" {
+                            isAdminPage.toggle()
+                        } else {
+                            isUserPage.toggle()
+                        }
+                        //                        }
                         
                     }) {
                         HStack {
-                            Text("Lets Go!").font(.title3).frame(width: 360, height: 50)
+                            Text("Lets Go!").font(.title3).frame(width: varWidth, height: 50)
                         }
                     }
                     .disabled(isFullNameEmpty)
@@ -155,6 +160,8 @@ struct FullNameDetails: View {
                 .foregroundColor(.black)
             }
             .navigationBarHidden(isNavigationBarHidden)
+        }
+        
     }
 }
 

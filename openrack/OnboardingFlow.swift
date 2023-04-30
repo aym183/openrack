@@ -12,7 +12,7 @@ struct OnboardingFlow : View {
     var body: some View {
         NavigationView {
             ZStack {
-                
+                Color("Primary_color").ignoresSafeArea()
                 TabView {
                     PageView()
                     PageView2()
@@ -21,7 +21,6 @@ struct OnboardingFlow : View {
                 .tabViewStyle(.page(indexDisplayMode: .automatic))
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
             }
-            .background(Color("Primary_color"))
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
