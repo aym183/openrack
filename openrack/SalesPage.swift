@@ -63,9 +63,6 @@ struct SalesPage: View {
                     Spacer()
                 }
             }
-            .onAppear {
-                print(sales)
-            }
         }
     }
     

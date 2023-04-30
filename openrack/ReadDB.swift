@@ -131,7 +131,6 @@ class ReadDB : ObservableObject {
                     let documentData = document.data()
                     for value in documentData.values {
                         if let valueDict = value as? [String: Any] {
-                            print(valueDict)
                             sales.append(["buyer": valueDict["buyer"]!, "city": valueDict["city"]!, "full_name": valueDict["full_name"]!, "house_number": valueDict["house_number"]!, "item": valueDict["item"]!, "order_total": valueDict["order_total"]!, "seller": valueDict["seller"]!, "street": valueDict["street"]!, "country": valueDict["country"]!,])
                         }
                     }

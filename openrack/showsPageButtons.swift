@@ -16,8 +16,10 @@ struct ShowsPageButtons: View {
         var retrievedShow: [String: Any]!
         @State var streamStarted = false
         @State var listingStarted = false
+        @State var salesStarted = false
         @State var listings = ListingViewModel().listings
         @State var listingSelected = Listing(image: "", title: "", quantity: "", price: "", type: "")
+        @StateObject var readListing = ReadDB()
 //        var retrievedListings = UserDefaults.standard.object(forKey: "listings")
     
         var body: some View {
@@ -93,7 +95,7 @@ struct ShowsPageButtons: View {
                                 )
                         }
                     } else {
-                        Button(action: {}) {
+                        Button(action: { salesStarted.toggle() }) {
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.black)
                                 .frame(width: 70, height: 30)
@@ -105,13 +107,16 @@ struct ShowsPageButtons: View {
                                         .foregroundColor(.white)
                                 )
                         }
+                        .navigationDestination(isPresented: $salesStarted) {
+                            SalesPage(sales: readListing.creatorSales!)
+                        }
                     }
                 }
                 .frame(width: varWidth)
                 .padding(.leading, 20.15)
                 .foregroundColor(.black)
                 .onAppear {
-                    print("Print retrieved show \(retrievedShow)")
+                    readListing.getCreatorSales(listingID: String(describing: retrievedShow["listings"]!))
                 }
             }
         }
