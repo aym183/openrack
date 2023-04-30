@@ -20,6 +20,7 @@ struct CreatorShow: View {
     @State private var isStreaming = false
     @State var showCircle = false
     @State var showingBottomSheet = false
+    @State var showingSalesSheet = false
     var streamName: String
     var streamKey: String
     var liveStreamID: String
@@ -177,7 +178,7 @@ struct CreatorShow: View {
 
                                 Text("Listings").font(Font.system(size: 15)).fontWeight(.semibold)
 
-                                Button(action: {}) {
+                                Button(action: { showingSalesSheet.toggle() }) {
                                     Circle()
                                         .fill(Color("Primary_color"))
                                         .frame(height: 50)
@@ -299,10 +300,15 @@ struct CreatorShow: View {
                 .frame(width: 370, height: 750)
                 .onAppear{
                     readListing.getListingSelected(listingID: String(describing: listingID))
+                    readListing.getCreatorSales(listingID: String(describing: listingID))
                 }
             }
             .sheet(isPresented: $showingBottomSheet) {
                 CreateListings(listingID: listingID, creatorView: true, listingSelected: $listingSelected)
+                    .presentationDetents([.height(400)])
+            }
+            .sheet(isPresented: $showingSalesSheet) {
+                SalesPage(sales: readListing.creatorSales!)
                     .presentationDetents([.height(400)])
             }
             .SPAlert(

@@ -25,13 +25,13 @@ struct SalesPage: View {
                     
                     ScrollView {
                         //listingsViewModel.listings
-                        ForEach(0..<2) { index in
+                        ForEach(0..<noOfSales) { index in
                             
                             VStack {
                                 HStack {
-                                    Text("White Air Force Ones")
+                                    Text(String(describing: sales[index]["item"]!))
                                     Spacer()
-                                    Text("Buyer: aym1302").font(Font.system(size: 14))
+                                    Text("Buyer: \(String(describing: sales[index]["buyer"]!))").font(Font.system(size: 14))
                                     
                                 }
                                 .foregroundColor(.black)
@@ -40,14 +40,14 @@ struct SalesPage: View {
                                 Spacer()
                                 
                                 HStack {
-                                    Text("Ayman Ali, Apartment 508, Skyline Apartments, Dubai, United Arab Emirates").font(Font.system(size: 15)).multilineTextAlignment(.leading)
+                                    Text("\(String(describing: sales[index]["full_name"]!)), \(String(describing: sales[index]["house_number"]!)), \(String(describing: sales[index]["street"]!)), \(String(describing: sales[index]["city"]!)), \(String(describing: sales[index]["country"]!))").font(Font.system(size: 15)).multilineTextAlignment(.leading)
                                     Spacer()
                                 }
                                 
                                 Spacer()
                                 
                                 HStack {
-                                    Text("Total: 450 AED").font(Font.system(size: 14))
+                                    Text("Total: \(String(describing: sales[index]["order_total"]!))").font(Font.system(size: 14))
                                     Spacer()
                                 }
                             }
@@ -62,6 +62,9 @@ struct SalesPage: View {
                     
                     Spacer()
                 }
+            }
+            .onAppear {
+                print(sales)
             }
         }
     }
