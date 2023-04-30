@@ -16,20 +16,16 @@ struct FeedPage: View {
     var rows: [GridItem] = [
         GridItem(.flexible() , spacing: nil, alignment: nil),
     ]
-//    var viewerShows = UserDefaults.standard.array(forKey: "viewer_shows") as? [[String: Any]]
-//    var viewerScheduledShows = UserDefaults.standard.array(forKey: "viewer_scheduled_shows") as? [[String: Any]]
-    @AppStorage("email") var userEmail: String = ""
     @AppStorage("username") var userName: String = ""
     @StateObject var readListing = ReadDB()
     @State var isShownFeed: Bool = true
+    @State var clickedIndex = 0
     
     var body: some View {
         var noOfShows = readListing.viewerShows?.count ?? 0
         var noOfScheduledShows = readListing.viewerScheduledShows?.count ?? 0
         GeometryReader { geometry in
-            var varWidth = geometry.size.width - 90
             var varHeight = geometry.size.height - 20
-            var btnWidth = geometry.size.width - 40
             NavigationStack {
                 ZStack {
                     Color("Secondary_color").ignoresSafeArea()
@@ -64,9 +60,11 @@ struct FeedPage: View {
                                         NavigationStack {
                                             VStack (alignment: .leading){
                                                 Button(action: {
-                                                    isShownShow.toggle()
-                                                    print(readListing.viewerShows![index])
-                                                    print(index)
+                                                    clickedIndex = index
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                                        withAnimation { isShownShow.toggle() }
+                                                    }
+                                                    
                                                 }) {
                                                     VStack (alignment: .leading){
                                                         
@@ -94,10 +92,9 @@ struct FeedPage: View {
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
                                                     )
-                                                } //Button
+                                                }
                                                 .navigationDestination(isPresented: $isShownShow) {
-                                                    //                            ViewerShow(username:viewerShows![index]["created_by"]!, playbackID: viewerShows![index]["playback_id"]!, listingID: viewerShows![index]["listings"]!).navigationBarHidden(true)
-                                                    ViewerShow(retrievedShow: readListing.viewerShows![index]).navigationBarBackButtonHidden(true)
+                                                        ViewerShow(retrievedShow: readListing.viewerShows![clickedIndex], index: clickedIndex).navigationBarBackButtonHidden(true)
                                                 }
                                                 
                                                 HStack {

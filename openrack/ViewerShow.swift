@@ -13,6 +13,7 @@ struct ViewerShow: View {
     
     // could be what's making the discrepancy in viewer show, try passing listing id akele as a parameter
     let retrievedShow: [String: Any]
+    var index: Int?
 //    let username: String
 //    let playbackID: String
     let playerController = AVPlayerViewController()
@@ -28,21 +29,41 @@ struct ViewerShow: View {
     @StateObject var readListing = ReadDB()
     @State var updateDB = UpdateDB()
     @State var commentText = ""
+    @State var showStart = true
+    @State private var opacity = 0.5
 
     
     var body: some View {
         var noOfComments = readListing.comments?.count ?? 0
+
         NavigationStack {
             let player = AVPlayer(url: URL(string: "https://stream.mux.com/\(retrievedShow["playback_id"]!).m3u8")!)
+            
             ZStack {
+                Color("Primary_color").ignoresSafeArea()
                 
-                GeometryReader { geometry in
-                    VideoPlayer (player: player)
-                        .disabled(true)
-                        .onAppear() { player.play() }
-                    //                .allowsHitTesting(false)
+                if showStart {
+                    VStack {
+                        Spacer()
+                        Image("Logo").padding(.horizontal).opacity(opacity)
+                        Spacer()
+                    }
+                    .onAppear {
+                        withAnimation(Animation.easeIn(duration: 1)) { self.opacity = 1.0 }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            withAnimation{ self.showStart = false }
+                        }
+                    }
                 }
-                .edgesIgnoringSafeArea(.all)
+                    GeometryReader { geometry in
+                        VideoPlayer (player: player)
+                            .disabled(true)
+                            .onAppear() { player.play() }
+                        //                .allowsHitTesting(false)
+                    }
+                    .edgesIgnoringSafeArea(.all)
+                    .opacity(showStart ? 0 : 1)
+                
                 
                 VStack {
                     
@@ -53,6 +74,9 @@ struct ViewerShow: View {
                             
                             Text(String(describing: retrievedShow["created_by"]!)).font(Font.system(size: 20))
                         }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 2).opacity(0)
+                        )
                         
                         
                         Spacer()
@@ -63,26 +87,15 @@ struct ViewerShow: View {
                             .overlay(
                                 Image(systemName: "livephoto").font(Font.system(size: 20)).foregroundColor(.white)
                             )
-                        
-                        Text("45").font(Font.system(size: 15))
                             .padding(.trailing)
                         
+//                        Text("Live").font(Font.system(size: 15)).foregroundColor(.red)
+//                            .padding(.trailing)
+//                        
                         
                     }
                     .foregroundColor(.white)
                     .fontWeight(.semibold)
-                    
-                    HStack {
-                        Button(action: {}) {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color("Primary_color"))
-                                .frame(width: 50, height: 20)
-                                .overlay(
-                                    Text("Follow").font(Font.system(size: 10)).fontWeight(.semibold).foregroundColor(.white)
-                                )
-                        }
-                        Spacer()
-                    }
                     
                     Spacer()
                     
@@ -370,6 +383,7 @@ struct ViewerShow: View {
                 .frame(width: 370, height: 750)
                 .onAppear{
                     print(String(describing: retrievedShow))
+                    print(index)
                     readListing.getListingSelected(listingID: String(describing: retrievedShow["listings"]!))
                 }
                 .onReceive(readListing.$timer) { timer in
@@ -396,8 +410,8 @@ struct ViewerShow: View {
                         BottomNavbar(isShownFeed: false).navigationBarBackButtonHidden(true)
                     }
                 }
+                .opacity(showStart ? 0 : 1)
             }
-            
             .SPAlert(
                 isPresent: $showConfirmationOrder,
                 title: "Success!",

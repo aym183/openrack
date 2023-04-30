@@ -10,22 +10,21 @@ import SwiftUI
 struct SplashScreenView: View {
     @State private var isActive = false
     @State private var opacity = 0.5
+    @Binding var showStart: Bool
     
     var body: some View {
-        if isActive {
-            let viewModel = AuthViewModel()
-            LandingPage().environmentObject(viewModel)
-        } else{
+        if showStart {
             ZStack {
-                Color("Primary_color").font(.system(size: 20)).ignoresSafeArea()
+                Color("Primary_color").ignoresSafeArea()
                 Image("Logo").padding(.horizontal).opacity(opacity)
             }
             .onAppear {
-                withAnimation(Animation.easeIn(duration: 1.2)) { self.opacity = 1.0 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    withAnimation{ self.isActive = true }
-                }
+                withAnimation(Animation.easeIn(duration: 2)) { self.opacity = 1.0 }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//                    withAnimation{ self.showStart = false }
+//                }
             }
         }
+        
     }
 }
