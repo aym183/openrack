@@ -49,7 +49,7 @@ struct CustomNavbarView: View {
                     .shadow(color: .black, radius: 6, x: 0, y: 0.5)
                     ,alignment: .bottom
             )
-            .padding(.top, 15)
+            .padding(.top, 5)
         }
         
 

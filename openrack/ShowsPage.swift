@@ -26,54 +26,56 @@ struct ShowsPage: View {
 //    }
     
     var body: some View {
-        var noOfShows = readListing.creatorShows!.count ?? 0
-        NavigationStack {
-            ZStack {
-                Color("Secondary_color").ignoresSafeArea()
-                
-                VStack (alignment: .leading) {
+        GeometryReader { geometry in
+            var varWidth = geometry.size.width - 30
+            var noOfShows = readListing.creatorShows!.count ?? 0
+            NavigationStack {
+                ZStack {
+                    Color("Secondary_color").ignoresSafeArea()
                     
-                    Text("Shows").font(Font.system(size: 30)).fontWeight(.bold).padding(.vertical, 20).foregroundColor(.black)
-                    Spacer()
-                    ScrollView {
-                        LazyVGrid(columns: columns, spacing: 20) {
-                            // Change to length of response array
-                            //                        noOfShows
-                            ForEach(0..<noOfShows, id: \.self) { index in
-                                VStack {
-                                    
-                                    showName(retrievedShow: readListing.creatorShows![index], statusColor: String(describing: String(describing: readListing.creatorShows![index]["status"]!)))
-//                                             ["name"]!), status: String(describing: readListing.creatorShows![index]["status"]!), date_sched: String(describing: readListing.creatorShows![index]["date_scheduled"]!), description: String(describing: readListing.creatorShows![index]["description"]!)
-                                    
-                                    ShowsPageButtons(retrievedShow: readListing.creatorShows![index])
-                                    //                                String(describing: retrievedShows[index]["name"]!), stream_key: String(describing: retrievedShows[index]["stream_key"]!), stream_id: String(describing: retrievedShows[index]["livestream_id"]!), liveStreamID: String(describing: retrievedShows[index]["livestream_id"]!), listingID: String(describing: retrievedShows[index]["listings"]!)
-                                    
+                    VStack (alignment: .leading) {
+                        
+                        Text("Shows").font(Font.system(size: 30)).fontWeight(.bold).padding(.vertical, 20).foregroundColor(.black)
+                        Spacer()
+                        ScrollView {
+                            LazyVGrid(columns: columns, spacing: 20) {
+                                // Change to length of response array
+                                //                        noOfShows
+                                ForEach(0..<noOfShows, id: \.self) { index in
+                                    VStack {
+                                        
+                                        showName(retrievedShow: readListing.creatorShows![index], statusColor: String(describing: String(describing: readListing.creatorShows![index]["status"]!)))
+                                        //                                             ["name"]!), status: String(describing: readListing.creatorShows![index]["status"]!), date_sched: String(describing: readListing.creatorShows![index]["date_scheduled"]!), description: String(describing: readListing.creatorShows![index]["description"]!)
+                                        
+                                        ShowsPageButtons(retrievedShow: readListing.creatorShows![index])
+                                        //                                String(describing: retrievedShows[index]["name"]!), stream_key: String(describing: retrievedShows[index]["stream_key"]!), stream_id: String(describing: retrievedShows[index]["livestream_id"]!), liveStreamID: String(describing: retrievedShows[index]["livestream_id"]!), listingID: String(describing: retrievedShows[index]["listings"]!)
+                                        
+                                    }
+                                    .frame(width: varWidth, height: 110)
+                                    .border(Color.black, width: 2)
+                                    .background(.white)
+                                    .id(index)
                                 }
-                                .frame(width: 360, height: 110)
-                                .border(Color.black, width: 2)
-                                .background(.white)
-                                .id(index)
                             }
                         }
                     }
+                    .padding(.horizontal)
+                    //            .onAppear {
+                    //
+                    //            }
                 }
-                .padding(.horizontal)
-                //            .onAppear {
-                //
-                //            }
-            }
-            .refreshable {
-                readListing.getCreatorShows()
-                readListing.getListingIDs()
-                readListing.getListings()
-            }
-            .onAppear {
-                readListing.getCreatorShows()
-                readListing.getListingIDs()
-                readListing.getListings()
+                .refreshable {
+                    readListing.getCreatorShows()
+                    readListing.getListingIDs()
+                    readListing.getListings()
+                }
+                .onAppear {
+                    readListing.getCreatorShows()
+                    readListing.getListingIDs()
+                    readListing.getListings()
+                }
             }
         }
-        
     }
 }
 
@@ -104,7 +106,7 @@ struct showName: View {
             Text(String(describing: retrievedShow["date_scheduled"]!)).font(Font.system(size: 12))
 
         }
-        .padding(.horizontal,6)
+        .padding(.horizontal,6).padding(.top, 5)
         .foregroundColor(.black)
         
 

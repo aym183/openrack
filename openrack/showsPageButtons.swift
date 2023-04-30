@@ -21,97 +21,98 @@ struct ShowsPageButtons: View {
 //        var retrievedListings = UserDefaults.standard.object(forKey: "listings")
     
         var body: some View {
-            HStack {
+            GeometryReader { geometry in
+                var varWidth = geometry.size.width - 40
                 
-                if String(describing: retrievedShow["status"]!) != "Finished" {
+                HStack {
+                    
+                    if String(describing: retrievedShow["status"]!) != "Finished" {
+                        
+                        Button(action: {
+                            ReadDB().getStreamKey(liveStreamID:  String(describing: retrievedShow["livestream_id"]!))
+                            streamStarted.toggle()
+                        }) {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.black)
+                                .frame(width: 85, height: 30)
+                                .overlay(
+                                    Text("Start Streaming").font(Font.system(size: 8)).fontWeight(.bold).foregroundColor(.white)
+                                )
+                        }
+                        .navigationDestination(isPresented: $streamStarted) {
+                            CreatorShow(streamName: String(describing: retrievedShow["name"]!), streamKey: String(describing: retrievedShow["stream_key"]!), liveStreamID:  String(describing: retrievedShow["livestream_id"]!), listingID:  String(describing: retrievedShow["listings"]!), listingSelected: $listingSelected).navigationBarHidden(true)
+                        }
+                    }
+                    
                     
                     Button(action: {
-                        ReadDB().getStreamKey(liveStreamID:  String(describing: retrievedShow["livestream_id"]!))
-                        streamStarted.toggle()
+                        //                    if let myDictionary = UserDefaults.standard.object(forKey: "listings") {
+                        listingStarted.toggle()
                     }) {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(.black)
-                            .frame(width: 85, height: 30)
+                            .frame(width: 70, height: 30)
                             .overlay(
-                                Text("Start Streaming").font(Font.system(size: 8)).fontWeight(.bold).foregroundColor(.white)
+                                HStack{
+                                    Image(systemName: "tshirt.fill").font(Font.system(size: 8)).padding(.trailing, -5)
+                                    Text("Listings").font(Font.system(size: 8)).fontWeight(.bold)
+                                }
+                                    .foregroundColor(.white)
                             )
                     }
-                    .navigationDestination(isPresented: $streamStarted) {
-                        CreatorShow(streamName: String(describing: retrievedShow["name"]!), streamKey: String(describing: retrievedShow["stream_key"]!), liveStreamID:  String(describing: retrievedShow["livestream_id"]!), listingID:  String(describing: retrievedShow["listings"]!), listingSelected: $listingSelected).navigationBarHidden(true)
-                    }
-                }
-
-                
-                Button(action: {
-//                    if let myDictionary = UserDefaults.standard.object(forKey: "listings") {
-                    listingStarted.toggle()
-                }) {
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(.black)
-                        .frame(width: 70, height: 30)
-                        .overlay(
-                            HStack{
-                                Image(systemName: "tshirt.fill").font(Font.system(size: 8)).padding(.trailing, -5)
-                                Text("Listings").font(Font.system(size: 8)).fontWeight(.bold)
-                            }
-                                .foregroundColor(.white)
-                        )
-                }
-                .navigationDestination(isPresented: $listingStarted) {
-                    CreateListings(listingID:  String(describing: retrievedShow["listings"]!), creatorView: false, listingSelected: $listingSelected)
-                }
-                
-                if String(describing: retrievedShow["status"]!) != "Finished" {
-                    Button(action: {}) {
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(.black)
-                        .frame(width: 70, height: 30)
-                        .overlay(
-                            HStack{
-                                Image(systemName: "link").font(Font.system(size: 8)).padding(.trailing, -5)
-                                Text("Copy Link").font(Font.system(size: 8)).fontWeight(.bold)
-                            }
-                                .foregroundColor(.white)
-                        )
+                    .navigationDestination(isPresented: $listingStarted) {
+                        CreateListings(listingID:  String(describing: retrievedShow["listings"]!), creatorView: false, listingSelected: $listingSelected)
                     }
                     
-                        
-                    Button(action: { print(index) }) {
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(.white)
-                        .frame(width: 85, height: 26)
-                        .overlay(
-                            Text("Cancel Stream").font(Font.system(size: 8)).fontWeight(.bold).foregroundColor(.red)
-                        )
-                        .background(
+                    if String(describing: retrievedShow["status"]!) != "Finished" {
+                        Button(action: {}) {
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.black)
-                                .frame(width: 88.5, height: 30)
-                        )
-                    }
-                } else {
-                    Button(action: {}) {
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(.black)
-                        .frame(width: 70, height: 30)
-                        .overlay(
-                            HStack{
-                                Image(systemName: "dollarsign.circle").font(Font.system(size: 9)).padding(.trailing, -5)
-                                Text("Sales").font(Font.system(size: 9)).fontWeight(.bold)
-                            }
-                                .foregroundColor(.white)
-                        )
+                                .frame(width: 70, height: 30)
+                                .overlay(
+                                    HStack{
+                                        Image(systemName: "link").font(Font.system(size: 8)).padding(.trailing, -5)
+                                        Text("Copy Link").font(Font.system(size: 8)).fontWeight(.bold)
+                                    }
+                                        .foregroundColor(.white)
+                                )
+                        }
+                        
+                        
+                        Button(action: { print(index) }) {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.white)
+                                .frame(width: 81.5, height: 26)
+                                .overlay(
+                                    Text("Cancel Stream").font(Font.system(size: 8)).fontWeight(.bold).foregroundColor(.red)
+                                )
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(.black)
+                                        .frame(width: 85, height: 30)
+                                )
+                        }
+                    } else {
+                        Button(action: {}) {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.black)
+                                .frame(width: 70, height: 30)
+                                .overlay(
+                                    HStack{
+                                        Image(systemName: "dollarsign.circle").font(Font.system(size: 9)).padding(.trailing, -5)
+                                        Text("Sales").font(Font.system(size: 9)).fontWeight(.bold)
+                                    }
+                                        .foregroundColor(.white)
+                                )
+                        }
                     }
                 }
-                
-
-                Spacer()
-            }
-            .padding(.leading, 5)
-            .padding(.top, 0)
-            .foregroundColor(.black)
-            .onAppear {
-                print("Print retrieved show \(retrievedShow)")
+                .frame(width: varWidth)
+                .padding(.leading, 20.15)
+                .foregroundColor(.black)
+                .onAppear {
+                    print("Print retrieved show \(retrievedShow)")
+                }
             }
         }
 }

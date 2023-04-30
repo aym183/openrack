@@ -28,6 +28,7 @@ struct FeedPage: View {
         var noOfScheduledShows = readListing.viewerScheduledShows?.count ?? 0
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 90
+            var varHeight = geometry.size.height - 20
             var btnWidth = geometry.size.width - 40
             NavigationStack {
                 ZStack {
@@ -192,7 +193,7 @@ struct FeedPage: View {
                                 .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
                             }
                         }
-                        .frame(height: 710)
+                        .frame(height: varHeight)
                     }
                     .refreshable {
                         readListing.getViewerLiveShows()
