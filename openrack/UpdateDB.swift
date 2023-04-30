@@ -151,6 +151,40 @@ class UpdateDB : ObservableObject {
         }
     }
     
+    func updateCreatorSales(item: String, purchase_price: String, seller: String, address: [String: String], listingID: String) {
+        @AppStorage("username") var userName: String = ""
+        let db = Firestore.firestore()
+        let ref = db.collection("sales")
+        var documentData = [String: Any]()
+        var docID = ref.document(listingID)
+//        for _ in 0..<count! {
+        var fieldID = ref.document()
+        
+        documentData[fieldID.documentID] = [
+            "item": item,
+            "order_total": "\(purchase_price) AED",
+            "buyer": userName,
+            "seller": seller,
+            "full_name": address["full_name"],
+            "house_number": address["house_number"],
+            "street": address["street"],
+            "city": address["city"],
+            "country": address["country"],
+            "purchased_at": miscData.getPresentDateTime()
+        ]
+        
+        
+        DispatchQueue.global(qos: .background).async {
+            docID.updateData(documentData) { error in
+                if let error = error {
+                    print("Error adding salesUpdate: \(error.localizedDescription)")
+                } else {
+                    print("Sale updated")
+                }
+            }
+        }
+        
+    }
     func updateUserAddress(address: [String: Any]) {
         @AppStorage("username") var userName: String = ""
         let db = Firestore.firestore()

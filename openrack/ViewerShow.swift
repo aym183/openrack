@@ -335,9 +335,14 @@ struct ViewerShow: View {
                                 Button(action: {
                                     ReadServer().executeOrderTransaction(order_amount: readListing.price!) { response in
                                         if response! == "success" {
-                                            UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
                                             showConfirmationOrder.toggle()
+                                            UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
                                             CreateDB().addUserOrders(item: readListing.title!, purchase_price: readListing.price!, buyer: userName)
+                                            if readListing.creatorSales!.count == 0 {
+                                                CreateDB().addCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
+                                            } else {
+                                                UpdateDB().updateCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
+                                            }
                                         }
                                     }
                                 }) {
@@ -386,6 +391,8 @@ struct ViewerShow: View {
                     .frame(width: varWidth, height: varHeight)
                     .onAppear{
                         readListing.getListingSelected(listingID: String(describing: retrievedShow["listings"]!))
+                        readListing.getAddress()
+                        readListing.getCreatorSales(listingID: String(describing: retrievedShow["listings"]!))
                     }
                     .onReceive(readListing.$timer) { timer in
                         if timer == "00:00" && userName == readListing.current_bidder {

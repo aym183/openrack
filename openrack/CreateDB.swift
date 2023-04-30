@@ -143,30 +143,6 @@ class CreateDB : ObservableObject {
         } else {
             print("Document added successfully!")
             ReadDB().getListings()
-            self.addSales(docRef: docRef)
-        }
-                }
-    }
-    
-    func addSales(docRef: String){
-        let db = Firestore.firestore()
-        let ref = db.collection("sales")
-//        let count = Int(listing[2])
-        var docID = ref.document(docRef)
-        var presentDateTime = miscData.getPresentDateTime()
-        
-        var documentData = [String: Any]()
-//        for _ in 0..<count! {
-        var fieldID = ref.document()
-        documentData[fieldID.documentID] = ["added": "nil"]
-//        }
-        
-        docID.setData(documentData) { error in
-        if let error = error {
-            print("Error adding listing: \(error.localizedDescription)")
-        } else {
-            print("Document added successfully!")
-//            ReadDB().getSales()
         }
                 }
     }
@@ -191,6 +167,43 @@ class CreateDB : ObservableObject {
                     print("Error adding order: \(error.localizedDescription)")
                 } else {
                     print("Order added")
+                }
+            }
+        }
+        
+    }
+    
+    func addCreatorSales(item: String, purchase_price: String, seller: String, address: [String: String], listingID: String) {
+        @AppStorage("username") var userName: String = ""
+        let db = Firestore.firestore()
+        let ref = db.collection("sales")
+        var documentData = [String: Any]()
+        var docID = ref.document(listingID)
+//        for _ in 0..<count! {
+        var fieldID = ref.document()
+        
+//        self.address = ["full_name": document.data()["full_name"], "house_number": document.data()["house_number"], "street": document.data()["street"] , "city": document.data()["city"], "country": document.data()["country"]] as? [String: String]
+//
+        documentData[fieldID.documentID] = [
+            "item": item,
+            "order_total": "\(purchase_price) AED",
+            "buyer": userName,
+            "seller": seller,
+            "full_name": address["full_name"],
+            "house_number": address["house_number"],
+            "street": address["street"],
+            "city": address["city"],
+            "country": address["country"],
+            "purchased_at": miscData.getPresentDateTime()
+        ]
+        
+        
+        DispatchQueue.global(qos: .background).async {
+            docID.setData(documentData) { error in
+                if let error = error {
+                    print("Error adding sales: \(error.localizedDescription)")
+                } else {
+                    print("Sales added")
                 }
             }
         }

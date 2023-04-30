@@ -11,6 +11,7 @@ import SwiftUI
 class ReadDB : ObservableObject {
     
     @Published var userOrders: [[String: Any]]? = []
+    @Published var creatorSales: [[String: Any]]? = []
     @Published var creatorShows: [[String: Any]]? = []
     @Published var viewerShows: [[String: Any]]? = []
     @Published var viewerScheduledShows: [[String: Any]]? = []
@@ -113,6 +114,26 @@ class ReadDB : ObservableObject {
                 self.creatorShows = userShows
             }
         
+    }
+    
+    func getCreatorSales(listingID: String) {
+        
+        let db = Firestore.firestore()
+        let ref = db.collection("sales")
+        var sales = UserDefaults.standard.array(forKey: "myKey") as? [[String:Any]] ?? []
+        
+        ref.whereField(FieldPath.documentID(), isEqualTo: listingID)
+            .getDocuments { (snapshot, error) in
+                if let error = error {
+                    print("Error getting email in getCreatorSales: \(error.localizedDescription)")
+                } else {
+                    for document in snapshot!.documents {
+//                        document.data()["full_name"]
+                        sales.append(document.data())
+                    }
+                }
+                self.creatorSales = sales
+            }
     }
     
     func getViewerLiveShows() {
