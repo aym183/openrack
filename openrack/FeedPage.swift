@@ -39,7 +39,6 @@ struct FeedPage: View {
                             ProgressView()
                                 .scaleEffect(2.5)
                                 .progressViewStyle(CircularProgressViewStyle(tint: .black))
-                                .fontWeight(.semibold)
                             
                             Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
                         }
