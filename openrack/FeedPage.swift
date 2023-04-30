@@ -26,24 +26,27 @@ struct FeedPage: View {
     var body: some View {
         var noOfShows = readListing.viewerShows?.count ?? 0
         var noOfScheduledShows = readListing.viewerScheduledShows?.count ?? 0
-        NavigationStack {
-            ZStack {
-                Color("Secondary_color").ignoresSafeArea()
-                
-                if isShownFeed {
-                    VStack {
-                        ProgressView()
-                            .scaleEffect(2.5)
-                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                        
-                        Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
-                    }
-                }
-                ScrollView(.vertical, showsIndicators: false) {
+        GeometryReader { geometry in
+            var varWidth = geometry.size.width - 90
+            var btnWidth = geometry.size.width - 40
+            NavigationStack {
+                ZStack {
+                    Color("Secondary_color").ignoresSafeArea()
                     
-                    VStack {
-                        CustomNavbarView()
+                    if isShownFeed {
+                        VStack {
+                            ProgressView()
+                                .scaleEffect(2.5)
+                                .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                            
+                            Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
+                        }
+                    }
+                    ScrollView(.vertical, showsIndicators: false) {
                         
+                        VStack {
+                            CustomNavbarView()
+                            
                             
                             HStack {
                                 Text("Live Shows")
@@ -119,7 +122,7 @@ struct FeedPage: View {
                                     Text("Upcoming Shows")
                                     Spacer()
                                 }
-                                .foregroundColor(.black).fontWeight(.semibold).font(Font.system(size: 20)).opacity(0.7).multilineTextAlignment(.leading).padding(.horizontal).padding(.bottom, 0)
+                                .foregroundColor(.black).fontWeight(.semibold).font(Font.system(size: 20)).opacity(0.7).multilineTextAlignment(.leading).padding(.horizontal).padding(.bottom, -12)
                                 
                                 
                                 ScrollView(.horizontal, showsIndicators: false) {
@@ -150,7 +153,7 @@ struct FeedPage: View {
                                                             Text(String(describing:readListing.viewerScheduledShows![index]["name"]!)).font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).multilineTextAlignment(.leading).padding(.horizontal, 5)
                                                         }
                                                         .padding(.vertical, 10)
-                                                        .frame(width: 175, height: 260)
+                                                        .frame(width: 175, height: 240)
                                                         .background(Image("ShowPreview").resizable())
                                                         .cornerRadius(10.0)
                                                         .overlay(
@@ -169,7 +172,7 @@ struct FeedPage: View {
                                         }
                                         
                                     }
-                                    .padding(.horizontal, 15).padding(.top, 0)
+                                    .padding(.horizontal, 15)
                                 }
                                 .frame(height: 300)
                             }
@@ -190,30 +193,31 @@ struct FeedPage: View {
                             }
                         }
                         .frame(height: 710)
-                }
-                .refreshable {
-                    readListing.getViewerLiveShows()
-                    readListing.getViewerScheduledShows()
-                }
-                .background(Color("Secondary_color"))
-                .sheet(isPresented: $showingBottomSheet) {
-                    StreamBottomSheet(showingBottomSheet: $showingBottomSheet, isShowingNextView: $isShowingNextView)
-                        .presentationDetents([.height(200)])
-                }
-                .navigationDestination(isPresented: $isShowingNextView) {
-                    ScheduleStream().navigationBarHidden(true)
-                }
-                .onAppear {
-                    readListing.getViewerLiveShows()
-                    readListing.getViewerScheduledShows()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        withAnimation(.easeOut(duration: 0.5)) {
-                            isShownFeed = false
+                    }
+                    .refreshable {
+                        readListing.getViewerLiveShows()
+                        readListing.getViewerScheduledShows()
+                    }
+                    .background(Color("Secondary_color"))
+                    .sheet(isPresented: $showingBottomSheet) {
+                        StreamBottomSheet(showingBottomSheet: $showingBottomSheet, isShowingNextView: $isShowingNextView)
+                            .presentationDetents([.height(200)])
+                    }
+                    .navigationDestination(isPresented: $isShowingNextView) {
+                        ScheduleStream().navigationBarHidden(true)
+                    }
+                    .onAppear {
+                        readListing.getViewerLiveShows()
+                        readListing.getViewerScheduledShows()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation(.easeOut(duration: 0.5)) {
+                                isShownFeed = false
+                            }
                         }
                     }
+                    .opacity(isShownFeed ? 0 : 1)
                 }
-                .opacity(isShownFeed ? 0 : 1)
             }
         }
     }

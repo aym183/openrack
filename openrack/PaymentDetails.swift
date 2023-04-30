@@ -15,6 +15,8 @@ struct PaymentDetails: View {
     @StateObject var addressDetails = ReadDB()
 
     var body: some View {
+        GeometryReader { geometry in
+            var btnWidth = geometry.size.width - 40
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack(spacing: 20) {
@@ -39,7 +41,7 @@ struct PaymentDetails: View {
                             Image(systemName: "pencil").font(Font.system(size: 25))
                         }
                         .padding(20).padding(.bottom)
-                        .frame(width: 370)
+                        .frame(width: btnWidth)
                         .background(Color("Primary_color")).cornerRadius(15)
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2))
                     }
@@ -49,14 +51,14 @@ struct PaymentDetails: View {
                     
                     Button(action: {
                         ReadServer().startCheckout { response in
-
-//                            print("Response in \(response)")
+                            
+                            //                            print("Response in \(response)")
                             PaymentConfig.shared.paymentIntentClientSecret = response[0] //clientSecret
                             PaymentConfig.shared.paymentIntentID = response[1]
                             
-//                            DispatchQueue.main.async {
+                            //                            DispatchQueue.main.async {
                             isShowingPaymentsForm.toggle()
-//                            }
+                            //                            }
                         }
                     }) {
                         HStack {
@@ -75,13 +77,11 @@ struct PaymentDetails: View {
                             Image(systemName: "pencil").font(Font.system(size: 25))
                         }
                         .padding(20).padding(.bottom)
-                        .frame(width: 370)
+                        .frame(width: btnWidth)
                         .background(Color("Primary_color")).cornerRadius(15)
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
                     }
                     .sheet(isPresented: $isShowingPaymentsForm) {
-//                            AddressForm()
-//                        ExampleSwiftUIPaymentSheet()
                         CheckoutView(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm).presentationDetents([.height(250)])
                     }
                 }
@@ -92,6 +92,7 @@ struct PaymentDetails: View {
                     addressDetails.getCardDetails()
                 }
             }
+        }
         }
 }
 
