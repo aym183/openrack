@@ -74,9 +74,6 @@ struct FeedPage: View {
                                                             Text("Live")
                                                                 .fontWeight(.semibold).foregroundColor(Color.white).padding(.leading, -6)
                                                             Spacer()
-                                                            Button(action: {isBookmarked.toggle()}) {
-                                                                Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color.white)
-                                                            }
                                                             
                                                         }
                                                         .padding(.horizontal, 3)
