@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 09/04/2023.
 //
-
 import SwiftUI
 
 import SwiftUI
@@ -189,7 +188,6 @@ struct CreatorShow: View {
                                 }
 
                                 Text("Sales").font(Font.system(size: 15)).fontWeight(.semibold) // Should show item sold to who, price, and shipping details
-
 
                                 Button(action: {}) {
                                     Circle()

@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 15/04/2023.
 //
-
 import SwiftUI
 import Foundation
 
@@ -59,7 +58,6 @@ struct CreateListings: View {
 
 //                    }
 //                    .border(Color.black, width: 2)
-
                     Spacer()
                     
                     HStack{

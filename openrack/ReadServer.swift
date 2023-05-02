@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 21/04/2023.
 //
-
 import Foundation
 import SwiftUI
 
@@ -27,7 +26,7 @@ class ReadServer : ObservableObject {
                 return
             }
             let paymentMethodResponse = try? JSONDecoder().decode(PaymentMethodResponse.self, from: data)
-            completion([paymentMethodResponse?.cardBrand, paymentMethodResponse?.lastFour]) 
+            completion([paymentMethodResponse?.cardBrand, paymentMethodResponse?.lastFour])
         }.resume()
     }
     

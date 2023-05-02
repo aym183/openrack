@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 26/03/2023.
 //
-
 import SwiftUI
 import _AuthenticationServices_SwiftUI
 import Firebase
@@ -178,4 +177,3 @@ struct ContentView_Previews: PreviewProvider {
 //        LandingPage().previewDevice("iPhone X")
     }
 }
-

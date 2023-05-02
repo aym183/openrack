@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 09/04/2023.
 //
-
 import Foundation
 import FirebaseFirestore
 import Firebase
@@ -264,7 +263,6 @@ class UpdateDB : ObservableObject {
 //                print("Realtime Comment Updated")
 //            }
 //        }
-
     }
     
     

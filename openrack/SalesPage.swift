@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 30/04/2023.
 //
-
 import SwiftUI
 
 struct SalesPage: View {

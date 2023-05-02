@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 23/04/2023.
 //
-
 import SwiftUI
 
 struct AccountPage: View {

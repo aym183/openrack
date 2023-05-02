@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 19/04/2023.
 //
-
 import Foundation
 
 struct CheckoutIntentResponse: Decodable {

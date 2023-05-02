@@ -140,6 +140,7 @@ class ReadDB : ObservableObject {
 //                        print(document.data().values["full_name"])
 //                    }
                 }
+                print("Sales are \(sales)")
                 self.creatorSales = sales
             }
     }
@@ -163,7 +164,6 @@ class ReadDB : ObservableObject {
                 }
                 self.viewerShows = viewerShows
 //                UserDefaults.standard.set(viewerShows, forKey: "viewer_shows")
-
             }
     }
     
@@ -372,7 +372,6 @@ class ReadDB : ObservableObject {
 //                    self.is_timer = is_timer
 //            }
 //        }
-
         currentBidderDB.observe(.value) { snapshot in
             if let current_bidder_value = snapshot.value as? String {
                     self.current_bidder = current_bidder_value
@@ -412,7 +411,6 @@ class ReadDB : ObservableObject {
 //                            UserDefaults.standard.set(listings, forKey: "listings")
 //                        }
 //                    }
-
 //if let error = error {
 //    print("Error getting ReadListings: \(error.localizedDescription)")
 //} else if let snapshot = querySnapshot, !snapshot.isEmpty {

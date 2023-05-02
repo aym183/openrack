@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 23/04/2023.
 //
-
 import SwiftUI
 
 struct CreateSales: View {
@@ -66,7 +65,6 @@ struct CreateSales: View {
 
 //                    }
 //                    .border(Color.black, width: 2)
-
                     Spacer()
                     
                 }

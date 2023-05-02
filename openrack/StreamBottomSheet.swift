@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 06/04/2023.
 //
-
 import SwiftUI
 
 struct StreamBottomSheet: View {
@@ -35,7 +34,7 @@ struct StreamBottomSheet: View {
                                 Image(systemName: "play.fill").font(.system(size: 20)).padding(.trailing, 5)
                                 Text("Schedule a Show").font(.title2)
                             }
-                            .fontWeight(.semibold)
+                            .fontWeight(.medium)
                             
                         }
                         .frame(width: btnWidth, height: 60)
