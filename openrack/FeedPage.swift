@@ -91,7 +91,7 @@ struct FeedPage: View {
                                                     )
                                                 }
                                                 .navigationDestination(isPresented: $isShownShow) {
-                                                        ViewerShow(retrievedShow: readListing.viewerShows![clickedIndex], index: clickedIndex).navigationBarBackButtonHidden(true)
+                                                        ViewerShow(retrievedShow: readListing.viewerShows![clickedIndex], index: clickedIndex)..navigationBarBackButtonHidden(true)
                                                 }
                                                 
                                                 HStack {
@@ -199,7 +199,7 @@ struct FeedPage: View {
                             .presentationDetents([.height(200)])
                     }
                     .navigationDestination(isPresented: $isShowingNextView) {
-                        ScheduleStream().navigationBarHidden(true)
+                        ScheduleStream().navigationBarBackButtonHidden(true)
                     }
                     .onAppear {
                         readListing.getViewerLiveShows()

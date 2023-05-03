@@ -60,14 +60,17 @@ struct ViewerShow: View {
                         }
                         .frame(width: geometry.size.width, height: geometry.size.height)
                     }
-                    GeometryReader { geometry in
+                    
+                    
+                    GeometryReader { newgeometry in
                         VideoPlayer (player: player)
-                            .disabled(true)
-                            .onAppear() { player.play() }
-                        //                .allowsHitTesting(false)
+                            .onAppear { player.play() }
+//                            .disabled(true)
                     }
                     .edgesIgnoringSafeArea(.all)
+                    .frame(width: geometry.size.width, height: geometry.size.height)
                     .opacity(showStart ? 0 : 1)
+                    
 
 
                     VStack {
@@ -347,7 +350,8 @@ struct ViewerShow: View {
                     }
                     .navigationDestination(isPresented: $showingFeedPage) {
                         if userName != "aali183" {
-                            FeedPage(isShownFeed: false).navigationBarBackButtonHidden(true)
+//                            FeedPage(isShownFeed: false)
+                            LandingPage().navigationBarBackButtonHidden(true)
                         } else {
                             BottomNavbar(isShownFeed: false).navigationBarBackButtonHidden(true)
                         }

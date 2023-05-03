@@ -4,7 +4,6 @@
 //
 //  Created by Ayman Ali on 09/04/2023.
 //
-import SwiftUI
 
 import SwiftUI
 import AVKit
@@ -20,6 +19,7 @@ struct CreatorShow: View {
     @State var showCircle = false
     @State var showingBottomSheet = false
     @State var showingSalesSheet = false
+    @State var isFinished = false
     var streamName: String
     var streamKey: String
     var liveStreamID: String
@@ -44,8 +44,8 @@ struct CreatorShow: View {
             ZStack {
                 
                   FrameView(image: model.frame)
-                                  .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                  .ignoresSafeArea()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .ignoresSafeArea()
 
                 if isTimerShown {
                     Text("\(countdownTimer)").font(Font.system(size: 100)).opacity(0.7).foregroundColor(.white)
@@ -55,17 +55,13 @@ struct CreatorShow: View {
                             } else {
                                 timerRunning = false
                                 isTimerShown = false
-                            }
                         }
+                    }
                 }
 
-
                 VStack {
-
                     HStack {
-
                         Text(streamName).font(Font.system(size: 20))
-
 
                         Spacer()
 
@@ -261,6 +257,7 @@ struct CreatorShow: View {
                                     model.closeStream()
                                 }
                                 UpdateDB().updateStatus(text: "Finished", livestreamID: liveStreamID)
+                                isFinished.toggle()
                             } else {
                                 isTimerShown.toggle()
                                 timerRunning.toggle()
@@ -291,6 +288,9 @@ struct CreatorShow: View {
                                 .padding(.horizontal)
                         }
 
+                    }
+                    .navigationDestination(isPresented: $isFinished) {
+                        ShowsPage().navigationBarBackButtonHidden(true)
                     }
 
 
