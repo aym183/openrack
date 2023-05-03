@@ -24,7 +24,7 @@ struct AccountPage: View {
     
     var body: some View {
         GeometryReader { geometry in
-            var varWidth = geometry.size.width - 170
+            var varWidth = geometry.size.width - 220
             var btnWidth = geometry.size.width - 40
             NavigationStack {
                 ZStack {
@@ -69,11 +69,11 @@ struct AccountPage: View {
                         Divider().frame(width: 340, height: 2).background(.black).padding(.bottom, 5).opacity(0.5).padding(.horizontal,5)
                         
                         HStack {
-                            Text("Username").padding(.trailing, 20)
+                            Text("Username").font(Font.system(size: 15)).padding(.trailing, 25)
                             TextField("", text: $usernameText)
                                 .font(Font.system(size: 13))
                                 .padding(.horizontal, 8)
-                                .frame(width: varWidth, height: 35)
+                                .frame(width: varWidth, height: 30)
                                 .background(.gray)
                                 .opacity(0.5)
                                 .border(Color.black, width: 2)
@@ -81,6 +81,22 @@ struct AccountPage: View {
                             
                             
                             //                        Text(userName).padding(.leading, 22)
+                        }
+                        .foregroundColor(.black)
+                        .fontWeight(.semibold)
+                        .padding()
+                        
+                        HStack {
+                            Text("Phone").font(Font.system(size: 15)).padding(.trailing, 54)
+                            TextField("", text: $phoneText)
+                                .font(Font.system(size: 13))
+                                .padding(.horizontal, 8)
+                                .frame(width: varWidth, height: 30)
+                                .background(.gray)
+                                .opacity(0.5)
+                                .border(Color.black, width: 2)
+                                .disabled(true)
+                            //                        Text("+447859234405").padding(.leading, 53)
                         }
                         .foregroundColor(.black)
                         .fontWeight(.semibold)
@@ -119,21 +135,6 @@ struct AccountPage: View {
                         //                    .fontWeight(.semibold)
                         //                    .padding()
                         
-                        HStack {
-                            Text("Phone").padding(.trailing, 51)
-                            TextField("", text: $phoneText)
-                                .font(Font.system(size: 13))
-                                .padding(.horizontal, 8)
-                                .frame(width: varWidth, height: 35)
-                                .background(.gray)
-                                .opacity(0.5)
-                                .border(Color.black, width: 2)
-                                .disabled(true)
-                            //                        Text("+447859234405").padding(.leading, 53)
-                        }
-                        .foregroundColor(.black)
-                        .fontWeight(.semibold)
-                        .padding()
                         
                         //                Spacer()
                         

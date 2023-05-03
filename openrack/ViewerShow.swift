@@ -345,7 +345,7 @@ struct ViewerShow: View {
 //                            print(readListing.cardDetails)
 //                            print(readListing.address)
 //                        }
-//                        readListing.getCreatorSales(listingID: String(describing: retrievedShow["listings"]!))
+                        readListing.getCreatorSales(listingID: String(describing: retrievedShow["listings"]!))
                     }
                     .onReceive(readListing.$timer) { timer in
                         if timer == "00:00" && userName == readListing.current_bidder {
@@ -368,8 +368,7 @@ struct ViewerShow: View {
                     }
                     .navigationDestination(isPresented: $showingFeedPage) {
                         if userName != "aali183" {
-//                            FeedPage(isShownFeed: false)
-                            LandingPage().navigationBarBackButtonHidden(true)
+                            FeedPage(isShownFeed: false).navigationBarBackButtonHidden(true)
                         } else {
                             BottomNavbar(isShownFeed: false).navigationBarBackButtonHidden(true)
                         }

@@ -11,7 +11,7 @@ import SwiftUI
 class ReadDB : ObservableObject {
     
     @Published var userOrders: [[String: Any]]? = []
-    @Published var creatorSales: [[String: Any]]? = []
+    @Published var creatorSales: [[String: Any]]? = nil
     @Published var creatorShows: [[String: Any]]? = []
     @Published var viewerShows: [[String: Any]]? = []
     @Published var viewerScheduledShows: [[String: Any]]? = []
@@ -127,13 +127,22 @@ class ReadDB : ObservableObject {
                 if let error = error {
                     print("Error getting email in getCreatorSales: \(error.localizedDescription)")
                 } else {
-                    let document = snapshot!.documents[0]
-                    let documentData = document.data()
-                    for value in documentData.values {
-                        if let valueDict = value as? [String: Any] {
-                            sales.append(["buyer": valueDict["buyer"]!, "city": valueDict["city"]!, "full_name": valueDict["full_name"]!, "house_number": valueDict["house_number"]!, "item": valueDict["item"]!, "order_total": valueDict["order_total"]!, "seller": valueDict["seller"]!, "street": valueDict["street"]!, "country": valueDict["country"]!,])
+                    for document in snapshot!.documents {
+                        for documentData in document.data().values {
+                            if let valueDict = documentData as? [String: Any] {
+                                sales.append(["buyer": valueDict["buyer"]!, "city": valueDict["city"]!, "full_name": valueDict["full_name"]!, "house_number": valueDict["house_number"]!, "item": valueDict["item"]!, "order_total": valueDict["order_total"]!, "seller": valueDict["seller"]!, "street": valueDict["street"]!, "country": valueDict["country"]!,])
+                            }
                         }
+//                        .values
                     }
+//                    print(snapshot!.documents)
+//                    let document = snapshot!.documents
+//                    let documentData = document.data()
+//                    for value in documentData.values {
+//                        if let valueDict = value as? [String: Any] {
+//                            sales.append(["buyer": valueDict["buyer"]!, "city": valueDict["city"]!, "full_name": valueDict["full_name"]!, "house_number": valueDict["house_number"]!, "item": valueDict["item"]!, "order_total": valueDict["order_total"]!, "seller": valueDict["seller"]!, "street": valueDict["street"]!, "country": valueDict["country"]!,])
+//                        }
+//                    }
 //                    for document in snapshot!.documents {
 //                        document.data()["full_name"]
 //                        .values
