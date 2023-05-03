@@ -20,6 +20,7 @@ struct ViewerShow: View {
     @AppStorage("username") var userName: String = ""
 //    let listingID: String
     @State var showingPaySheet = false
+    @State var showingPayDetailsError = false
     @State var showingAddressSheet = false
     @State var isShowingPaymentsForm = false
     @State var isShowingAddressForm = false
@@ -31,6 +32,7 @@ struct ViewerShow: View {
     @State var commentText = ""
     @State var showStart = true
     @State private var opacity = 0.5
+
 
     
     var body: some View {
@@ -65,9 +67,9 @@ struct ViewerShow: View {
                     GeometryReader { newgeometry in
                         VideoPlayer (player: player)
                             .onAppear { player.play() }
+                            .ignoresSafeArea()
 //                            .disabled(true)
                     }
-                    .edgesIgnoringSafeArea(.all)
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .opacity(showStart ? 0 : 1)
                     
@@ -197,7 +199,6 @@ struct ViewerShow: View {
                                     Circle()
                                         .fill(Color("Primary_color"))
                                         .frame(height: 50)
-                                        .opacity(0.7)
                                         .overlay(
                                             Image(systemName: "link").font(Font.system(size: 20)).foregroundColor(.white)
                                         )
@@ -209,7 +210,6 @@ struct ViewerShow: View {
                                     Circle()
                                         .fill(Color("Primary_color"))
                                         .frame(height: 50)
-                                        .opacity(0.7)
                                         .overlay(
                                             Image(systemName: "creditcard.fill").font(Font.system(size: 20)).foregroundColor(.white)
                                         )
@@ -218,18 +218,17 @@ struct ViewerShow: View {
                                 Text("Pay").font(Font.system(size: 15)).fontWeight(.semibold)
 
 
-                                Button(action: {}) {
-                                    Circle()
-                                        .fill(Color("Primary_color"))
-                                        .frame(height: 70)
-                                        .opacity(0.7)
-                                        .overlay(
-                                            Image(systemName:"bag.fill")
-                                                .font(Font.system(size: 35))
-                                                .foregroundColor(.white)
-                                        )
-                                }
-                                .padding(.top)
+//                                Button(action: {}) {
+//                                    Circle()
+//                                        .fill(Color("Primary_color"))
+//                                        .frame(height: 70)
+//                                        .overlay(
+//                                            Image(systemName:"bag.fill")
+//                                                .font(Font.system(size: 35))
+//                                                .foregroundColor(.white)
+//                                        )
+//                                }
+//                                .padding(.top)
                             }
                             .foregroundColor(.white)
                         }
@@ -261,8 +260,13 @@ struct ViewerShow: View {
                             if readListing.type == "Auction" && readListing.price != nil && readListing.timer != nil  && readListing.isSold != true {
                                 HStack {
                                     Button(action: {
-                                        readListing.price = "\(Int(readListing.price!)! + 5)"
-                                        UpdateDB().updateHighestBid(listingID: String(describing: retrievedShow["listings"]!), bid: "\(Int(readListing.price!)! + 5)", bidder: userName)
+                                        if readListing.address == nil && readListing.cardDetails == nil {
+                                            showingPayDetailsError.toggle()
+                                        }
+                                        else {
+                                            readListing.price = "\(Int(readListing.price!)! + 5)"
+                                            UpdateDB().updateHighestBid(listingID: String(describing: retrievedShow["listings"]!), bid: "\(Int(readListing.price!)! + 5)", bidder: userName)
+                                        }
                                     }) {
 
 
@@ -295,16 +299,22 @@ struct ViewerShow: View {
                             } else {
 
                                 Button(action: {
-                                    ReadServer().executeOrderTransaction(order_amount: readListing.price!) { response in
-                                        if response! == "success" {
-                                            showConfirmationOrder.toggle()
-                                            UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
-                                            CreateDB().addUserOrders(item: readListing.title!, purchase_price: readListing.price!, buyer: userName)
-//                                            if readListing.creatorSales!.count == 0 {
-//                                                CreateDB().addCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
-//                                            } else {
-//                                                UpdateDB().updateCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
-//                                            }
+                                    if readListing.address == nil && readListing.cardDetails == nil {
+                                        showingPayDetailsError.toggle()
+                                    }
+                                    else {
+                                        showingPayDetailsError = false
+                                        ReadServer().executeOrderTransaction(order_amount: readListing.price!) { response in
+                                            if response! == "success" {
+                                                showConfirmationOrder.toggle()
+                                                UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
+                                                CreateDB().addUserOrders(item: readListing.title!, purchase_price: readListing.price!, buyer: userName)
+                                                //                                            if readListing.creatorSales!.count == 0 {
+                                                //                                                CreateDB().addCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
+                                                //                                            } else {
+                                                //                                                UpdateDB().updateCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
+                                                //                                            }
+                                            }
                                         }
                                     }
                                 }) {
@@ -330,6 +340,11 @@ struct ViewerShow: View {
                     .onAppear{
                         readListing.getListingSelected(listingID: String(describing: retrievedShow["listings"]!))
                         readListing.getAddress()
+                        readListing.getCardDetails()
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+//                            print(readListing.cardDetails)
+//                            print(readListing.address)
+//                        }
 //                        readListing.getCreatorSales(listingID: String(describing: retrievedShow["listings"]!))
                     }
                     .onReceive(readListing.$timer) { timer in
@@ -345,8 +360,11 @@ struct ViewerShow: View {
                         }
                     }
                     .sheet(isPresented: $showingPaySheet) {
-                        PaymentDetails(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm, isShowingAddressForm: $isShowingAddressForm)
+                        PaymentDetails(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm, isShowingAddressForm: $isShowingAddressForm, readListing: readListing)
                             .presentationDetents([.height(320)])
+                    }
+                    .sheet(isPresented: $showingPayDetailsError) {
+                        PaymentDetailsError().presentationDetents([.height(200)])
                     }
                     .navigationDestination(isPresented: $showingFeedPage) {
                         if userName != "aali183" {

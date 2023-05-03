@@ -20,7 +20,7 @@ struct AccountPage: View {
     @State var isShowingPaymentsForm = false
     @State var isShowingAddressForm = false
     @State var isShowingOrders = false
-    @StateObject var addressDetails = ReadDB()
+    @StateObject var readListing = ReadDB()
     
     var body: some View {
         GeometryReader { geometry in
@@ -156,7 +156,7 @@ struct AccountPage: View {
                         }
                         .padding(.top, 10).padding(.bottom, -10)
                         .sheet(isPresented: $isShowingOrders) {
-                            OrdersPage(orders: addressDetails.userOrders!).presentationDetents([.height(500)])
+                            OrdersPage(orders: readListing.userOrders!).presentationDetents([.height(500)])
                         }
                         .padding(.horizontal,5)
                         
@@ -167,11 +167,11 @@ struct AccountPage: View {
                                     Text("Shipping")
                                         .fontWeight(.bold).font(Font.system(size: 20)).padding(.top)
                                     
-                                    if addressDetails.address == nil {
+                                    if readListing.address == nil {
                                         Text("Please set your information here.")
                                             .fontWeight(.semibold).font(Font.system(size: 14)).multilineTextAlignment(.leading).padding(.top, 0)
                                     } else {
-                                        Text("\(addressDetails.address!["full_name"]!)\n\(addressDetails.address!["house_number"]!)\n\(addressDetails.address!["street"]!), \(addressDetails.address!["city"]!)")
+                                        Text("\(readListing.address!["full_name"]!)\n\(readListing.address!["house_number"]!)\n\(readListing.address!["street"]!), \(readListing.address!["city"]!)")
                                             .fontWeight(.semibold).font(Font.system(size: 12)).multilineTextAlignment(.leading).padding(.top, 0)
                                     }
                                 }
@@ -184,7 +184,7 @@ struct AccountPage: View {
                             .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2))
                         }
                         .sheet(isPresented: $isShowingAddressForm) {
-                            AddressForm(showingPaySheet: $showingPaySheet, isShowingAddressForm: $isShowingAddressForm).presentationDetents([.height(750)])
+                            AddressForm(showingPaySheet: $showingPaySheet, isShowingAddressForm: $isShowingAddressForm, readListing: readListing).presentationDetents([.height(750)])
                         }
                         .padding(.top).padding(.horizontal,5)
                         
@@ -205,11 +205,11 @@ struct AccountPage: View {
                                 VStack(alignment: .leading) {
                                     Text("Payment")
                                         .fontWeight(.bold).font(Font.system(size: 20)).padding(.top)
-                                    if addressDetails.cardDetails == nil {
+                                    if readListing.cardDetails == nil {
                                         Text("Please input your payment info.")
                                             .fontWeight(.semibold).font(Font.system(size: 14)).padding(.top, 0)
                                     } else {
-                                        Text("\(addressDetails.cardDetails!["card_brand"]!) - \(addressDetails.cardDetails!["last_four"]!)").fontWeight(.semibold).font(Font.system(size: 12)).multilineTextAlignment(.leading).padding(.top, 0)
+                                        Text("\(readListing.cardDetails!["card_brand"]!) - \(readListing.cardDetails!["last_four"]!)").fontWeight(.semibold).font(Font.system(size: 12)).multilineTextAlignment(.leading).padding(.top, 0)
                                     }
                                 }
                                 Spacer()
@@ -223,7 +223,7 @@ struct AccountPage: View {
                         .sheet(isPresented: $isShowingPaymentsForm) {
                             //                            AddressForm()
                             //                        ExampleSwiftUIPaymentSheet()
-                            CheckoutView(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm).presentationDetents([.height(250)])
+                            CheckoutView(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm, readListing: readListing).presentationDetents([.height(250)])
                         }
                         .padding(.top,5).padding(.bottom, 30).padding(.horizontal,5)
                         
@@ -235,9 +235,9 @@ struct AccountPage: View {
                     .frame(width: 350)
                     .foregroundColor(.white)
                     .onAppear {
-                        addressDetails.getAddress()
-                        addressDetails.getCardDetails()
-                        addressDetails.getUserOrders()
+                        readListing.getAddress()
+                        readListing.getCardDetails()
+                        readListing.getUserOrders()
                     }
                 }
                 .navigationDestination(isPresented: $showingFeedPage) {

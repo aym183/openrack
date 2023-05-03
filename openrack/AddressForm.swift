@@ -14,6 +14,7 @@ struct AddressForm: View {
     @State private var selectedCountry: Dropdownmenus? = nil
     @Binding var showingPaySheet: Bool
     @Binding var isShowingAddressForm: Bool
+    @ObservedObject var readListing: ReadDB
     
     var areTextFieldsEmpty: Bool {
         return fullName.isEmpty || houseNumber.isEmpty || city.isEmpty || street.isEmpty
@@ -66,6 +67,7 @@ struct AddressForm: View {
                                 UpdateDB().updateUserAddress(address: ["full_name": fullName, "house_number": houseNumber, "street": street, "city": city, "country": selectedCountry!.option])
                                 showingPaySheet.toggle()
                                 isShowingAddressForm.toggle()
+                                readListing.getAddress()
                                 //                            print("The Address is \(fullName), \(addressDetails), \(addressDetailsSecondary), \(city), \(state), \(postalCode), \(selectedCountry!.option)")
                             }) {
                                 Text("Save Info").font(.title3)

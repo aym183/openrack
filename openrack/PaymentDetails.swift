@@ -11,7 +11,8 @@ struct PaymentDetails: View {
     @Binding var showingPaySheet: Bool
     @Binding var isShowingPaymentsForm: Bool
     @Binding var isShowingAddressForm: Bool
-    @StateObject var addressDetails = ReadDB()
+//    @StateObject var addressDetails = ReadDB()
+    @ObservedObject var readListing: ReadDB
 
     var body: some View {
         GeometryReader { geometry in
@@ -28,11 +29,11 @@ struct PaymentDetails: View {
                                 Text("Shipping")
                                     .fontWeight(.bold).font(Font.system(size: 20)).padding(.top)
                                 
-                                if addressDetails.address == nil {
+                                if readListing.address == nil {
                                     Text("Please set your information here.")
                                         .fontWeight(.semibold).font(Font.system(size: 14)).multilineTextAlignment(.leading).padding(.top, 0)
                                 } else {
-                                    Text("\(addressDetails.address!["full_name"]!)\n\(addressDetails.address!["house_number"]!)\n\(addressDetails.address!["street"]!), \(addressDetails.address!["city"]!)")
+                                    Text("\(readListing.address!["full_name"]!)\n\(readListing.address!["house_number"]!)\n\(readListing.address!["street"]!), \(readListing.address!["city"]!)")
                                         .fontWeight(.semibold).font(Font.system(size: 12)).multilineTextAlignment(.leading).padding(.top, 0)
                                 }
                             }
@@ -45,7 +46,7 @@ struct PaymentDetails: View {
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2))
                     }
                     .sheet(isPresented: $isShowingAddressForm) {
-                        AddressForm(showingPaySheet: $showingPaySheet, isShowingAddressForm: $isShowingAddressForm).presentationDetents([.height(750)])
+                        AddressForm(showingPaySheet: $showingPaySheet, isShowingAddressForm: $isShowingAddressForm, readListing: readListing).presentationDetents([.height(750)])
                     }
                     
                     Button(action: {
@@ -65,11 +66,11 @@ struct PaymentDetails: View {
                             VStack(alignment: .leading) {
                                 Text("Payment")
                                     .fontWeight(.bold).font(Font.system(size: 20)).padding(.top)
-                                if addressDetails.cardDetails == nil {
+                                if readListing.cardDetails == nil {
                                     Text("Please input your payment info.")
                                         .fontWeight(.semibold).font(Font.system(size: 14)).padding(.top, 0)
                                 } else {
-                                    Text("\(addressDetails.cardDetails!["card_brand"]!) - \(addressDetails.cardDetails!["last_four"]!)").fontWeight(.semibold).font(Font.system(size: 12)).multilineTextAlignment(.leading).padding(.top, 0)
+                                    Text("\(readListing.cardDetails!["card_brand"]!) - \(readListing.cardDetails!["last_four"]!)").fontWeight(.semibold).font(Font.system(size: 12)).multilineTextAlignment(.leading).padding(.top, 0)
                                 }
                             }
                             Spacer()
@@ -81,14 +82,14 @@ struct PaymentDetails: View {
                         .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
                     }
                     .sheet(isPresented: $isShowingPaymentsForm) {
-                        CheckoutView(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm).presentationDetents([.height(250)])
+                        CheckoutView(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm, readListing: readListing).presentationDetents([.height(250)])
                     }
                 }
                 .foregroundColor(.white)
                 .padding(.vertical)
                 .onAppear {
-                    addressDetails.getAddress()
-                    addressDetails.getCardDetails()
+                    readListing.getAddress()
+                    readListing.getCardDetails()
                 }
             }
         }

@@ -18,6 +18,7 @@ struct CheckoutView: View {
     
     @State var showFailureAlert = false
     @State var showSuccessAlert = false
+    @ObservedObject var readListing: ReadDB
     
     private func pay() {
         guard let clientSecret = PaymentConfig.shared.paymentIntentClientSecret else {
@@ -50,6 +51,7 @@ struct CheckoutView: View {
                         UpdateDB().updateStripePaymentMethodID(paymentMethodID: paymentMethod!)
                         ReadServer().getPaymentMethodDetails(payment_method: paymentMethod!) { response in
                             UpdateDB().updateStripePaymentDetails(paymentDetails: [response[0]!, response[1]!])
+                            readListing.getCardDetails()
                         }
                     }
                     showingPaySheet.toggle()
