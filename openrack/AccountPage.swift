@@ -31,7 +31,7 @@ struct AccountPage: View {
                     Color("Secondary_color").ignoresSafeArea()
                     VStack(alignment: .leading) {
                         HStack {
-                            Button(action: { showingFeedPage.toggle() }) {
+                            Button(action: { withAnimation { showingFeedPage.toggle() } }) {
                                 Image(systemName: "arrow.backward").font(Font.system(size: 25)).fontWeight(.bold).foregroundColor(.black)
                                 Text("Account").font(Font.system(size: 30)).fontWeight(.bold).padding(.vertical, 20).foregroundColor(.black).padding(.horizontal,5)
                             }

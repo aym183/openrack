@@ -11,7 +11,6 @@ struct CustomNavbarView: View {
     @State var showingAccountPage = false
     @AppStorage("username") var userName: String = ""
     var body: some View {
-        NavigationStack {
             HStack {
                 
 //                Button(action: {})
@@ -28,9 +27,9 @@ struct CustomNavbarView: View {
                 
                 Spacer()
                 
-                Button(action: { showingAccountPage.toggle() }) {
+                Button(action: { withAnimation { showingAccountPage.toggle() } }) {
                     Image(systemName: "person.circle").font(Font.system(size: 18)).fontWeight(.semibold).padding(.trailing, -5)
-                    Text(userName).font(Font.system(size: 12)).fontWeight(.bold).padding(.trailing, 15)
+                    Text(userName).font(Font.system(size: 12)).fontWeight(.bold).padding(.trailing, 15).foregroundColor(Color("Primary_color"))
                 }
                 .navigationDestination(isPresented: $showingAccountPage) {
                     AccountPage().navigationBarBackButtonHidden(true)
@@ -49,7 +48,6 @@ struct CustomNavbarView: View {
                     ,alignment: .bottom
             )
             .padding(.top, 5)
-        }
         
 
     }

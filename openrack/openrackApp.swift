@@ -43,10 +43,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
       return true
   }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        
-    }
+//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+//
+//    }
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+                    let firebaseAuth = Auth.auth()
+                    firebaseAuth.setAPNSToken(deviceToken, type: AuthAPNSTokenType.unknown)
+          }
     
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+                    let firebaseAuth = Auth.auth()
+                    if (firebaseAuth.canHandleNotification(userInfo)){
+                        print(userInfo)
+                        return
+                    }
+         }
     
     // This method handles opening universal link URLs (for example, "https://example.com/stripe_ios_callback")
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool  {

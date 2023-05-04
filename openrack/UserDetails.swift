@@ -141,13 +141,13 @@ struct FullNameDetails: View {
                     .navigationDestination(isPresented: $isAdminPage) {
                         withAnimation(.easeIn(duration: 2)) {
                             BottomNavbar()
-                                .navigationBarBackButtonHidden(true)
+                                .navigationBarHidden(true)
                         }
                     }
                     .navigationDestination(isPresented: $isUserPage) {
                         withAnimation(.easeIn(duration: 2)) {
                             FeedPage()
-                                .navigationBarBackButtonHidden(true)
+                                .navigationBarHidden(true)
                         }
                     }
                     //                .navigationDestination(isPresented: $isHomePage) {
