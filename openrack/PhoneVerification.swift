@@ -23,6 +23,7 @@ struct PhoneVerification: View {
     var body: some View {
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 40
+            var varHeight = geometry.size.height - 20
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack(alignment: .leading) {
@@ -86,6 +87,7 @@ struct PhoneVerification: View {
                 }
             }
             .foregroundColor(.black)
+            .frame(height: varHeight)
             
         }
     }

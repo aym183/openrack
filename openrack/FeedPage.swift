@@ -19,6 +19,7 @@ struct FeedPage: View {
     @AppStorage("username") var userName: String = ""
     @StateObject var readListing = ReadDB()
     @State var isShownFeed: Bool = true
+    @State var isShownFirstFeed: Bool = false
     @State var clickedIndex = 0
     
     var body: some View {
@@ -30,13 +31,19 @@ struct FeedPage: View {
                 ZStack {
                     Color("Secondary_color").ignoresSafeArea()
                     
+                    
                     if isShownFeed {
                         VStack {
-                            ProgressView()
-                                .scaleEffect(2.5)
-                                .progressViewStyle(CircularProgressViewStyle(tint: .black))
                             
-                            Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
+                            if isShownFirstFeed {
+                                Text("Please exit the app and reload it to begin your Openrack journey!").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
+                            } else {
+                                ProgressView()
+                                    .scaleEffect(2.0)
+                                    .progressViewStyle(CircularProgressViewStyle(tint: .black))
+                                
+                                Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
+                            }
                         }
                     }
                     ScrollView(.vertical, showsIndicators: false) {
@@ -57,7 +64,6 @@ struct FeedPage: View {
                                     
                                     ForEach(0..<noOfShows, id: \.self ) { index in
                                         
-                                        NavigationStack {
                                             VStack (alignment: .leading){
                                                 Button(action: {
                                                     clickedIndex = index
@@ -102,7 +108,6 @@ struct FeedPage: View {
                                                 .foregroundColor(.black)
                                             }
                                             .id(index)
-                                        }
                                     }
                                     
                                     
@@ -126,7 +131,6 @@ struct FeedPage: View {
                                         
                                         ForEach(0..<noOfScheduledShows, id: \.self) { index in
                                             
-                                            NavigationStack {
                                                 VStack (alignment: .leading){
                                                     Button(action: {}) {
                                                         VStack (alignment: .leading){
@@ -163,7 +167,6 @@ struct FeedPage: View {
                                                     .foregroundColor(.black)
                                                 }
                                                 .id(index)
-                                            }
                                         }
                                         
                                     }
@@ -202,12 +205,15 @@ struct FeedPage: View {
                         ScheduleStream().navigationBarBackButtonHidden(true)
                     }
                     .onAppear {
+                        
                         readListing.getViewerLiveShows()
                         readListing.getViewerScheduledShows()
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            withAnimation(.easeOut(duration: 0.5)) {
-                                isShownFeed = false
+                        if !isShownFirstFeed {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                withAnimation(.easeOut(duration: 0.5)) {
+                                    isShownFeed = false
+                                }
                             }
                         }
                     }

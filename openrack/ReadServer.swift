@@ -6,8 +6,11 @@
 //
 import Foundation
 import SwiftUI
+import FirebaseFunctions
+import Firebase
 
 class ReadServer : ObservableObject {
+    lazy var functions = Functions.functions(app: FirebaseApp.app()!)
     
     func getPaymentMethodDetails(payment_method: String, completion: @escaping ([String?]) -> Void) {
         let url = URL(string: "https://foul-checkered-lettuce.glitch.me/get-payment-method-details")!

@@ -41,7 +41,7 @@ struct ViewerShow: View {
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 30
             var varCommentsWidth = geometry.size.width - 140
-            var varHeight = geometry.size.height - 10
+            var varHeight = geometry.size.height - 20
             NavigationStack {
                 let player = AVPlayer(url: URL(string: "https://stream.mux.com/\(retrievedShow["playback_id"]!).m3u8")!)
 
@@ -309,11 +309,11 @@ struct ViewerShow: View {
                                                 showConfirmationOrder.toggle()
                                                 UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
                                                 CreateDB().addUserOrders(item: readListing.title!, purchase_price: readListing.price!, buyer: userName)
-                                                //                                            if readListing.creatorSales!.count == 0 {
-                                                //                                                CreateDB().addCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
-                                                //                                            } else {
-                                                //                                                UpdateDB().updateCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
-                                                //                                            }
+                                                if readListing.creatorSales!.count == 0 {
+                                                    CreateDB().addCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
+                                                 } else {
+                                                    UpdateDB().updateCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
+                                                 }
                                             }
                                         }
                                     }

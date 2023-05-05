@@ -17,15 +17,15 @@ struct LandingPage: View {
     var body: some View {
         ZStack {
             VStack {
-                if userIsLoggedIn {
-                    if userName == "aali183" {
-                        BottomNavbar()
-                    } else {
-                        FeedPage()
-                    }
-                } else {
+//                if userIsLoggedIn {
+//                    if userName == "aali183" {
+//                        BottomNavbar()
+//                    } else {
+//                        FeedPage()
+//                    }
+//                } else {
                     LandingContent(userIsLoggedIn: $userIsLoggedIn)
-                }
+//                }
             }
         }
         .onAppear {
@@ -45,8 +45,10 @@ struct LandingContent: View {
     // ------ Add @AppStorage("shouldShowOnboarding") instead of @State to persist not showing onbaording after  user's tried ------
     @AppStorage("shouldShowOnboarding") var shouldShowOnboarding: Bool = true
     var body: some View {
-            NavigationStack {
-                
+        NavigationStack {
+            GeometryReader { geometry in
+                var varWidth = geometry.size.width - 10
+                var varHeight = geometry.size.height - 20
                 ZStack {
                     Color("Secondary_color").ignoresSafeArea()
                     VStack{
@@ -54,6 +56,7 @@ struct LandingContent: View {
                         Text("Openrack").font(Font.system(size: 70)).fontWeight(.heavy)
                             .foregroundColor(Color("Primary_color"))
                             .padding(.top, 120)
+                            .padding(.horizontal, 10)
                         
                         Text("Buy, Sell, Discover ✨").font(Font.system(size: 20)).font(.subheadline).fontWeight(.semibold).foregroundColor(.black)
                             .opacity(0.7)
@@ -150,8 +153,8 @@ struct LandingContent: View {
                             .multilineTextAlignment(.center)
                         
                     }
+                    .frame(width: varWidth, height: varHeight)
                 }
-                
             }
             .onAppear {
                 Auth.auth().addStateDidChangeListener { auth, user in
@@ -166,6 +169,8 @@ struct LandingContent: View {
             .fullScreenCover(isPresented: $shouldShowOnboarding , content: {
                 OnboardingFlow(shouldShowOnboarding: $shouldShowOnboarding)
             })
+            
+        }
     }
 }
 struct ContentView_Previews: PreviewProvider {

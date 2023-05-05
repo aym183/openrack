@@ -19,6 +19,7 @@ struct UserDetails: View {
     var body: some View {
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 40
+            var varHeight = geometry.size.height - 20
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 
@@ -59,6 +60,7 @@ struct UserDetails: View {
                     }
                     
                 }
+                .frame(height: varHeight)
             }
             .foregroundColor(.black)
             .onAppear {
@@ -86,6 +88,7 @@ struct FullNameDetails: View {
     var body: some View {
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 40
+            var varHeight = geometry.size.height - 20
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 if isLoading {
@@ -146,7 +149,7 @@ struct FullNameDetails: View {
                     }
                     .navigationDestination(isPresented: $isUserPage) {
                         withAnimation(.easeIn(duration: 2)) {
-                            FeedPage()
+                            FeedPage(isShownFirstFeed: true)
                                 .navigationBarHidden(true)
                         }
                     }
@@ -157,6 +160,7 @@ struct FullNameDetails: View {
                 }
                 .opacity(isLoading ? 0 : 1)
                 .foregroundColor(.black)
+                .frame(height: varHeight)
             }
             .navigationBarHidden(isNavigationBarHidden)
         }
