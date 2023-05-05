@@ -17,15 +17,15 @@ struct LandingPage: View {
     var body: some View {
         ZStack {
             VStack {
-//                if userIsLoggedIn {
-//                    if userName == "aali183" {
-//                        BottomNavbar()
-//                    } else {
-//                        FeedPage()
-//                    }
-//                } else {
+                if userIsLoggedIn {
+                    if userName == "aali183" {
+                        BottomNavbar()
+                    } else {
+                        FeedPage()
+                    }
+                } else {
                     LandingContent(userIsLoggedIn: $userIsLoggedIn)
-//                }
+                }
             }
         }
         .onAppear {

@@ -148,7 +148,7 @@ struct FullNameDetails: View {
                         }
                     }
                     .navigationDestination(isPresented: $isUserPage) {
-                        withAnimation(.easeIn(duration: 2)) {
+                        withAnimation(.easeIn(duration: 4)) {
                             FeedPage(isShownFirstFeed: true)
                                 .navigationBarHidden(true)
                         }

@@ -85,9 +85,9 @@ struct PhoneVerification: View {
                         }
                     }
                 }
+                .frame(height: varHeight)
             }
             .foregroundColor(.black)
-            .frame(height: varHeight)
             
         }
     }
