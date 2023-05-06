@@ -24,7 +24,7 @@ struct UserDetails: View {
                 Color("Secondary_color").ignoresSafeArea()
                 
                 VStack(alignment: .leading) {
-                    Text("User Details").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
+                    Text("User Details").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 40)
                     
                     Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
@@ -53,7 +53,7 @@ struct UserDetails: View {
                     .border(Color.black, width: 2)
                     .padding(.vertical)
                     .navigationDestination(isPresented: $isFullNameDetails) {
-                        FullNameDetails(phoneText: $phoneText, user_credentials: $user_credentials, usernameText: $usernameText)
+                        FullNameDetails(phoneText: $phoneText, user_credentials: $user_credentials, usernameText: $usernameText).navigationBarHidden(true)
                         //                    if user_credentials != nil {
                         //                        UserDetails(phoneText: $phoneText, phoneID: $phoneID, user_credentials: $user_credentials)
                         //                    }
@@ -94,7 +94,7 @@ struct FullNameDetails: View {
                 
                 
                 VStack(alignment: .leading) {
-                    Text("User Details").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
+                    Text("User Details").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 40)
                     
                     Text("Full Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     

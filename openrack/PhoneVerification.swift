@@ -27,7 +27,7 @@ struct PhoneVerification: View {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack(alignment: .leading) {
-                    Text("Verify Number").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
+                    Text("Verify Number").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 40)
                     
                     Text("Phone Number").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
@@ -81,7 +81,7 @@ struct PhoneVerification: View {
                     .padding(.vertical)
                     .navigationDestination(isPresented: $isUserDetails) {
                         if user_credentials != nil {
-                            UserDetails(phoneText: $phoneText, user_credentials: $user_credentials)
+                            UserDetails(phoneText: $phoneText, user_credentials: $user_credentials).navigationBarHidden(true)
                         }
                     }
                 }

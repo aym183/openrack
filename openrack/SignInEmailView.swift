@@ -117,7 +117,7 @@ struct SignInEmailView: View {
                                 .border(Color.black, width: 2)
                                 .padding(.vertical)
                                 .navigationDestination(isPresented: $isVerification) {
-                                    PhoneVerification(phoneText: $phoneText, phoneID: $phoneID)
+                                    PhoneVerification(phoneText: $phoneText, phoneID: $phoneID).navigationBarHidden(true)
                                 }
                             }
                             
