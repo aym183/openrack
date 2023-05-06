@@ -41,8 +41,8 @@ struct FeedPage: View {
                         VStack {
                             
                                 ProgressView()
-                                    .scaleEffect(2.0)
-                                    .progressViewStyle(CircularProgressViewStyle(tint: .black))
+                                    .scaleEffect(1.75)
+                                    .progressViewStyle(CircularProgressViewStyle(tint: Color.black))
                                 
                                 Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
 
@@ -194,10 +194,6 @@ struct FeedPage: View {
                         }
                         .frame(height: varHeight)
                     }
-                    .refreshable {
-                        readListing.getViewerLiveShows()
-                        readListing.getViewerScheduledShows()
-                    }
                     .background(Color("Secondary_color"))
                     .sheet(isPresented: $showingBottomSheet) {
                         StreamBottomSheet(showingBottomSheet: $showingBottomSheet, isShowingNextView: $isShowingNextView)
@@ -221,6 +217,10 @@ struct FeedPage: View {
                     }
                     .opacity(isShownFeed ? 0 : 1)
                     .opacity(isShownFirstFeed ? 0 : 1)
+                    .refreshable {
+                        readListing.getViewerLiveShows()
+                        readListing.getViewerScheduledShows()
+                    }
                 }
             }
         }

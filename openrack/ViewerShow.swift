@@ -68,7 +68,7 @@ struct ViewerShow: View {
                         VideoPlayer (player: player)
                             .onAppear { player.play() }
                             .ignoresSafeArea()
-//                            .disabled(true)
+                            .disabled(true)
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .opacity(showStart ? 0 : 1)

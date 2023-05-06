@@ -287,7 +287,7 @@ struct CreatorShow: View {
 
                     }
                     .navigationDestination(isPresented: $isFinished) {
-                        ShowsPage().navigationBarBackButtonHidden(true)
+                        BottomNavbar().navigationBarBackButtonHidden(true)
                     }
 
 

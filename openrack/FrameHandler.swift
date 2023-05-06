@@ -80,7 +80,6 @@ class FrameHandler: NSObject, ObservableObject {
     }
     
     func publishStream() {
-        print("I AM STREAMKEY \(streamKey)")
         rtmpStream!.publish("\(streamKey)")
     }
     
