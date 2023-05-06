@@ -46,8 +46,8 @@ class ReadDB : ObservableObject {
 //                        UserDefaults.standard.set(String(describing:document.data()["email"]!), forKey: "email")
                         UserDefaults.standard.set(String(describing:document.data()["full_name"]!), forKey: "full_name")
                         UserDefaults.standard.set(String(describing:document.data()["phone_number"]!), forKey: "phone_number")
-                        UserDefaults.standard.set(String(describing:document.data()["stripe_customer_id"]!), forKey: "stripe_customer_id")
-                        UserDefaults.standard.set(String(describing:document.data()["stripe_payment_method"]!), forKey: "stripe_payment_method")
+                        UserDefaults.standard.set(String(describing:document.data()["stripe_customer_id"]), forKey: "stripe_customer_id")
+                        UserDefaults.standard.set(String(describing:document.data()["stripe_payment_method"]), forKey: "stripe_payment_method")
                     }
                 }
             }
@@ -320,6 +320,14 @@ class ReadDB : ObservableObject {
         let highestBidDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("highest_bid")
         let timerDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("timer")
         let commentDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("comments")
+        
+        Database.database().isPersistenceEnabled = true
+        commentDB.keepSynced(true)
+        highestBidDB.keepSynced(true)
+        currentBidderDB.keepSynced(true)
+        titleDB.keepSynced(true)
+        priceDB.keepSynced(true)
+        typeDB.keepSynced(true)
         
         var temp_comments: [[String: String]] = []
 //        let istimerDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("is_timer")
