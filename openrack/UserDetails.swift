@@ -20,11 +20,23 @@ struct UserDetails: View {
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 40
             var varHeight = geometry.size.height - 20
+            var progressWidth = geometry.size.width - 250
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 
                 VStack(alignment: .leading) {
-                    Text("User Details").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 40)
+                    HStack {
+                        Text("User Details").font(Font.system(size: 30)).fontWeight(.bold)
+                        
+                        Spacer()
+                        
+                        ZStack(alignment: .leading) {
+                            Capsule().frame(width: progressWidth, height: 12.5).foregroundColor(.gray)
+                            Capsule().frame(width: (progressWidth)*(60/100), height: 12.5).foregroundColor(Color("Primary_color"))
+                        }
+                        
+                    }
+                    .padding(.top, 40).padding(.trailing)
                     
                     Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
@@ -61,6 +73,7 @@ struct UserDetails: View {
                     
                 }
                 .frame(height: varHeight)
+                .padding(.horizontal)
             }
             .foregroundColor(.black)
             .onAppear {
@@ -89,12 +102,25 @@ struct FullNameDetails: View {
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 40
             var varHeight = geometry.size.height - 20
+            var progressWidth = geometry.size.width - 250
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 
                 
                 VStack(alignment: .leading) {
-                    Text("User Details").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 40)
+                    
+                    HStack {
+                        Text("User Details").font(Font.system(size: 30)).fontWeight(.bold)
+                        
+                        Spacer()
+                        
+                        ZStack(alignment: .leading) {
+                            Capsule().frame(width: progressWidth, height: 12.5).foregroundColor(.gray)
+                            Capsule().frame(width: (progressWidth)*(85/100), height: 12.5).foregroundColor(Color("Primary_color"))
+                        }
+
+                    }
+                    .padding(.top, 40).padding(.trailing)
                     
                     Text("Full Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     
@@ -118,6 +144,7 @@ struct FullNameDetails: View {
                         } else {
                             isUserPage.toggle()
                         }
+                        
                         //                        }
                         
                     }) {
@@ -138,7 +165,7 @@ struct FullNameDetails: View {
                     }
                     .navigationDestination(isPresented: $isUserPage) {
                         withAnimation(.easeIn(duration: 4)) {
-                            FeedPage(isShownFirstFeed: true)
+                            FeedPage(isShownFeed: false, isShownFirstFeed: true)
                                 .navigationBarHidden(true)
                         }
                     }
@@ -149,6 +176,7 @@ struct FullNameDetails: View {
                 }
                 .foregroundColor(.black)
                 .frame(height: varHeight)
+                .padding(.horizontal)
             }
             .navigationBarHidden(isNavigationBarHidden)
         }

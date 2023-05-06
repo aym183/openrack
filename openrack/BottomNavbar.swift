@@ -32,7 +32,7 @@ struct BottomNavbar: View {
                 }
                 
                 TabView(selection: $selectedTab){
-                    FeedPage(isShownFeed: false)
+                    FeedPage(isShownFeed: false, isShownFirstFeed: false)
                         .tabItem {
                             Image(systemName: "rectangle.3.offgrid")
                             Text("My Feed")

@@ -18,8 +18,8 @@ struct FeedPage: View {
     ]
     @AppStorage("username") var userName: String = ""
     @StateObject var readListing = ReadDB()
-    @State var isShownFeed: Bool = true
-    @State var isShownFirstFeed: Bool = false
+    @State var isShownFeed: Bool
+    @State var isShownFirstFeed: Bool
     @State var clickedIndex = 0
     
     var body: some View {
@@ -31,19 +31,21 @@ struct FeedPage: View {
                 ZStack {
                     Color("Secondary_color").ignoresSafeArea()
                     
+                    if isShownFirstFeed {
+                        VStack {
+                            Text("Please exit the app and restart it to begin your Openrack journey!").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
+                        }
+                    }
                     
-                    if isShownFeed {
+                    if !isShownFirstFeed {
                         VStack {
                             
-                            if isShownFirstFeed {
-                                Text("Please exit the app and reload it to begin your Openrack journey!").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
-                            } else {
                                 ProgressView()
                                     .scaleEffect(2.0)
                                     .progressViewStyle(CircularProgressViewStyle(tint: .black))
                                 
                                 Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
-                            }
+
                         }
                     }
                     ScrollView(.vertical, showsIndicators: false) {
@@ -218,14 +220,15 @@ struct FeedPage: View {
                         }
                     }
                     .opacity(isShownFeed ? 0 : 1)
+                    .opacity(isShownFirstFeed ? 0 : 1)
                 }
             }
         }
     }
 }
 
-struct FeedPage_Previews: PreviewProvider {
-    static var previews: some View {
-        FeedPage()
-    }
-}
+//struct FeedPage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FeedPage()
+//    }
+//}

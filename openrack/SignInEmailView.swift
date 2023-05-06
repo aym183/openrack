@@ -41,7 +41,7 @@ struct SignInEmailView: View {
     var body: some View {
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 40
-            var progressWidth = geometry.size.width - 200
+            var progressWidth = geometry.size.width - 250
             NavigationStack {
                 ZStack {
                     Color("Secondary_color").ignoresSafeArea()
@@ -58,8 +58,17 @@ struct SignInEmailView: View {
                     
                     VStack (alignment: .leading){
                         
+//                        HStack {
                         Text(String(describing: userDetails[0])).font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
-                            
+                                
+//                            Spacer()
+//                            ZStack(alignment: .leading) {
+//                                Capsule().frame(width: progressWidth, height: 12.5).foregroundColor(.gray)
+//                                Capsule().frame(width: progressWidth-120, height: 12.5).foregroundColor(Color("Primary_color"))
+//                            }
+////
+//                        }
+//                        .padding(.top, 20).padding(.trailing)
                         
                         if String(describing: userDetails[3]) != "Phone" {
                             
@@ -290,8 +299,8 @@ struct SignInEmailView: View {
         }
     }
 }
-struct SignInView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignInEmailView(userDetails: ["Login", "Remember Me", "Submit", "No", FeedPage()])
-    }
-}
+//struct SignInView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SignInEmailView(userDetails: ["Verify Phone", "Remember Me", "Submit", "Phone", FeedPage()])
+//    }
+//}

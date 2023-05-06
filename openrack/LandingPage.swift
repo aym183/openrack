@@ -17,15 +17,15 @@ struct LandingPage: View {
     var body: some View {
         ZStack {
             VStack {
-//                if userIsLoggedIn {
-//                    if userName == "aali183" {
-//                        BottomNavbar()
-//                    } else {
-//                        FeedPage()
-//                    }
-//                } else {
+                if userIsLoggedIn {
+                    if userName == "aali183" {
+                        BottomNavbar()
+                    } else {
+                        FeedPage(isShownFeed: true, isShownFirstFeed: false)
+                    }
+                } else {
                     LandingContent(userIsLoggedIn: $userIsLoggedIn)
-//                }
+                }
             }
         }
         .onAppear {
@@ -42,6 +42,7 @@ struct LandingContent: View {
 //    @State var showingLoginBottomSheet = false
     @State var signedIn = false
     @Binding var userIsLoggedIn: Bool
+    @Environment(\.presentationMode) var presentationMode
     // ------ Add @AppStorage("shouldShowOnboarding") instead of @State to persist not showing onbaording after  user's tried ------
     @AppStorage("shouldShowOnboarding") var shouldShowOnboarding: Bool = true
     var body: some View {
@@ -70,7 +71,11 @@ struct LandingContent: View {
                         //                        .multilineTextAlignment(.center)
                         //
                         
-                        Button(action: { showingPhoneBottomSheet.toggle() }) {
+                        Button(action: { showingPhoneBottomSheet.toggle()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        }) {
                             HStack {
                                 Text("Get Started")
                                 Image(systemName: "arrow.forward")
@@ -157,14 +162,12 @@ struct LandingContent: View {
                 }
             }
             .onAppear {
-                Auth.auth().addStateDidChangeListener { auth, user in
-                    if user != nil {
-                        print("User is \(user)")
+                    if Auth.auth().currentUser != nil {
+                        print("User is \(Auth.auth().currentUser)")
                         userIsLoggedIn.toggle()
                         
                     }
                 }
-            }
             // ------ Add to replace loginview ka bs and add bottomcard ? ------
             .fullScreenCover(isPresented: $shouldShowOnboarding , content: {
                 OnboardingFlow(shouldShowOnboarding: $shouldShowOnboarding)

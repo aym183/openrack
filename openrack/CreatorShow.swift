@@ -272,9 +272,6 @@ struct CreatorShow: View {
                                 }
                             }
 
-
-
-
                         }) {
                             Text(streamButtonText) // Should popup to add catalogue
                                 .font(.title3).fontWeight(.medium)

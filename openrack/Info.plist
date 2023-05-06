@@ -23,5 +23,7 @@
 	</array>
 	<key>GIDClientID</key>
 	<string>577391432799-lclajci6pksv3p8kar736vmi78uaoqp4.apps.googleusercontent.com</string>
+	<key>FirebaseAutomaticScreenReportingEnabled</key>
+	<false/>
 </dict>
 </plist>
