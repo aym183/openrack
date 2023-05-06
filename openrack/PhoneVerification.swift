@@ -23,11 +23,22 @@ struct PhoneVerification: View {
     var body: some View {
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 40
+            var progressWidth = geometry.size.width - 200
             var varHeight = geometry.size.height - 20
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack(alignment: .leading) {
-                    Text("Verify Number").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 40)
+                    
+                    HStack {
+                        Text("Verify Number").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 40)
+                        Spacer()
+                        ZStack(alignment: .leading) {
+                            Capsule().frame(width: progressWidth, height: 12.5).foregroundColor(.gray)
+                            Capsule().frame(width: progressWidth-120, height: 12.5).foregroundColor(Color("Primary_color"))
+                        }
+                        .padding(.trailing, 10).padding(.top, 22)
+                    }
+                    
                     
                     Text("Phone Number").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                     

@@ -41,6 +41,7 @@ struct SignInEmailView: View {
     var body: some View {
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 40
+            var progressWidth = geometry.size.width - 200
             NavigationStack {
                 ZStack {
                     Color("Secondary_color").ignoresSafeArea()
@@ -58,6 +59,7 @@ struct SignInEmailView: View {
                     VStack (alignment: .leading){
                         
                         Text(String(describing: userDetails[0])).font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
+                            
                         
                         if String(describing: userDetails[3]) != "Phone" {
                             
@@ -81,6 +83,7 @@ struct SignInEmailView: View {
                         }
                         
                         if String(describing: userDetails[3]) == "Phone" {
+                            
                             Text("Phone Number").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
                             
                             TextField("", text: $phoneText)
