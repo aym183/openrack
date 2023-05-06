@@ -321,14 +321,6 @@ class ReadDB : ObservableObject {
         let timerDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("timer")
         let commentDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("comments")
         
-        Database.database().isPersistenceEnabled = true
-        commentDB.keepSynced(true)
-        highestBidDB.keepSynced(true)
-        currentBidderDB.keepSynced(true)
-        titleDB.keepSynced(true)
-        priceDB.keepSynced(true)
-        typeDB.keepSynced(true)
-        
         var temp_comments: [[String: String]] = []
 //        let istimerDB = Database.database().reference().child("shows").child(listingID).child("selectedListing").child("is_timer")
         
