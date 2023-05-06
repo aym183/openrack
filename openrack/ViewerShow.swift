@@ -33,7 +33,6 @@ struct ViewerShow: View {
     @State var showStart = true
     @State private var opacity = 0.5
 
-
     
     var body: some View {
                 
@@ -260,10 +259,11 @@ struct ViewerShow: View {
                             if readListing.type == "Auction" && readListing.price != nil && readListing.timer != nil  && readListing.isSold != true {
                                 HStack {
                                     Button(action: {
-                                        if readListing.address == nil && readListing.cardDetails == nil {
+                                        if readListing.address == nil || readListing.cardDetails == nil {
                                             showingPayDetailsError.toggle()
                                         }
                                         else {
+                                            showingPayDetailsError = false
                                             readListing.price = "\(Int(readListing.price!)! + 5)"
                                             UpdateDB().updateHighestBid(listingID: String(describing: retrievedShow["listings"]!), bid: "\(Int(readListing.price!)! + 5)", bidder: userName)
                                         }
@@ -297,9 +297,8 @@ struct ViewerShow: View {
                                 .padding(.trailing).padding(.leading, 5).padding(.bottom, 30)
 
                             } else {
-
                                 Button(action: {
-                                    if readListing.address == nil && readListing.cardDetails == nil {
+                                    if readListing.address == nil || readListing.cardDetails == nil {
                                         showingPayDetailsError.toggle()
                                     }
                                     else {

@@ -100,7 +100,7 @@ struct ScheduleStream: View {
                         .border(Color.black, width: 2)
                         .padding(.vertical)
                         .navigationDestination(isPresented: $showSubmission) {
-                            BottomNavbar().navigationBarHidden(true)
+                            BottomNavbar(isShownFeed: false).navigationBarBackButtonHidden(true)
                         }
                     }
                     .opacity(isLoading ? 0 : 1)

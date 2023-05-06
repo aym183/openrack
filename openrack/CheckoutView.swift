@@ -62,13 +62,13 @@ struct CheckoutView: View {
     
     var body: some View {
         ZStack {
-            Color("Secondary_color").ignoresSafeArea()
+            Color("Primary_color").ignoresSafeArea()
             VStack {
                 
-                Text("Set Payment Information").font(Font.system(size: 20)).fontWeight(.semibold).foregroundColor(.black).opacity(0.7)
+                Text("Set Payment Information").font(Font.system(size: 20)).fontWeight(.semibold).foregroundColor(.white)
+//                    .opacity(0.7)
                 
                 STPPaymentCardTextField.Representable.init(paymentMethodParams: $paymentMethodParams).border(.black, width: 2).padding()
-//                .background(Color("Primary_color"))
                 
                 HStack {
                     Spacer()
@@ -79,9 +79,9 @@ struct CheckoutView: View {
                             .font(.title3)
                             .fontWeight(.semibold)
                             .frame(width: 250, height: 50)
+                            .foregroundColor(.black)
                     }
-                    .background(Color("Primary_color"))
-                    .foregroundColor(.white)
+                    .background(Color("Secondary_color"))
                     .border(.black, width: 2)
                     Spacer()
                 }

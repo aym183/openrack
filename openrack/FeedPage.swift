@@ -203,7 +203,6 @@ struct FeedPage: View {
                         ScheduleStream().navigationBarBackButtonHidden(true)
                     }
                     .onAppear {
-                        
                         readListing.getViewerLiveShows()
                         readListing.getViewerScheduledShows()
                         
