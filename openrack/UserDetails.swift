@@ -91,17 +91,6 @@ struct FullNameDetails: View {
             var varHeight = geometry.size.height - 20
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
-                if isLoading {
-                    
-                    VStack {
-                        ProgressView()
-                            .scaleEffect(2.5)
-                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                        
-                        Text("Getting Openrack Ready...🥳").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
-                    }
-                }
-                
                 
                 
                 VStack(alignment: .leading) {
@@ -158,7 +147,6 @@ struct FullNameDetails: View {
                     //                }
                     // Add error check for admin user redirection
                 }
-                .opacity(isLoading ? 0 : 1)
                 .foregroundColor(.black)
                 .frame(height: varHeight)
             }
