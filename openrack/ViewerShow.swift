@@ -69,6 +69,7 @@ struct ViewerShow: View {
 //                            .onAppear { player.play() }
 //                            .ignoresSafeArea()
 //                            .disabled(true)
+//                            .frame(width: geometry.size.width, height: geometry.size.height)
 //                    }
 //                    .frame(width: geometry.size.width, height: geometry.size.height)
 //                    .opacity(showStart ? 0 : 1)
