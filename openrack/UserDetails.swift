@@ -164,10 +164,9 @@ struct FullNameDetails: View {
                         }
                     }
                     .navigationDestination(isPresented: $isUserPage) {
-                        withAnimation(.easeIn(duration: 4)) {
-                            FeedPage(isShownFeed: false, isShownFirstFeed: true)
-                                .navigationBarHidden(true)
-                        }
+//                        withAnimation(.easeIn(duration: 4)) {
+                            FeedPage(isShownFeed: false, isShownFirstFeed: true).navigationBarHidden(true)
+//                        }
                     }
                     //                .navigationDestination(isPresented: $isHomePage) {
                     //                    FeedPage().navigationBarBackButtonHidden(true)

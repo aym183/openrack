@@ -28,10 +28,10 @@ struct ScheduleStream: View {
                     if isLoading {
                         VStack {
                             ProgressView()
-                                .scaleEffect(2.5)
+                                .scaleEffect(1.75)
                                 .progressViewStyle(CircularProgressViewStyle(tint: .black))
                             
-                            Text("Hold on while we create your show 😁").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
+                            Text("Creating your show 😁").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
                         }
                     }
                     
@@ -88,7 +88,9 @@ struct ScheduleStream: View {
                             }
                             isLoading.toggle()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                                showSubmission.toggle()
+                                withAnimation(.easeOut(duration: 0.5)) {
+                                    showSubmission.toggle()
+                                }
                             }
                         }) {
                             HStack { Text("Submit").font(.title3) }

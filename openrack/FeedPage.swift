@@ -37,7 +37,7 @@ struct FeedPage: View {
                         }
                     }
                     
-                    if !isShownFirstFeed {
+                    if isShownFeed {
                         VStack {
                             
                                 ProgressView()
@@ -92,7 +92,7 @@ struct FeedPage: View {
                                                     }
                                                     .padding(.vertical, 10)
                                                     .frame(width: 175, height: 240)
-                                                    .background(Image("ShowPreview").resizable())
+                                                    .background(Image("AppImageSets").resizable())
                                                     .cornerRadius(10.0)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
@@ -155,7 +155,7 @@ struct FeedPage: View {
                                                         }
                                                         .padding(.vertical, 10)
                                                         .frame(width: 175, height: 240)
-                                                        .background(Image("ShowPreview").resizable())
+                                                        .background(Image("AppImageSets").resizable())
                                                         .cornerRadius(10.0)
                                                         .overlay(
                                                             RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
@@ -194,7 +194,7 @@ struct FeedPage: View {
                         }
                         .frame(height: varHeight)
                     }
-                    .background(Color("Secondary_color"))
+//                    .background(Color("Secondary_color"))
                     .sheet(isPresented: $showingBottomSheet) {
                         StreamBottomSheet(showingBottomSheet: $showingBottomSheet, isShowingNextView: $isShowingNextView)
                             .presentationDetents([.height(200)])
