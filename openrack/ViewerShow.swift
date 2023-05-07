@@ -354,6 +354,12 @@ struct ViewerShow: View {
                                 if response! == "success" {
                                     showConfirmationOrder.toggle()
                                     UpdateDB().updateListingSold(listingID: retrievedShow["listings"] as! String)
+                                    CreateDB().addUserOrders(item: readListing.title!, purchase_price: readListing.price!, buyer: userName)
+                                    if readListing.creatorSales!.count == 0 {
+                                        CreateDB().addCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
+                                     } else {
+                                        UpdateDB().updateCreatorSales(item: readListing.title!, purchase_price: readListing.price!, seller: String(describing: retrievedShow["created_by"]!), address: readListing.address!, listingID: String(describing: retrievedShow["listings"]!))
+                                     }
                                 }
                             }
                         }
