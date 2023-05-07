@@ -46,7 +46,6 @@ class ReadDB : ObservableObject {
 //                        UserDefaults.standard.set(String(describing:document.data()["email"]!), forKey: "email")
                         UserDefaults.standard.set(String(describing:document.data()["full_name"]!), forKey: "full_name")
                         UserDefaults.standard.set(String(describing:document.data()["phone_number"]!), forKey: "phone_number")
-                        
                         UserDefaults.standard.set(String(describing:document.data()["stripe_customer_id"]!), forKey: "stripe_customer_id")
                         UserDefaults.standard.set(String(describing:document.data()["stripe_payment_method"]!), forKey: "stripe_payment_method")
                     }

@@ -143,15 +143,27 @@ struct CreatorShow: View {
                                     .padding(.bottom, 20).padding(.trailing, 85).padding(.leading, 10)
                                     .onSubmit {
                                         if commentText != "" {
-                                            print(noOfComments)
-                                            UpdateDB().updateComments(listingID: listingID, comment: commentText, username: userName)
-                                            print(noOfComments)
-                                            commentText = ""
-                                            
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                                withAnimation(.easeOut(duration: 0.5)) {
-                                                    proxy.scrollTo(noOfComments, anchor: .bottom)
-                                                }
+                                            DispatchQueue.global().async {
+//                                                DispatchQueue.global(qos: .userInteractive).async {
+                                                    UpdateDB().updateComments(listingID: listingID, comment: commentText, username: userName) { response in
+                                                        if response == "Comment added successfully" {
+                                                            commentText = ""
+//                                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                                            withAnimation(.easeOut(duration: 0.5)) {
+                                                                proxy.scrollTo(noOfComments, anchor: .bottom)
+                                                            }
+//                                                            }
+                                                        }
+                                                    }
+//                                                UpdateDB().updateComments(listingID: listingID, comment: commentText, username: userName)
+                                                
+//                                                commentText = ""
+                                                
+//                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                                                    withAnimation(.easeOut(duration: 0.5)) {
+//                                                        proxy.scrollTo(noOfComments, anchor: .bottom)
+//                                                    }
+//                                                }
                                             }
                                         }
                                     }

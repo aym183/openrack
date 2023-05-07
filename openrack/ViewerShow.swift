@@ -163,13 +163,16 @@ struct ViewerShow: View {
                                         .onSubmit {
                                             if commentText != "" {
                                                 
-                                                DispatchQueue.global().async {
-                                                    UpdateDB().updateComments(listingID: String(describing: retrievedShow["listings"]!), comment: commentText, username: userName)
-                                                    commentText = ""
-
-                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                                        withAnimation(.easeOut(duration: 0.5)) {
-                                                            proxy.scrollTo(noOfComments, anchor: .bottom)
+//                                                DispatchQueue.global().async {
+                                                DispatchQueue.global(qos: .userInteractive).async {
+                                                    UpdateDB().updateComments(listingID: String(describing: retrievedShow["listings"]!), comment: commentText, username: userName) { response in
+                                                        if response == "Comment added successfully" {
+                                                            commentText = ""
+//                                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                                            withAnimation(.easeOut(duration: 0.5)) {
+                                                                proxy.scrollTo(noOfComments, anchor: .bottom)
+                                                            }
+//                                                            }
                                                         }
                                                     }
                                                 }
