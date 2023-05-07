@@ -153,13 +153,13 @@ struct ViewerShow: View {
                                     TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white).font(Font.system(size: 12)))
                                         .padding(.horizontal)
                                         .foregroundColor(.white).font(Font.system(size: 12))
-                                        .frame(width: 130, height: 37)
+                                        .frame(width: 160, height: 38)
                                         .cornerRadius(20)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 2)
                                         )
                                         .opacity(0.7)
-                                        .padding(.bottom, 50).padding(.trailing, 100)
+                                        .padding(.bottom, 20).padding(.trailing, 85)
                                         .onSubmit {
                                             if commentText != "" {
                                                 print(noOfComments)
@@ -249,8 +249,7 @@ struct ViewerShow: View {
                                     .font(Font.system(size: 18)).fontWeight(.bold).padding(.trailing, 10)
 
                             }
-                            .padding(.bottom)
-                            .padding(.horizontal)
+                            .padding(.bottom).padding(.horizontal)
                             .foregroundColor(Color.white)
 
                         }

@@ -86,6 +86,7 @@ struct CreatorShow: View {
                                 .padding(.trailing)
                         }
                     }
+                    .padding(.top).padding(.leading, 10)
                     .foregroundColor(.white)
                     .fontWeight(.semibold)
 
@@ -128,18 +129,18 @@ struct CreatorShow: View {
                                 }
                                 .frame(width: 250, height: 200)
                                 .cornerRadius(10)
-                                .padding(.leading,5).padding(.top, 70).padding(.bottom)
+                                .padding(.leading,10).padding(.top, 70).padding(.bottom)
                                 
                                 TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white).font(Font.system(size: 12)))
                                     .padding(.horizontal)
                                     .foregroundColor(.white).font(Font.system(size: 12))
-                                    .frame(width: 130, height: 37)
+                                    .frame(width: 160, height: 37)
                                     .cornerRadius(20)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 2)
                                     )
                                     .opacity(0.7)
-                                    .padding(.bottom, 50).padding(.trailing, 100)
+                                    .padding(.bottom, 20).padding(.trailing, 85).padding(.leading, 10)
                                     .onSubmit {
                                         if commentText != "" {
                                             print(noOfComments)
@@ -196,18 +197,6 @@ struct CreatorShow: View {
                                 }
 
                                 Text("Share").font(Font.system(size: 15)).fontWeight(.semibold)
-
-                                Button(action: { }) {
-                                    Circle()
-                                        .fill(Color("Primary_color"))
-                                        .frame(height: 50)
-                                        .opacity(0.7)
-                                        .overlay(
-                                            Image(systemName: "gear").font(Font.system(size: 20)).foregroundColor(.white)
-                                        )
-                                }
-
-                                Text("Settings").font(Font.system(size: 15)).fontWeight(.semibold) // Where creators can decide whether audience can bid or buy straight for an item, set timer for each item // Creators should be able to see each offer and choose to accept/deny
                             }
                             .padding(.vertical, 40).padding(.trailing)
                             .foregroundColor(.white)
