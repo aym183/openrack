@@ -162,14 +162,15 @@ struct ViewerShow: View {
                                         .padding(.bottom, 20).padding(.trailing, 85)
                                         .onSubmit {
                                             if commentText != "" {
-                                                print(noOfComments)
-                                                UpdateDB().updateComments(listingID: String(describing: retrievedShow["listings"]!), comment: commentText, username: userName)
-                                                print(noOfComments)
-                                                commentText = ""
+                                                
+                                                DispatchQueue.global().async {
+                                                    UpdateDB().updateComments(listingID: String(describing: retrievedShow["listings"]!), comment: commentText, username: userName)
+                                                    commentText = ""
 
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                                    withAnimation(.easeOut(duration: 0.5)) {
-                                                        proxy.scrollTo(noOfComments, anchor: .bottom)
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                                        withAnimation(.easeOut(duration: 0.5)) {
+                                                            proxy.scrollTo(noOfComments, anchor: .bottom)
+                                                        }
                                                     }
                                                 }
                                             }
