@@ -108,7 +108,7 @@ struct ShowsPageButtons: View {
                         }
                         .navigationDestination(isPresented: $salesStarted) {
 //                            SalesPage(sales: readListing.creatorSales)
-                            SalesPage(readListing: readListing)
+                            SalesPage(readListing: readListing, listingID: String(describing: retrievedShow["listings"]!))
                         }
                     }
                 }

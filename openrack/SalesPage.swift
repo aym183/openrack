@@ -8,6 +8,7 @@ import SwiftUI
 
 struct SalesPage: View {
     @ObservedObject var readListing: ReadDB
+    var listingID: String
     var body: some View {
         var noOfSales = readListing.creatorSales?.count ?? 0
         GeometryReader { geometry in
@@ -60,6 +61,9 @@ struct SalesPage: View {
                     }
                     Spacer()
                 }
+            }
+            .onAppear {
+                readListing.getCreatorSales(listingID: listingID)
             }
         }
     }

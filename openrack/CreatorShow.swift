@@ -132,6 +132,7 @@ struct CreatorShow: View {
                                 .padding(.leading,10).padding(.top, 70).padding(.bottom)
                                 
                                 TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white).font(Font.system(size: 12)))
+                                    .disableAutocorrection(true)
                                     .padding(.horizontal)
                                     .foregroundColor(.white).font(Font.system(size: 12))
                                     .frame(width: 160, height: 37)
@@ -304,7 +305,7 @@ struct CreatorShow: View {
                     .presentationDetents([.height(400)])
             }
             .sheet(isPresented: $showingSalesSheet) {
-                SalesPage(readListing: readListing)
+                SalesPage(readListing: readListing, listingID: listingID)
                     .presentationDetents([.height(400)])
             }
             .SPAlert(

@@ -31,6 +31,7 @@ struct ViewerShow: View {
     @State var updateDB = UpdateDB()
     @State var commentText = ""
     @State var showStart = true
+    @State var commentDisabled = false
     @State private var opacity = 0.5
 
     
@@ -63,14 +64,14 @@ struct ViewerShow: View {
                     }
                     
                     
-                    GeometryReader { newgeometry in
-                        VideoPlayer (player: player)
-                            .onAppear { player.play() }
-                            .ignoresSafeArea()
-                            .disabled(true)
-                    }
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .opacity(showStart ? 0 : 1)
+//                    GeometryReader { newgeometry in
+//                        VideoPlayer (player: player)
+//                            .onAppear { player.play() }
+//                            .ignoresSafeArea()
+//                            .disabled(true)
+//                    }
+//                    .frame(width: geometry.size.width, height: geometry.size.height)
+//                    .opacity(showStart ? 0 : 1)
                     
 
 
@@ -103,7 +104,7 @@ struct ViewerShow: View {
                         }
                         .foregroundColor(.white)
                         .fontWeight(.semibold)
-                        .padding(.top, -10).padding(.leading, 10)
+                        .padding(.top).padding(.leading, 10)
 
                         Spacer()
 
@@ -151,6 +152,7 @@ struct ViewerShow: View {
                                     .padding(.leading,5).padding(.bottom)
 
                                     TextField ("", text: $commentText, prompt: Text("Say Something...").foregroundColor(.white).font(Font.system(size: 12)))
+                                        .disableAutocorrection(true)
                                         .padding(.horizontal)
                                         .foregroundColor(.white).font(Font.system(size: 12))
                                         .frame(width: 160, height: 38)
@@ -162,7 +164,6 @@ struct ViewerShow: View {
                                         .padding(.bottom, 20).padding(.trailing, 85)
                                         .onSubmit {
                                             if commentText != "" {
-                                                
 //                                                DispatchQueue.global().async {
                                                 DispatchQueue.global(qos: .userInteractive).async {
                                                     UpdateDB().updateComments(listingID: String(describing: retrievedShow["listings"]!), comment: commentText, username: userName) { response in
@@ -172,7 +173,6 @@ struct ViewerShow: View {
                                                             withAnimation(.easeOut(duration: 0.5)) {
                                                                 proxy.scrollTo(noOfComments, anchor: .bottom)
                                                             }
-//                                                            }
                                                         }
                                                     }
                                                 }
@@ -268,7 +268,9 @@ struct ViewerShow: View {
                                         else {
                                             showingPayDetailsError = false
                                             readListing.price = "\(Int(readListing.price!)! + 5)"
-                                            UpdateDB().updateHighestBid(listingID: String(describing: retrievedShow["listings"]!), bid: "\(Int(readListing.price!)! + 5)", bidder: userName)
+                                            DispatchQueue.global(qos: .userInteractive).async {
+                                                UpdateDB().updateHighestBid(listingID: String(describing: retrievedShow["listings"]!), bid: "\(Int(readListing.price!)! + 5)", bidder: userName)
+                                            }
                                         }
                                     }) {
 
@@ -338,6 +340,7 @@ struct ViewerShow: View {
                             }
                         }
                     }
+                    .opacity(showStart ? 0 : 1)
                     .frame(width: varWidth, height: varHeight)
                     .onAppear{
                         readListing.getListingSelected(listingID: String(describing: retrievedShow["listings"]!))
