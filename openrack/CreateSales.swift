@@ -25,11 +25,9 @@ struct CreateSales: View {
                 
                 VStack(alignment: .leading) {
                     
-                    HStack {
-                        
-                        Text("Sales").font(Font.system(size: 30)).fontWeight(.bold)
-                    }
-                    .padding(.top, 20).padding(.horizontal, 20).foregroundColor(.black)
+                    
+                    Text("Sales").font(Font.system(size: 30)).fontWeight(.bold)
+                        .padding(.top, 20).padding(.horizontal, 20).foregroundColor(.black)
                     
 //                    List {
                     ScrollView {
@@ -57,6 +55,7 @@ struct CreateSales: View {
                                     .padding([.horizontal, .bottom],10)
                                 }
                             .frame(height: 100)
+                            .background(.white)
                             .border(.black, width: 2)
                             .padding(.horizontal, 20)
                             .padding(.top, 5)

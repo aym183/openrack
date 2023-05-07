@@ -303,7 +303,7 @@ struct CreatorShow: View {
                     .presentationDetents([.height(400)])
             }
             .sheet(isPresented: $showingSalesSheet) {
-                SalesPage(sales: readListing.creatorSales!)
+                SalesPage(readListing: readListing)
                     .presentationDetents([.height(400)])
             }
             .SPAlert(

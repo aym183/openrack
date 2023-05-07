@@ -106,9 +106,10 @@ struct ShowsPageButtons: View {
                                         .foregroundColor(.white)
                                 )
                         }
-//                        .navigationDestination(isPresented: $salesStarted) {
-//                            SalesPage(sales: readListing.creatorSales!)
-//                        }
+                        .navigationDestination(isPresented: $salesStarted) {
+//                            SalesPage(sales: readListing.creatorSales)
+                            SalesPage(readListing: readListing)
+                        }
                     }
                 }
                 .frame(width: varWidth)
