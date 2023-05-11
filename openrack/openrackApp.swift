@@ -23,8 +23,9 @@ struct openrackApp: App {
     var body: some Scene {
         WindowGroup {
             let viewModel = AuthViewModel()
-            LandingPage().environmentObject(viewModel)
+            LandingPage().environmentObject(viewModel).preferredColorScheme(.dark)
         }
+        
     }
 }
 

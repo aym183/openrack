@@ -24,7 +24,6 @@ struct SalesPage: View {
                     .padding(.top, 20).padding(.horizontal).foregroundColor(.black)
                     
                     ScrollView {
-                        //listingsViewModel.listings
                         ForEach(0..<noOfSales) { index in
                             
                             VStack {

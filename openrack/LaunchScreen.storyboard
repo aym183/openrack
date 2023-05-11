@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,20 +22,20 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="asa-1m-arC">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="LaunchSets" translatesAutoresizingMaskIntoConstraints="NO" id="SCQ-GB-lMR">
+                                <rect key="frame" x="0.0" y="59" width="393" height="765"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
-                        <color key="backgroundColor" name="Primary_color"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="obG-Y5-kRd" firstAttribute="top" secondItem="SCQ-GB-lMR" secondAttribute="bottom" constant="8" symbolic="YES" id="47P-5B-09B"/>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
-                            <constraint firstItem="asa-1m-arC" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="KtO-jv-cjs"/>
-                            <constraint firstItem="asa-1m-arC" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Mme-UG-Rec"/>
+                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="LuJ-qa-NvN"/>
                             <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="SfN-ll-jLj"/>
                             <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
-                            <constraint firstItem="asa-1m-arC" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="h5s-DO-96h"/>
-                            <constraint firstAttribute="bottom" secondItem="asa-1m-arC" secondAttribute="bottom" id="l2i-kA-xg6"/>
+                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="ZXB-vY-E1l"/>
+                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="aw7-bU-PGp"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -45,9 +45,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo" width="426.66665649414062" height="426.66665649414062"/>
-        <namedColor name="Primary_color">
-            <color red="0.12549019607843137" green="0.29803921568627451" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <image name="LaunchSets" width="166.66667175292969" height="166.66667175292969"/>
     </resources>
 </document>

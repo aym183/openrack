@@ -113,7 +113,6 @@ class ReadDB : ObservableObject {
 //                UserDefaults.standard.set(userShows, forKey: "shows")
                 self.creatorShows = userShows
             }
-        
     }
     
     func getCreatorSales(listingID: String) {

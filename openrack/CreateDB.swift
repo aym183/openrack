@@ -32,6 +32,7 @@ class CreateDB : ObservableObject {
                 print("Error adding document: \(error.localizedDescription)")
             } else {
                 print("User added")
+                UserDefaults.standard.set(username, forKey: "username")
             }
             
         }
