@@ -16,26 +16,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="obG-Y5-kRd">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="obG-Y5-kRd">
                                 <rect key="frame" x="0.0" y="832" width="393" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="LaunchSets" translatesAutoresizingMaskIntoConstraints="NO" id="SCQ-GB-lMR">
-                                <rect key="frame" x="0.0" y="59" width="393" height="765"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="738"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.039215686270000001" green="0.1647058824" blue="0.0" alpha="0.7806291390728477" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.039215686270000001" green="0.1647058824" blue="0.0" alpha="0.78000000000000003" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="obG-Y5-kRd" firstAttribute="top" secondItem="SCQ-GB-lMR" secondAttribute="bottom" constant="8" symbolic="YES" id="47P-5B-09B"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
-                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="LuJ-qa-NvN"/>
-                            <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="SfN-ll-jLj"/>
-                            <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
-                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="ZXB-vY-E1l"/>
-                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="aw7-bU-PGp"/>
+                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="CYe-oL-fCH"/>
+                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="OfT-Ny-fCH"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="SCQ-GB-lMR" secondAttribute="bottom" constant="21" id="VKU-l9-mmI"/>
+                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="X0f-aR-Hdv"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -45,6 +44,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchSets" width="166.66667175292969" height="166.66667175292969"/>
+        <image name="LaunchSets" width="100" height="100"/>
     </resources>
 </document>
