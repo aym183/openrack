@@ -24,17 +24,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="LaunchSets" translatesAutoresizingMaskIntoConstraints="NO" id="SCQ-GB-lMR">
-                                <rect key="frame" x="0.0" y="59" width="393" height="738"/>
+                                <rect key="frame" x="0.0" y="245" width="393" height="363"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="0.039215686270000001" green="0.1647058824" blue="0.0" alpha="0.7806291390728477" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <color key="tintColor" red="0.039215686270000001" green="0.1647058824" blue="0.0" alpha="0.78000000000000003" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="CYe-oL-fCH"/>
-                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="OfT-Ny-fCH"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="SCQ-GB-lMR" secondAttribute="bottom" constant="21" id="VKU-l9-mmI"/>
-                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="X0f-aR-Hdv"/>
+                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="4el-In-YFc"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="SCQ-GB-lMR" secondAttribute="bottom" constant="210" id="Nr6-YR-zQi"/>
+                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="fZV-2N-dCE"/>
+                            <constraint firstItem="SCQ-GB-lMR" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="186" id="xjt-gP-1u4"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -44,6 +44,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchSets" width="100" height="100"/>
+        <image name="LaunchSets" width="200" height="200"/>
     </resources>
 </document>
