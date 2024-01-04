@@ -9,7 +9,8 @@ import _AuthenticationServices_SwiftUI
 import Firebase
 
 struct LandingPage: View {
-    @AppStorage("username") var userName: String = ""
+//    @AppStorage("username") var userName: String = ""
+    var userName = ""
     @State var userIsLoggedIn = false
     var body: some View {
         ZStack {

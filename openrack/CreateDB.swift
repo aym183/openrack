@@ -191,7 +191,7 @@ class CreateDB : ObservableObject {
             let url = URL(string: "https://api.mux.com/video/v1/live-streams")!
             var request = URLRequest(url: url)
             let muxTokenID = "a0cb25b9-df73-40b5-acc4-e214297afbea"
-            let muxTokenSecret = "oTZ5J9/aFCGR44YBvkO+GjOa16AfCs595nDMom3O5TO+Mk/VSUz+4a4Ts+ZhwBo6YhOs7LUQOsN"
+            let muxTokenSecret = "secret"
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             var responseArray = Array<String>()
