@@ -12,21 +12,12 @@ struct CustomNavbarView: View {
     @AppStorage("username") var userName: String = ""
     var body: some View {
             HStack {
-                
-//                Button(action: {})
-//                  {
-//                    Image(systemName: "slider.horizontal.3").font(.system(size: 10)).padding(.leading, 15).padding(.trailing, -22)
-//                    Text("Follows").font(Font.system(size: 12)).fontWeight(.bold).padding(.horizontal)
-//                }
-                
                 VStack {
                     Text("Openrack").font(Font.system(size: 30)).fontWeight(.semibold)
                         .foregroundColor(Color("Primary_color")).padding(.vertical)
                 }
                 .padding(.leading, 15)
-                
                 Spacer()
-                
                 Button(action: { withAnimation { showingAccountPage.toggle() } }) {
                     Image(systemName: "person.circle").font(Font.system(size: 18)).fontWeight(.semibold).padding(.trailing, -5)
                     Text(userName).font(Font.system(size: 12)).fontWeight(.bold).padding(.trailing, 15).foregroundColor(Color("Primary_color"))
@@ -34,7 +25,6 @@ struct CustomNavbarView: View {
                 .navigationDestination(isPresented: $showingAccountPage) {
                     AccountPage().navigationBarBackButtonHidden(true)
                 }
-                
             }
             .frame(width: UIScreen.main.bounds.width )
             .background(Color("Secondary_color").ignoresSafeArea(edges: .top))
@@ -47,14 +37,5 @@ struct CustomNavbarView: View {
                     .shadow(color: .black, radius: 6, x: 0, y: 0.5)
                     ,alignment: .bottom
             )
-//            .padding(.top, 5)
-        
-
-    }
-}
-
-struct CustomNavbarView_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomNavbarView()
     }
 }

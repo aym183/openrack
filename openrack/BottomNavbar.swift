@@ -5,13 +5,7 @@
 //  Created by Ayman Ali on 30/03/2023.
 //
 import SwiftUI
-
-//magnifyingglass - Explore
-//person.fill - Account
-//rectangle.3.offgrid - My Feed
-//dollarsign.square - Sell
 struct BottomNavbar: View {
-
     @State var selectedTab: Int = 1
     @AppStorage("email") var userEmail: String = ""
     @State var isShownFeed: Bool = true
@@ -20,13 +14,11 @@ struct BottomNavbar: View {
         NavigationStack {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
-                
                 if isShownFeed {
                     VStack {
                         ProgressView()
                             .scaleEffect(2.5)
                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                        
                         Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
                     }
                 }
@@ -39,10 +31,10 @@ struct BottomNavbar: View {
                         }
                     
                     ShowsPage()
-                            .tabItem {
-                                Image(systemName: "video.fill")
-                                Text("My Shows")
-                            }
+                        .tabItem {
+                            Image(systemName: "video.fill")
+                            Text("My Shows")
+                        }
                 }
                 .accentColor(Color("Primary_color"))
                 .onAppear {
@@ -54,22 +46,6 @@ struct BottomNavbar: View {
                 }
                 .opacity(isShownFeed ? 0 : 1)
             }
-            
         }
-//        .overlay(
-//            Rectangle()
-//                .frame(height: 0.5)
-//                .foregroundColor(.black)
-//                .offset(y: -55)
-//                .shadow(color: .black, radius: 6, x: 0, y: 0.5)
-//                ,alignment: .bottom
-//        )
-    }
-
-}
-
-struct BottomNavbar_Previews: PreviewProvider {
-    static var previews: some View {
-        BottomNavbar()
     }
 }

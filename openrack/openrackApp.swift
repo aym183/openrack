@@ -17,7 +17,7 @@ struct openrackApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     init() {
-        StripeAPI.defaultPublishableKey = "pk_test_51LcPpgJ4NNUHuKH8CVncZseI96JVxtbDzpEGLuKbM1dDOLCigYJXC9MTwNUZTYjoGpLPuTax7gbMb4NpQVlXkex000vVNrubiU"
+        StripeAPI.defaultPublishableKey = "test"
     }
     
     var body: some Scene {
@@ -32,43 +32,36 @@ struct openrackApp: App {
 class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-      
         FirebaseApp.configure()
         let session = AVAudioSession.sharedInstance()
         do {
-                try session.setCategory(.playAndRecord, mode: .voiceChat, options: [.defaultToSpeaker, .allowBluetooth])
-                try session.setActive(true)
+            try session.setCategory(.playAndRecord, mode: .voiceChat, options: [.defaultToSpeaker, .allowBluetooth])
+            try session.setActive(true)
         } catch {
-                    print("Audio Time")
+            print("Error")
         }
       return true
-  }
-    
-//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-//
-//    }
+    }
+
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-                    let firebaseAuth = Auth.auth()
-                    firebaseAuth.setAPNSToken(deviceToken, type: AuthAPNSTokenType.unknown)
-          }
+        let firebaseAuth = Auth.auth()
+        firebaseAuth.setAPNSToken(deviceToken, type: AuthAPNSTokenType.unknown)
+    }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-                    let firebaseAuth = Auth.auth()
-                    if (firebaseAuth.canHandleNotification(userInfo)){
-                        print(userInfo)
-                        return
-                    }
-         }
+        let firebaseAuth = Auth.auth()
+        if (firebaseAuth.canHandleNotification(userInfo)){
+            print(userInfo)
+            return
+        }
+    }
     
-    // This method handles opening universal link URLs (for example, "https://example.com/stripe_ios_callback")
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool  {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
             if let url = userActivity.webpageURL {
                 let stripeHandled = StripeAPI.handleURLCallback(with: url)
                 if (stripeHandled) {
                     return true
-                } else {
-                    // This was not a Stripe url – handle the URL normally as you would
                 }
             }
         }
@@ -80,10 +73,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let stripeHandled = StripeAPI.handleURLCallback(with: url)
         if (stripeHandled) {
             print("Stripe Handled")
-        } else {
-            // This was not a Stripe url – handle the URL normally as you would
         }
-        
         return GIDSignIn.sharedInstance.handle(url)
     }
 }

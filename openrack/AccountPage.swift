@@ -41,31 +41,10 @@ struct AccountPage: View {
                         
                         HStack {
                             Text("Personal Details").font(Font.system(size: 18)).fontWeight(.bold).foregroundColor(.black).padding(.horizontal,5).opacity(0.7)
-                            
                             Spacer()
-                            
-                            //                        Button(action: {
-                            //                            if disableFields == false {
-                            //                                // Add phone number update
-                            //                                UpdateDB().updateUserDetails(inputs: ["full_name": nameText])
-                            //                                disableFields.toggle()
-                            //                            } else {
-                            //                                disableFields.toggle()
-                            //                            }
-                            //
-                            //                        }) {
-                            //                            if disableFields == false {
-                            //                                Text(String("Save Details")).font(Font.system(size: 15)).frame(width: 100, height: 30).background(Color("Primary_color"))
-                            //                                    .foregroundColor(.white)
-                            //                                    .border(Color.black, width: 2)
-                            //                            } else {
-                            //                                Image(systemName: "applepencil").font(Font.system(size: 20)).fontWeight(.bold).foregroundColor(.black).opacity(0.7)
-                            //                            }
-                            //                        }
                                 .padding(.trailing)
                         }
-                        
-                        
+                           
                         Divider().frame(width: 340, height: 2).background(.black).padding(.bottom, 5).opacity(0.5).padding(.horizontal,5)
                         
                         HStack {
@@ -78,9 +57,6 @@ struct AccountPage: View {
                                 .opacity(0.5)
                                 .border(Color.black, width: 2)
                                 .disabled(true)
-                            
-                            
-                            //                        Text(userName).padding(.leading, 22)
                         }
                         .foregroundColor(.black)
                         .fontWeight(.semibold)
@@ -96,49 +72,11 @@ struct AccountPage: View {
                                 .opacity(0.5)
                                 .border(Color.black, width: 2)
                                 .disabled(true)
-                            //                        Text("+447859234405").padding(.leading, 53)
                         }
                         .foregroundColor(.black)
                         .fontWeight(.semibold)
                         .padding()
-                        
-                        
-                        //                    HStack {
-                        //                        Text("Email").padding(.trailing, 58)
-                        //                        TextField("", text: $emailText)
-                        //                            .font(Font.system(size: 13))
-                        //                            .padding(.horizontal, 8)
-                        //                            .frame(width: 200, height: 35)
-                        //                            .background(.gray)
-                        //                            .opacity(0.5)
-                        //                            .border(Color.black, width: 2)
-                        //                            .disabled(true)
-                        ////                        Text(userEmail).font(Font.system(size: 15)).padding(.leading, 60)
-                        //                    }
-                        //                    .foregroundColor(.black)
-                        //                    .fontWeight(.semibold)
-                        //                    .padding()
-                        
-                        //                    HStack {
-                        //                        Text("Name").padding(.trailing, 55)
-                        //                        TextField("", text: $nameText)
-                        //                            .font(Font.system(size: 13))
-                        //                            .padding(.horizontal, 8)
-                        //                            .frame(width: 200, height: 35)
-                        //                            .background(disableFields ? .gray : .white)
-                        //                            .opacity(disableFields ? 0.5 : 1)
-                        //                            .border(Color.black, width: 2)
-                        //                            .disabled(disableFields)
-                        ////                        Text(fullName).padding(.leading, 56)
-                        //                    }
-                        //                    .foregroundColor(.black)
-                        //                    .fontWeight(.semibold)
-                        //                    .padding()
-                        
-                        
-                        //                Spacer()
-                        
-                        
+                      
                         Button(action: { isShowingOrders.toggle() }) {
                             HStack {
                                 Image(systemName: "tshirt.fill").padding(.trailing, 10).padding(.leading, 5)
@@ -191,14 +129,9 @@ struct AccountPage: View {
                         
                         Button(action: {
                             ReadServer().startCheckout { response in
-                                
-                                //                            print("Response in \(response)")
-                                PaymentConfig.shared.paymentIntentClientSecret = response[0] //clientSecret
+                                PaymentConfig.shared.paymentIntentClientSecret = response[0]
                                 PaymentConfig.shared.paymentIntentID = response[1]
-                                
-                                //                            DispatchQueue.main.async {
                                 isShowingPaymentsForm.toggle()
-                                //                            }
                             }
                         }) {
                             HStack {
@@ -222,15 +155,11 @@ struct AccountPage: View {
                             .overlay( RoundedRectangle(cornerRadius: 15).stroke(Color.black, lineWidth: 2) )
                         }
                         .sheet(isPresented: $isShowingPaymentsForm) {
-                            //                            AddressForm()
-                            //                        ExampleSwiftUIPaymentSheet()
                             CheckoutView(showingPaySheet: $showingPaySheet, isShowingPaymentsForm: $isShowingPaymentsForm, readListing: readListing).presentationDetents([.height(250)])
                         }
                         .padding(.top,5).padding(.bottom, 30).padding(.horizontal,5)
                         
-                        
                         Spacer()
-                        
                         
                     }
                     .frame(width: 350)
@@ -256,11 +185,5 @@ struct AccountPage: View {
                 
             }
         }
-    }
-}
-
-struct AccountPage_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountPage()
     }
 }
