@@ -11,7 +11,6 @@ import UIKit
 class PaymentGateway: UIViewController {
     func submitPayment(intent: STPPaymentIntentParams, completion: @escaping (STPPaymentHandlerActionStatus, STPPaymentIntent?, NSError?) -> Void) {
         let paymentHandler = STPPaymentHandler.shared()
-        
         paymentHandler.confirmPayment(intent, with: self) { (status, intent, error) in
             completion(status, intent, error)
         }

@@ -11,6 +11,5 @@ class PaymentConfig {
     var paymentIntentClientSecret: String?
     var paymentIntentID: String?
     static var shared: PaymentConfig = PaymentConfig()
-    
     private init() { }
 }

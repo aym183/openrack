@@ -12,20 +12,10 @@ struct DropdownMenu: View {
     var width: CGFloat
     let options: [Dropdownmenus]
     var body: some View {
-            Button(action: {
-                withAnimation {
-                    self.isOptionsPresented.toggle()
-                }
-                //            if (selectedOption != nil) {
-                //                print(selectedOption!.option)
-                //            }
-                //            print(selectedOption!.option)
-            }) {
+            Button(action: { withAnimation {self.isOptionsPresented.toggle()} }) {
                 HStack {
                     Text(selectedOption == nil ? "Select..." : selectedOption!.option)
-                    
                     Spacer()
-                    
                     Image(systemName: self.isOptionsPresented ? "chevron.up" : "chevron.down")
                 }
                 .padding(.horizontal)
@@ -40,7 +30,6 @@ struct DropdownMenu: View {
                         DropdownMenuList(options: self.options) { option in
                             self.isOptionsPresented = false
                             self.selectedOption = option
-                            print(String(describing: self.selectedOption!.option))
                         }
                     }
                 }

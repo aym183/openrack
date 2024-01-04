@@ -30,7 +30,6 @@ struct ScheduleStream: View {
                             ProgressView()
                                 .scaleEffect(1.75)
                                 .progressViewStyle(CircularProgressViewStyle(tint: .black))
-                            
                             Text("Creating your show 😁").fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
                         }
                     }
@@ -39,7 +38,6 @@ struct ScheduleStream: View {
                         Text("Schedule Show").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
                         
                         Text("Show Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                        
                         TextField("", text: $streamName)
                             .padding(.horizontal, 8)
                             .frame(width: btnWidth, height: 50).border(Color.black, width: 2)
@@ -48,7 +46,6 @@ struct ScheduleStream: View {
                             .autocapitalization(.none)
                         
                         Text("Show Description").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                        
                         TextField("", text: $streamDescription)
                             .padding(.horizontal, 8)
                             .frame(width: btnWidth, height: 50).border(Color.black, width: 2)
@@ -81,7 +78,6 @@ struct ScheduleStream: View {
                                 switch response {
                                 case .success(let array):
                                     addStream.addShow(name: streamName, description: streamDescription, date: MiscData().convertDateToString(date_value: selectedDate, time_value: selectedTime), livestream_id: array[0], playback_id: array[1], stream_key: array[2])
-                                    
                                 case .failure(let error):
                                     print("Error: \(error.localizedDescription)")
                                 }
@@ -111,11 +107,5 @@ struct ScheduleStream: View {
             }
         }
         
-    }
-}
-
-struct ScheduleStream_Previews: PreviewProvider {
-    static var previews: some View {
-        ScheduleStream()
     }
 }

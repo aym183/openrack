@@ -36,14 +36,10 @@ struct PhoneVerification: View {
                             Capsule().frame(width: progressWidth, height: 12.5).foregroundColor(.gray)
                             Capsule().frame(width: (progressWidth)*(30/100), height: 12.5).foregroundColor(Color("Primary_color"))
                         }
-//                        .padding(.top, 22)
                     }
                     .padding(.top, 40).padding(.trailing)
                     
-                    
-                    
                     Text("Phone Number").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                    
                     TextField("", text: $phoneText)
                         .padding(.horizontal, 8)
                         .frame(width: varWidth, height: 50).border(Color.black, width: 2)
@@ -51,7 +47,6 @@ struct PhoneVerification: View {
                         .disabled(true).padding(.leading, 0)
                     
                     Text("Verification Code").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                    //
                     TextField("", text: $verificationText)
                         .padding(.horizontal, 8)
                         .frame(width: varWidth, height: 50).border(Color.black, width: 2)
@@ -67,7 +62,6 @@ struct PhoneVerification: View {
                                     self.phoneID = phoneID
                                 }
                             }
-                            //                        +971506194984
                         }
                     }) {
                         Text("Resend Code").font(Font.system(size: 12)).fontWeight(.semibold).padding(.top, 0).foregroundColor(.black)
@@ -77,9 +71,7 @@ struct PhoneVerification: View {
                     
                     Button(action: {
                         user_credentials = PhoneAuthProvider.provider().credential(withVerificationID: phoneID, verificationCode: verificationText)
-                        print(user_credentials)
                         isUserDetails.toggle()
-                        //                    AuthViewModel().phoneSignIn(phoneNumber: phoneText, username: usernameText, fullName: fullNameText, credential: credential)
                         
                     }) {
                         HStack {
@@ -87,7 +79,6 @@ struct PhoneVerification: View {
                         }
                     }
                     .disabled(isVerifyTextFieldEmpty)
-                    //                    .frame(width: 360, height: 50)
                     .background(isVerifyTextFieldEmpty ? Color.gray : Color("Primary_color"))
                     .foregroundColor(.white)
                     .border(Color.black, width: 2)
@@ -106,9 +97,3 @@ struct PhoneVerification: View {
         }
     }
 }
-
-//struct PhoneVerification_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PhoneVerification()
-//    }
-//}

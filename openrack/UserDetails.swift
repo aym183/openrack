@@ -23,23 +23,18 @@ struct UserDetails: View {
             var progressWidth = geometry.size.width - 250
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
-                
                 VStack(alignment: .leading) {
                     HStack {
                         Text("User Details").font(Font.system(size: 30)).fontWeight(.bold)
-                        
                         Spacer()
-                        
                         ZStack(alignment: .leading) {
                             Capsule().frame(width: progressWidth, height: 12.5).foregroundColor(.gray)
                             Capsule().frame(width: (progressWidth)*(60/100), height: 12.5).foregroundColor(Color("Primary_color"))
                         }
-                        
                     }
                     .padding(.top, 40).padding(.trailing)
                     
                     Text("Username").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                    
                     TextField("", text: $usernameText)
                         .padding(.horizontal, 8)
                         .frame(width: varWidth, height: 50).border(Color.black, width: 2)
@@ -49,36 +44,24 @@ struct UserDetails: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        isFullNameDetails.toggle()
-                        //                    AuthViewModel().phoneSignIn(phoneNumber: phoneText, username: usernameText, fullName: fullNameText, credential: credential)
-                        
-                    }) {
+                    Button(action: { isFullNameDetails.toggle() }) {
                         HStack {
                             Text("Next").font(.title3).frame(width: varWidth, height: 50)
                         }
                     }
                     .disabled(isUsernameEmpty)
-                    //                    .frame(width: 360, height: 50)
                     .background(isUsernameEmpty ? Color.gray : Color("Primary_color"))
                     .foregroundColor(.white)
                     .border(Color.black, width: 2)
                     .padding(.vertical)
                     .navigationDestination(isPresented: $isFullNameDetails) {
                         FullNameDetails(phoneText: $phoneText, user_credentials: $user_credentials, usernameText: $usernameText).navigationBarHidden(true)
-                        //                    if user_credentials != nil {
-                        //                        UserDetails(phoneText: $phoneText, phoneID: $phoneID, user_credentials: $user_credentials)
-                        //                    }
                     }
-                    
                 }
                 .frame(height: varHeight)
                 .padding(.horizontal)
             }
             .foregroundColor(.black)
-            .onAppear {
-                print("\(phoneText), \(user_credentials)")
-            }
         }
     }
    
@@ -88,13 +71,11 @@ struct FullNameDetails: View {
     @State var fullNameText = ""
     @Binding var phoneText: String
     @Binding var user_credentials: PhoneAuthCredential?
-//    @State private var isHomePage = false
     @State private var isAdminPage = false
     @State private var isUserPage = false
     @State private var isNavigationBarHidden = false
     @Binding var usernameText: String
     @State var isLoading  = false
-    
     var isFullNameEmpty: Bool {
         return fullNameText.isEmpty
     }
@@ -105,25 +86,18 @@ struct FullNameDetails: View {
             var progressWidth = geometry.size.width - 250
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
-                
-                
                 VStack(alignment: .leading) {
-                    
                     HStack {
                         Text("User Details").font(Font.system(size: 30)).fontWeight(.bold)
-                        
                         Spacer()
-                        
                         ZStack(alignment: .leading) {
                             Capsule().frame(width: progressWidth, height: 12.5).foregroundColor(.gray)
                             Capsule().frame(width: (progressWidth)*(85/100), height: 12.5).foregroundColor(Color("Primary_color"))
                         }
-
                     }
                     .padding(.top, 40).padding(.trailing)
                     
                     Text("Full Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                    
                     TextField("", text: $fullNameText)
                         .padding(.horizontal, 8)
                         .frame(width: varWidth, height: 50).border(Color.black, width: 2)
@@ -136,17 +110,11 @@ struct FullNameDetails: View {
                     Button(action: {
                         AuthViewModel().phoneSignIn(phoneNumber: phoneText, username: usernameText, fullName: fullNameText, credential: user_credentials!)
                         isNavigationBarHidden.toggle()
-                        //                        isLoading.toggle()
-                        
-                        //                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                         if usernameText == "aali183" {
                             isAdminPage.toggle()
                         } else {
                             isUserPage.toggle()
                         }
-                        
-                        //                        }
-                        
                     }) {
                         HStack {
                             Text("Lets Go!").font(.title3).frame(width: varWidth, height: 50)
@@ -164,14 +132,8 @@ struct FullNameDetails: View {
                         }
                     }
                     .navigationDestination(isPresented: $isUserPage) {
-//                        withAnimation(.easeIn(duration: 4)) {
                             FeedPage(isShownFeed: false, isShownFirstFeed: true).navigationBarHidden(true)
-//                        }
                     }
-                    //                .navigationDestination(isPresented: $isHomePage) {
-                    //                    FeedPage().navigationBarBackButtonHidden(true)
-                    //                }
-                    // Add error check for admin user redirection
                 }
                 .foregroundColor(.black)
                 .frame(height: varHeight)
@@ -182,9 +144,3 @@ struct FullNameDetails: View {
         
     }
 }
-
-//struct UserDetails_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserDetails()
-//    }
-//}

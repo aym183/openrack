@@ -43,7 +43,6 @@ struct TagToggleStyle: ToggleStyle {
         Label {
             configuration.label
         } icon: {
-//            Image(systemName: configuration.isOn ? "tag.fill" : "tag")
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
@@ -53,10 +52,5 @@ struct TagToggleStyle: ToggleStyle {
         .onTapGesture {
             configuration.isOn.toggle()
         }
-    }
-}
-struct TagView_Previews: PreviewProvider {
-    static var previews: some View {
-        TagView()
     }
 }

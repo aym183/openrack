@@ -9,9 +9,7 @@ import Foundation
 
 struct CreateListings: View {
     @StateObject var listingsViewModel = ListingViewModel()
-
     @State var listings = ListingViewModel().listings
-//    var retrievedListings = UserDefaults.standard.data(forKey: "listings") //as? [Listing] ?? []
     @State var showingBottomSheet = false
     var listingID: String
     var addStream = CreateDB()
@@ -20,13 +18,11 @@ struct CreateListings: View {
     @State var preSelected: Listing?
     @Binding var listingSelected: Listing
     
-    
     var body: some View {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 
                 VStack(alignment: .leading) {
-                    
                     HStack {
                         Text("Listings").font(Font.system(size: 30)).fontWeight(.bold)
                         Spacer()
@@ -37,9 +33,7 @@ struct CreateListings: View {
                     }
                     .padding(.top, 20).padding(.horizontal).foregroundColor(.black)
                     
-//                    List {
                     ScrollView {
-                        //listingsViewModel.listings
                         ForEach(listings) { listing in
                             Button(action: {
                                 if creatorView {
@@ -56,8 +50,6 @@ struct CreateListings: View {
                         .frame(width: 380)
                     }
 
-//                    }
-//                    .border(Color.black, width: 2)
                     Spacer()
                     
                     HStack{
@@ -68,13 +60,13 @@ struct CreateListings: View {
                                     UpdateDB().updateTimer(listingID: listingID, start_time: "0:30", viewer_side: false)
                                 }
                             }) {
-                                              HStack { Text("Start Selling").font(.title3) }
-                                          }
-                                          .frame(width: 360, height: 50)
-                                          .background(Color("Primary_color"))
-                                          .foregroundColor(.white)
-                                          .border(Color.black, width: 2)
-                                          .padding(.bottom, 10)
+                                    HStack { Text("Start Selling").font(.title3) }
+                            }
+                            .frame(width: 360, height: 50)
+                            .background(Color("Primary_color"))
+                            .foregroundColor(.white)
+                            .border(Color.black, width: 2)
+                            .padding(.bottom, 10)
                             
                         } else {
                             Button(action: { showingBottomSheet.toggle() }, label: {
@@ -82,11 +74,11 @@ struct CreateListings: View {
                                         .font(.system(.largeTitle)).frame(width: 50, height: 40)
                                         .foregroundColor(Color.white)
                                         .padding(.bottom, 7)
-                                })
-                                .foregroundColor(.black)
-                                .background(Color("Primary_color"))
-                                .cornerRadius(38.5)
-                                .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
+                            })
+                            .foregroundColor(.black)
+                            .background(Color("Primary_color"))
+                            .cornerRadius(38.5)
+                            .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
                         }
                     }
                     .frame(width: 400, height: 50)
@@ -94,8 +86,6 @@ struct CreateListings: View {
                         ListingsForm(listings: $listings, showingBottomSheet: $showingBottomSheet, listingID: listingID)
                             .presentationDetents([.height(750)])
                     }
-                    
-                    
                 }
             }
             .onAppear {
@@ -111,8 +101,6 @@ struct CreateListings: View {
                     } catch let error {
                         print("Error decoding listings data: \(error.localizedDescription)")
                     }
-                } else {
-                    // handle the case where there is no data for the "myListings" key
                 }
             }
     }
@@ -134,9 +122,3 @@ struct ListingRow: View {
         .foregroundColor(.black)
     }
 }
-
-//struct CreateListings_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CreateListings(listingID : "Test")
-//    }
-//}

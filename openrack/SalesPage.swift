@@ -25,26 +25,20 @@ struct SalesPage: View {
                     
                     ScrollView {
                         ForEach(0..<noOfSales) { index in
-                            
                             VStack {
                                 HStack {
                                     Text(String(describing: readListing.creatorSales![index]["item"]!))
                                     Spacer()
                                     Text("Buyer: \(String(describing: readListing.creatorSales![index]["buyer"]!))").font(Font.system(size: 14))
-                                    
                                 }
                                 .foregroundColor(.black)
                                 .padding(.top,5)
-                                
                                 Spacer()
-                                
                                 HStack {
                                     Text("\(String(describing: readListing.creatorSales![index]["full_name"]!)), \(String(describing: readListing.creatorSales![index]["house_number"]!)), \(String(describing: readListing.creatorSales![index]["street"]!)), \(String(describing: readListing.creatorSales![index]["city"]!)), \(String(describing: readListing.creatorSales![index]["country"]!))").font(Font.system(size: 15)).multilineTextAlignment(.leading)
                                     Spacer()
                                 }
-                                
                                 Spacer()
-                                
                                 HStack {
                                     Text("Total: \(String(describing: readListing.creatorSales![index]["order_total"]!))").font(Font.system(size: 14))
                                     Spacer()
@@ -67,9 +61,3 @@ struct SalesPage: View {
         }
     }
 }
-//
-//struct SalesPage_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SalesPage(sales: [])
-//    }
-//}

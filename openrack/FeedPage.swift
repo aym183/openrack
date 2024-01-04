@@ -13,9 +13,7 @@ struct FeedPage: View {
     @State var isShowingNextView = false
     @State var isBookmarked = false
     @State var isShownShow = false
-    var rows: [GridItem] = [
-        GridItem(.flexible() , spacing: nil, alignment: nil),
-    ]
+    var rows: [GridItem] = [GridItem(.flexible() , spacing: nil, alignment: nil)]
     @AppStorage("username") var userName: String = ""
     @StateObject var readListing = ReadDB()
     @State var isShownFeed: Bool
@@ -30,63 +28,46 @@ struct FeedPage: View {
             NavigationStack {
                 ZStack {
                     Color("Secondary_color").ignoresSafeArea()
-                    
                     if isShownFirstFeed {
                         VStack {
                             Text("Please exit the app and restart it to begin your Openrack journey!").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
                         }
                     }
-                    
                     if isShownFeed {
                         VStack {
-                            
-                                ProgressView()
-                                    .scaleEffect(1.75)
-                                    .progressViewStyle(CircularProgressViewStyle(tint: Color.black))
-                                
-                                Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
-
+                            ProgressView()
+                                .scaleEffect(1.75)
+                                .progressViewStyle(CircularProgressViewStyle(tint: Color.black))
+                            Text("Getting Openrack Ready! 🥳").font(Font.system(size: 20)).fontWeight(.semibold).multilineTextAlignment(.center).padding(.top, 30).padding(.horizontal).foregroundColor(.black)
                         }
                     }
                     ScrollView(.vertical, showsIndicators: false) {
-                        
                         VStack {
                             CustomNavbarView()
-                            
-                            
                             HStack {
                                 Text("Live Shows")
                                 Spacer()
                             }
                             .foregroundColor(.black).fontWeight(.semibold).font(Font.system(size: 20)).opacity(0.7).multilineTextAlignment(.leading).padding(.horizontal).padding(.bottom, -12)
                             
-                            
                             ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHGrid(rows: rows, spacing: 20) {
-                                    
                                     ForEach(0..<noOfShows, id: \.self ) { index in
-                                        
                                             VStack (alignment: .leading){
                                                 Button(action: {
                                                     clickedIndex = index
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                                         withAnimation { isShownShow.toggle() }
                                                     }
-                                                    
                                                 }) {
                                                     VStack (alignment: .leading){
-                                                        
                                                         HStack {
-                                                            // Use Async Images instead of Image when using url's
                                                             Image(systemName: "livephoto").foregroundColor(Color.red)
-                                                            Text("Live")
-                                                                .fontWeight(.semibold).foregroundColor(Color.white).padding(.leading, -6)
+                                                            Text("Live").fontWeight(.semibold).foregroundColor(Color.white).padding(.leading, -6)
                                                             Spacer()
-                                                            
                                                         }
                                                         .padding(.horizontal, 3)
                                                         .frame(width: 170)
-                                                        
                                                         Spacer()
                                                         Text(String(describing:readListing.viewerShows![index]["name"]!)).font(Font.system(size: 15)).fontWeight(.semibold).foregroundColor(Color.white).multilineTextAlignment(.leading).padding(.horizontal, 5)
                                                     }
@@ -99,9 +80,8 @@ struct FeedPage: View {
                                                     )
                                                 }
                                                 .navigationDestination(isPresented: $isShownShow) {
-                                                        ViewerShow(retrievedShow: readListing.viewerShows![clickedIndex], index: clickedIndex).navigationBarBackButtonHidden(true)
+                                                    ViewerShow(retrievedShow: readListing.viewerShows![clickedIndex], index: clickedIndex).navigationBarBackButtonHidden(true)
                                                 }
-                                                
                                                 HStack {
                                                     Image(systemName:"person.crop.circle")
                                                     Text(String(describing:readListing.viewerShows![index]["created_by"]!)).fontWeight(.medium).padding(.leading, -5)
@@ -111,41 +91,30 @@ struct FeedPage: View {
                                             }
                                             .id(index)
                                     }
-                                    
-                                    
                                 }
                                 .padding(.horizontal, 15)
                             }
                             .frame(height: 300)
                             
                             if userName != "aali183" {
-                                
                                 HStack {
                                     Text("Upcoming Shows")
                                     Spacer()
                                 }
                                 .foregroundColor(.black).fontWeight(.semibold).font(Font.system(size: 20)).opacity(0.7).multilineTextAlignment(.leading).padding(.horizontal).padding(.bottom, -12)
-                                
-                                
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     LazyHGrid(rows: rows, spacing: 20) {
-                                        // Change to length of response array
-                                        
                                         ForEach(0..<noOfScheduledShows, id: \.self) { index in
-                                            
                                                 VStack (alignment: .leading){
                                                     Button(action: {}) {
                                                         VStack (alignment: .leading){
-                                                            
                                                             HStack {
-                                                                // Use Async Images instead of Image when using url's
                                                                 Text(MiscData().getSubstring(input: String(describing:readListing.viewerScheduledShows![index]["date_scheduled"]!)))
                                                                     .fontWeight(.semibold).foregroundColor(Color.white).font(Font.system(size: 12))
                                                                 Spacer()
                                                                 Button(action: {isBookmarked.toggle()}) {
                                                                     Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark").foregroundColor(Color.white)
                                                                 }
-                                                                
                                                             }
                                                             .padding(.horizontal, 3)
                                                             .frame(width: 170)
@@ -160,7 +129,7 @@ struct FeedPage: View {
                                                         .overlay(
                                                             RoundedRectangle(cornerRadius: 10.0).stroke(Color.black, lineWidth: 2)
                                                         )
-                                                    } //Button
+                                                    }
                                                     HStack {
                                                         Image(systemName:"person.crop.circle")
                                                         Text(String(describing:readListing.viewerScheduledShows![index]["created_by"]!)).fontWeight(.medium).padding(.leading, -5)
@@ -170,7 +139,6 @@ struct FeedPage: View {
                                                 }
                                                 .id(index)
                                         }
-                                        
                                     }
                                     .padding(.horizontal, 15)
                                 }
@@ -194,7 +162,6 @@ struct FeedPage: View {
                         }
                         .frame(height: varHeight)
                     }
-//                    .background(Color("Secondary_color"))
                     .sheet(isPresented: $showingBottomSheet) {
                         StreamBottomSheet(showingBottomSheet: $showingBottomSheet, isShowingNextView: $isShowingNextView)
                             .presentationDetents([.height(200)])
@@ -205,7 +172,6 @@ struct FeedPage: View {
                     .onAppear {
                         readListing.getViewerLiveShows()
                         readListing.getViewerScheduledShows()
-                        
                         if !isShownFirstFeed {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 withAnimation(.easeOut(duration: 0.5)) {
@@ -225,9 +191,3 @@ struct FeedPage: View {
         }
     }
 }
-
-//struct FeedPage_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FeedPage()
-//    }
-//}

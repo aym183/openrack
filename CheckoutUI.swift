@@ -63,8 +63,6 @@ struct ExamplePaymentOptionView: View {
                 .frame(maxWidth: 30, maxHeight: 30, alignment: .leading)
                 .foregroundColor(.black)
             Text(paymentOptionDisplayData?.label ?? "Select a payment method")
-                // Surprisingly, setting the accessibility identifier on the HStack causes the identifier to be
-                // "Payment method-Payment method". We'll set it on a single View instead.
                 .accessibility(identifier: "Payment method")
         }
         .frame(minWidth: 200)

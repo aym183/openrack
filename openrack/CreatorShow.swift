@@ -10,7 +10,6 @@ import AVKit
 import HaishinKit
 
 struct CreatorShow: View {
-//https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8
     let player = AVPlayer(url: URL(string: "https://www.google.com")!)
     let playerController = AVPlayerViewController()
     let rtmpConnection = RTMPConnection()
@@ -33,17 +32,13 @@ struct CreatorShow: View {
     @State var showConfirmationOrder = false
     @State var commentText = ""
     @AppStorage("username") var userName: String = ""
-    
-//    @State var rtmpStream: RTMPStream?
-//    private var defaultCamera: AVCaptureDevice.Position = .front
     private let sessionQueue = DispatchQueue(label: "sessionQueue")
     @StateObject private var model = FrameHandler()
 
         var body: some View {
             var noOfComments = readListing.comments?.count ?? 0
             ZStack {
-                
-                  FrameView(image: model.frame)
+                FrameView(image: model.frame)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .ignoresSafeArea()
 
@@ -55,14 +50,13 @@ struct CreatorShow: View {
                             } else {
                                 timerRunning = false
                                 isTimerShown = false
+                            }
                         }
                     }
-                }
 
                 VStack {
                     HStack {
                         Text(streamName).font(Font.system(size: 20))
-
                         Spacer()
 
                         if showCircle {
@@ -74,14 +68,12 @@ struct CreatorShow: View {
                                 )
                             Text("15:00").font(Font.system(size: 15))
                                 .padding(.trailing)
-
                             Circle()
                                 .fill(Color("Primary_color"))
                                 .frame(height: 30)
                                 .overlay(
                                     Image(systemName: "person.fill").font(Font.system(size: 20)).foregroundColor(.white)
                                 )
-
                             Text("0").font(Font.system(size: 15))
                                 .padding(.trailing)
                         }
@@ -90,20 +82,16 @@ struct CreatorShow: View {
                     .foregroundColor(.white)
                     .fontWeight(.semibold)
 
-
                     Spacer()
 
                     HStack {
                         ScrollViewReader { proxy in
-                            
                             VStack{
                                 ScrollView(.vertical, showsIndicators: false) {
                                     if readListing.comments != [] {
-                                        
                                         ForEach(0..<noOfComments, id: \.self) { index in
                                             HStack {
                                                 VStack(alignment: .leading,spacing: 0) {
-                                                    
                                                     Text(String(describing: readListing.comments![index]["username"]!)).font(Font.system(size: 11)).fontWeight(.bold).padding(.top,10)
                                                     
                                                     Text(String(describing: readListing.comments![index]["comment"]!)).font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2)
@@ -120,11 +108,6 @@ struct CreatorShow: View {
                                                 proxy.scrollTo(noOfComments-1, anchor: .bottom)
                                             }
                                         }
-                                        //                                    .onReceive(readListing.$comments) { _ in
-                                        //                                        withAnimation(.easeOut(duration: 0.5)) {
-                                        //                                            proxy.scrollTo(noOfComments-1, anchor: .bottom)
-                                        //                                        }
-                                        //                                    }
                                     }
                                 }
                                 .frame(width: 250, height: 200)
@@ -145,26 +128,14 @@ struct CreatorShow: View {
                                     .onSubmit {
                                         if commentText != "" {
                                             DispatchQueue.global().async {
-//                                                DispatchQueue.global(qos: .userInteractive).async {
                                                     UpdateDB().updateComments(listingID: listingID, comment: commentText, username: userName) { response in
                                                         if response == "Comment added successfully" {
                                                             commentText = ""
-//                                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                                             withAnimation(.easeOut(duration: 0.5)) {
                                                                 proxy.scrollTo(noOfComments, anchor: .bottom)
                                                             }
-//                                                            }
                                                         }
                                                     }
-//                                                UpdateDB().updateComments(listingID: listingID, comment: commentText, username: userName)
-                                                
-//                                                commentText = ""
-                                                
-//                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//                                                    withAnimation(.easeOut(duration: 0.5)) {
-//                                                        proxy.scrollTo(noOfComments, anchor: .bottom)
-//                                                    }
-//                                                }
                                             }
                                         }
                                     }
@@ -174,7 +145,6 @@ struct CreatorShow: View {
                         
                             Spacer()
                             VStack {
-                                
                                 Button(action: { showingBottomSheet.toggle() }) {
                                     Circle()
                                         .fill(Color("Primary_color"))
@@ -186,7 +156,6 @@ struct CreatorShow: View {
                                 }
 
                                 Text("Listings").font(Font.system(size: 15)).fontWeight(.semibold)
-
                                 Button(action: { showingSalesSheet.toggle() }) {
                                     Circle()
                                         .fill(Color("Primary_color"))
@@ -197,8 +166,7 @@ struct CreatorShow: View {
                                         )
                                 }
 
-                                Text("Sales").font(Font.system(size: 15)).fontWeight(.semibold) // Should show item sold to who, price, and shipping details
-
+                                Text("Sales").font(Font.system(size: 15)).fontWeight(.semibold)
                                 Button(action: {}) {
                                     Circle()
                                         .fill(Color("Primary_color"))
@@ -219,7 +187,6 @@ struct CreatorShow: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(readListing.title!).font(Font.system(size: 18)).fontWeight(.bold)
-                                
                                 Text("🇦🇪 Shipping & Tax").font(Font.system(size: 12)).opacity(0.7)
                             }
                             
@@ -275,7 +242,7 @@ struct CreatorShow: View {
                             }
 
                         }) {
-                            Text(streamButtonText) // Should popup to add catalogue
+                            Text(streamButtonText)
                                 .font(.title3).fontWeight(.medium)
                                 .frame(width: 300, height: 50)
                                 .background(isStreaming ? Color.white : Color.red)
@@ -286,13 +253,10 @@ struct CreatorShow: View {
                                 .cornerRadius(50)
                                 .padding(.horizontal)
                         }
-
                     }
                     .navigationDestination(isPresented: $isFinished) {
                         BottomNavbar().navigationBarBackButtonHidden(true)
                     }
-
-
                 }
                 .frame(width: 370, height: 750)
                 .onAppear{
@@ -321,9 +285,3 @@ struct CreatorShow: View {
         }
 
 }
-
-//struct CreatorShow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CreatorShow()
-//    }
-//}

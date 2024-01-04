@@ -9,16 +9,11 @@ import AVKit
 import Firebase
 
 struct ViewerShow: View {
-//https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8
-    
-    // could be what's making the discrepancy in viewer show, try passing listing id akele as a parameter
+
     let retrievedShow: [String: Any]
     var index: Int?
-//    let username: String
-//    let playbackID: String
     let playerController = AVPlayerViewController()
     @AppStorage("username") var userName: String = ""
-//    let listingID: String
     @State var showingPaySheet = false
     @State var showingPayDetailsError = false
     @State var showingAddressSheet = false
@@ -33,10 +28,8 @@ struct ViewerShow: View {
     @State var showStart = true
     @State var commentDisabled = false
     @State private var opacity = 0.5
-
     
     var body: some View {
-                
         var noOfComments = readListing.comments?.count ?? 0
         GeometryReader { geometry in
             var varWidth = geometry.size.width - 30
@@ -44,10 +37,8 @@ struct ViewerShow: View {
             var varHeight = geometry.size.height - 20
             NavigationStack {
                 let player = AVPlayer(url: URL(string: "https://stream.mux.com/\(retrievedShow["playback_id"]!).m3u8")!)
-
                 ZStack {
                     Color("Primary_color").ignoresSafeArea()
-
                     if showStart {
                         VStack {
                             Spacer()
@@ -62,34 +53,17 @@ struct ViewerShow: View {
                         }
                         .frame(width: geometry.size.width, height: geometry.size.height)
                     }
-                    
-                    
-//                    GeometryReader { newgeometry in
-//                        VideoPlayer (player: player)
-//                            .onAppear { player.play() }
-//                            .ignoresSafeArea()
-//                            .disabled(true)
-//                            .frame(width: geometry.size.width, height: geometry.size.height)
-//                    }
-//                    .frame(width: geometry.size.width, height: geometry.size.height)
-//                    .opacity(showStart ? 0 : 1)
-                    
-
-
+                 
                     VStack {
                         HStack {
                             Button(action: { showingFeedPage.toggle() }) {
                                 Image(systemName: "arrow.backward").font(Font.system(size: 25)).fontWeight(.bold).foregroundColor(.white)
-
                                 Text(String(describing: retrievedShow["created_by"]!)).font(Font.system(size: 20))
                             }
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 2).opacity(0)
                             )
-
-
                             Spacer()
-
                             Circle()
                                 .fill(.red)
                                 .frame(height: 30)
@@ -97,11 +71,6 @@ struct ViewerShow: View {
                                     Image(systemName: "livephoto").font(Font.system(size: 20)).foregroundColor(.white)
                                 )
                                 .padding(.trailing)
-
-                            //                        Text("Live").font(Font.system(size: 15)).foregroundColor(.red)
-                            //                            .padding(.trailing)
-                            //
-
                         }
                         .foregroundColor(.white)
                         .fontWeight(.semibold)
@@ -110,24 +79,15 @@ struct ViewerShow: View {
                         Spacer()
 
                         HStack {
-                            //                            VStack {
                             ScrollViewReader { proxy in
-
                                 VStack{
                                     ScrollView(.vertical, showsIndicators: false) {
                                         if readListing.comments != [] {
-
                                             ForEach(0..<noOfComments, id: \.self) { index in
                                                 HStack {
                                                     VStack(alignment: .leading,spacing: 0) {
                                                         Text(String(describing: readListing.comments![index]["username"]!)).font(Font.system(size: 11)).fontWeight(.bold).padding(.top,10)
-
-                                                        //                                                        if readListing.comments![index]["username"]! == retrievedShow["created_by"]! {
-                                                        //                                                            Text(String(describing: readListing.comments![index]["comment"]!)).font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2).foregroundColor("Primary_color")
-                                                        //                                                        } else {
                                                         Text(String(describing: readListing.comments![index]["comment"]!)).font(Font.system(size: 14)).fontWeight(.medium).padding(.top,2)
-                                                        //                                                        }
-
                                                     }
                                                     .padding(.leading, 5)
                                                     Spacer()
@@ -141,11 +101,6 @@ struct ViewerShow: View {
                                                     proxy.scrollTo(noOfComments-1, anchor: .bottom)
                                                 }
                                             }
-                                            //                                    .onReceive(readListing.$comments) { _ in
-                                            //                                        withAnimation(.easeOut(duration: 0.5)) {
-                                            //                                            proxy.scrollTo(noOfComments-1, anchor: .bottom)
-                                            //                                        }
-                                            //                                    }
                                         }
                                     }
                                     .frame(width: 250, height: 200)
@@ -165,12 +120,10 @@ struct ViewerShow: View {
                                         .padding(.bottom, 20).padding(.trailing, 85)
                                         .onSubmit {
                                             if commentText != "" {
-//                                                DispatchQueue.global().async {
                                                 DispatchQueue.global(qos: .userInteractive).async {
                                                     UpdateDB().updateComments(listingID: String(describing: retrievedShow["listings"]!), comment: commentText, username: userName) { response in
                                                         if response == "Comment added successfully" {
                                                             commentText = ""
-//                                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                                             withAnimation(.easeOut(duration: 0.5)) {
                                                                 proxy.scrollTo(noOfComments, anchor: .bottom)
                                                             }
@@ -182,23 +135,8 @@ struct ViewerShow: View {
                                 }
 
                             }
-                            //                            }
-                            //                            .frame(width: 250)
-
-
-                            //                            // Scroll to the bottom when the view appears
-                            //                            DispatchQueue.main.async {
-                            //                                withAnimation {
-                            //                                    index.scrollTo(19)
-                            ////                                    ScrollViewProxy.scrollTo(19, anchor: .bottom)
-                            //                                }
-                            //                            }
-                            //                        }
-
-
                             Spacer()
                             VStack {
-
                                 Button(action: {}) {
                                     Circle()
                                         .fill(Color("Primary_color"))
@@ -207,7 +145,6 @@ struct ViewerShow: View {
                                             Image(systemName: "link").font(Font.system(size: 20)).foregroundColor(.white)
                                         )
                                 }
-
                                 Text("Share").font(Font.system(size: 15)).fontWeight(.semibold)
 
                                 Button(action: { showingPaySheet.toggle() }) {
@@ -220,31 +157,16 @@ struct ViewerShow: View {
                                 }
 
                                 Text("Pay").font(Font.system(size: 15)).fontWeight(.semibold)
-
-
-//                                Button(action: {}) {
-//                                    Circle()
-//                                        .fill(Color("Primary_color"))
-//                                        .frame(height: 70)
-//                                        .overlay(
-//                                            Image(systemName:"bag.fill")
-//                                                .font(Font.system(size: 35))
-//                                                .foregroundColor(.white)
-//                                        )
-//                                }
-//                                .padding(.top)
                             }
                             .foregroundColor(.white)
                         }
                         .padding(.vertical, 10).padding(.trailing,10)
-
                       
                         if readListing.title != nil && readListing.price != nil && readListing.isSold != true {
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text(readListing.title!)
                                         .font(Font.system(size: 18)).fontWeight(.bold)
-
                                     Text("🇦🇪 Shipping & Tax").font(Font.system(size: 12)).opacity(0.7)
                                 }
 
@@ -252,7 +174,6 @@ struct ViewerShow: View {
 
                                 Text("\(readListing.price!) AED")
                                     .font(Font.system(size: 18)).fontWeight(.bold).padding(.trailing, 10)
-
                             }
                             .padding(.bottom).padding(.horizontal)
                             .foregroundColor(Color.white)
@@ -274,8 +195,6 @@ struct ViewerShow: View {
                                             }
                                         }
                                     }) {
-
-
                                         HStack {
                                             Text("Place Bid").font(.title3).fontWeight(.semibold)
                                             Spacer()
@@ -295,10 +214,7 @@ struct ViewerShow: View {
 
                                     Spacer()
 
-
                                     Text(readListing.timer!).foregroundColor(.white).fontWeight(.semibold).font(Font.system(size: 18)).padding(.trailing, 10)
-
-
                                 }
                                 .padding(.trailing).padding(.leading, 5).padding(.bottom, 30)
 
@@ -347,16 +263,10 @@ struct ViewerShow: View {
                         readListing.getListingSelected(listingID: String(describing: retrievedShow["listings"]!))
                         readListing.getAddress()
                         readListing.getCardDetails()
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-//                            print(readListing.cardDetails)
-//                            print(readListing.address)
-//                        }
                         readListing.getCreatorSales(listingID: String(describing: retrievedShow["listings"]!))
                     }
                     .onReceive(readListing.$timer) { timer in
                         if timer == "00:00" && userName == readListing.current_bidder {
-                            print("Auction Ended")
-
                             ReadServer().executeOrderTransaction(order_amount: readListing.price!) { response in
                                 if response! == "success" {
                                     showConfirmationOrder.toggle()
@@ -388,7 +298,6 @@ struct ViewerShow: View {
                     .padding(.bottom, 10)
                     .opacity(showStart ? 0 : 1)
                 }
-//                .frame(width: geometry.size.width, height: geometry.size.height)
                 .SPAlert(
                     isPresent: $showConfirmationOrder,
                     title: "Success!",
@@ -401,11 +310,5 @@ struct ViewerShow: View {
                 )
             }
         }
-    }
-}
-
-struct ViewerShow_Previews: PreviewProvider {
-    static var previews: some View {
-        ViewerShow(retrievedShow: ["playback_id": "sdsds", "created_by": "test", "listings": "dacdads"])
     }
 }

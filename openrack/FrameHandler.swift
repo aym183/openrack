@@ -23,13 +23,11 @@ class FrameHandler: NSObject, ObservableObject {
         checkPermission()
         self.setupCaptureSession()
     }
-  
 
     func checkPermission() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
             case .authorized:
                 permissionGranted = true
-
             case .notDetermined:
                 requestPermission()
         default:
@@ -45,7 +43,6 @@ class FrameHandler: NSObject, ObservableObject {
     
     func setupCaptureSession() {
         captureSession.sessionPreset = .hd1920x1080
-        
         guard permissionGranted else { return }
         guard let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) else { return }
         guard let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice) else { return }
@@ -64,17 +61,12 @@ class FrameHandler: NSObject, ObservableObject {
         
         // Add audio input and output
         let audioOutput = AVCaptureAudioDataOutput()
-//        guard captureSession.canAddOutput(audioOutput) else { return }
         audioOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "sampleAudioQueue"))
         captureSession.addOutput(audioOutput)
-
-        // Connect to RTMP server and publish stream
         let connection = rtmpConnection
         connection.connect("rtmp://global-live.mux.com:5222/app")
         let stream = RTMPStream(connection: connection)
         stream.attachAudio(audioDevice)
-//        0cbcc2b5-5b7e-06a4-d476-e4fe272de327
-     
         rtmpStream = stream
         captureSession.startRunning()
     }
@@ -92,16 +84,13 @@ class FrameHandler: NSObject, ObservableObject {
 extension FrameHandler: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let rtmpStream = rtmpStream else { return }
-
         if connection.videoOrientation != nil {
-                    // Handle video sample buffer
                     guard let cgImage = imageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
                     DispatchQueue.main.async { [unowned self] in
                         self.frame = cgImage
                         rtmpStream.appendSampleBuffer(sampleBuffer, withType: .video)
                     }
         } else if connection.audioChannels != nil {
-                    // Handle audio sample buffer
                     DispatchQueue.main.async {
                         rtmpStream.appendSampleBuffer(sampleBuffer, withType: .audio)
                     }
@@ -112,7 +101,6 @@ extension FrameHandler: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureA
         guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return nil }
         let ciImage = CIImage(cvPixelBuffer: imageBuffer)
         guard let cgImage = context.createCGImage(ciImage, from: ciImage.extent) else { return nil }
-
         return cgImage
     }
 }

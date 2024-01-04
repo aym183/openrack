@@ -12,7 +12,6 @@ struct PaymentDetailsError: View {
         ZStack {
             Color("Secondary_color").ignoresSafeArea()
             VStack {
-
                 Text("Please fill in your payment and shipping details to proceed!").font(Font.system(size: 22)).fontWeight(.bold).multilineTextAlignment(.center)
             }
             .foregroundColor(.black)

@@ -23,15 +23,8 @@ struct DropdownMenuList: View {
         )
         .padding(.vertical, 5)
         .overlay {
-            Rectangle()
-                .stroke(.black, lineWidth: 2)
+            Rectangle().stroke(.black, lineWidth: 2)
         }
         .background(.white)
     }
 }
-
-//struct DropdownMenuList_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DropdownMenuList(options: Dropdownmenus.allOptions, onSelectedAction: _ in)
-//    }
-//}

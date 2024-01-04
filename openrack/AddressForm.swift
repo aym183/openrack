@@ -15,7 +15,6 @@ struct AddressForm: View {
     @Binding var showingPaySheet: Bool
     @Binding var isShowingAddressForm: Bool
     @ObservedObject var readListing: ReadDB
-    
     var areTextFieldsEmpty: Bool {
         return fullName.isEmpty || houseNumber.isEmpty || city.isEmpty || street.isEmpty
     }
@@ -30,33 +29,28 @@ struct AddressForm: View {
                         Text("Add Address").font(Font.system(size: 30)).fontWeight(.bold).padding(.top, 20)
                         
                         Text("Country").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                        
                         DropdownMenu(selectedOption: self.$selectedCountry, width: varWidth, options: Dropdownmenus.countryAllOptions )
-                        
+                    
                         if selectedCountry?.option != nil {
                             Text("Full Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                            
                             TextField("", text: $fullName)
                                 .padding(.horizontal, 8)
                                 .frame(width: varWidth, height: 50).border(Color.black, width: 2)
                                 .background(.white)
-                            
+
                             Text("Apartment/Villa Number").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                            
                             TextField("", text: $houseNumber)
                                 .padding(.horizontal, 8)
                                 .frame(width: varWidth, height: 50).border(Color.black, width: 2)
                                 .background(.white)
                             
                             Text("Street/Area Name").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                            
                             TextField("", text: $street)
                                 .padding(.horizontal, 8)
                                 .frame(width: varWidth, height: 50).border(Color.black, width: 2)
                                 .background(.white)
                             
                             Text("City").font(Font.system(size: 15)).fontWeight(.heavy).padding(.top, 10).padding(.bottom, -2)
-                            
                             TextField("", text: $city)
                                 .padding(.horizontal, 8)
                                 .frame(width: varWidth, height: 50).border(Color.black, width: 2)
@@ -66,10 +60,9 @@ struct AddressForm: View {
                             
                             Button(action: {
                                 UpdateDB().updateUserAddress(address: ["full_name": fullName, "house_number": houseNumber, "street": street, "city": city, "country": selectedCountry?.option])
+                                readListing.getAddress()
                                 showingPaySheet.toggle()
                                 isShowingAddressForm.toggle()
-                                readListing.getAddress()
-                                //                            print("The Address is \(fullName), \(addressDetails), \(addressDetailsSecondary), \(city), \(state), \(postalCode), \(selectedCountry!.option)")
                             }) {
                                 Text("Save Info").font(.title3)
                             }
@@ -80,7 +73,6 @@ struct AddressForm: View {
                             .border(Color.black, width: 2)
                             .padding(.vertical, 40)
                         }
-
                     }
                     .foregroundColor(.black)
                 }
@@ -88,9 +80,3 @@ struct AddressForm: View {
         }
     }
 }
-
-//struct AddressForm_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddressForm()
-//    }
-//}

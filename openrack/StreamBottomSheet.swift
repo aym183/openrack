@@ -29,13 +29,11 @@ struct StreamBottomSheet: View {
                     Button(action: {
                         showingBottomSheet.toggle()
                         isShowingNextView.toggle() }) {
-                            
                             HStack {
                                 Image(systemName: "play.fill").font(.system(size: 20)).padding(.trailing, 5)
                                 Text("Schedule a Show").font(.title2)
                             }
                             .fontWeight(.medium)
-                            
                         }
                         .frame(width: btnWidth, height: 60)
                         .background(.white).foregroundColor(.black)
@@ -43,7 +41,6 @@ struct StreamBottomSheet: View {
                         .cornerRadius(50)
                         .padding()
                 }
-                
             }
         }
     }

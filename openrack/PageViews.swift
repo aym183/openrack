@@ -46,7 +46,6 @@ struct PageView: View {
     }
 }
 
-
 struct PageView2: View {
     var body: some View {
         ZStack {
@@ -56,12 +55,10 @@ struct PageView2: View {
                     .font(Font.system(size: 60)).fontWeight(.heavy)
                     .frame(width: 400)
                 
-                
                 Text("✅ Online Payments\n✅ Fast Deliveries\n✅ Order Management\n✅ Buyback Protection\n✅ Built for All Sellers")
                     .font(Font.system(size: 30)).fontWeight(.heavy)
                     .multilineTextAlignment(.leading)
                     .padding(.top)
-                
             }
             .foregroundColor(Color("Secondary_color"))
         }
@@ -87,7 +84,6 @@ struct PageView3: View {
                         )
                         .cornerRadius(50)
                         .padding(.horizontal)
-                    
                 }
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color("Secondary_color"))

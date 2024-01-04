@@ -11,7 +11,6 @@ struct PaymentDetails: View {
     @Binding var showingPaySheet: Bool
     @Binding var isShowingPaymentsForm: Bool
     @Binding var isShowingAddressForm: Bool
-//    @StateObject var addressDetails = ReadDB()
     @ObservedObject var readListing: ReadDB
 
     var body: some View {
@@ -20,9 +19,7 @@ struct PaymentDetails: View {
             ZStack {
                 Color("Secondary_color").ignoresSafeArea()
                 VStack(spacing: 20) {
-                    Button(action: {
-                        isShowingAddressForm.toggle()
-                    }) {
+                    Button(action: { isShowingAddressForm.toggle() }) {
                         HStack {
                             Image(systemName: "shippingbox.fill").padding(.trailing, 10).padding(.leading, 5)
                             VStack(alignment: .leading) {
@@ -51,14 +48,9 @@ struct PaymentDetails: View {
                     
                     Button(action: {
                         ReadServer().startCheckout { response in
-                            
-                            //                            print("Response in \(response)")
-                            PaymentConfig.shared.paymentIntentClientSecret = response[0] //clientSecret
+                            PaymentConfig.shared.paymentIntentClientSecret = response[0]
                             PaymentConfig.shared.paymentIntentID = response[1]
-                            
-                            //                            DispatchQueue.main.async {
                             isShowingPaymentsForm.toggle()
-                            //                            }
                         }
                     }) {
                         HStack {

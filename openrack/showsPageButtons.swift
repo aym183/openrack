@@ -7,11 +7,6 @@
 import SwiftUI
 
 struct ShowsPageButtons: View {
-//        var name: String!
-//        var stream_key: String!
-//        var stream_id: String!
-//        var liveStreamID: String!
-//        var listingID: String!
         var retrievedShow: [String: Any]!
         @State var streamStarted = false
         @State var listingStarted = false
@@ -19,16 +14,12 @@ struct ShowsPageButtons: View {
         @State var listings = ListingViewModel().listings
         @State var listingSelected = Listing(image: "", title: "", quantity: "", price: "", type: "")
         @StateObject var readListing = ReadDB()
-//        var retrievedListings = UserDefaults.standard.object(forKey: "listings")
     
         var body: some View {
             GeometryReader { geometry in
                 var varWidth = geometry.size.width - 40
-                
                 HStack {
-                    
                     if String(describing: retrievedShow["status"]!) != "Finished" {
-                        
                         Button(action: {
                             ReadDB().getStreamKey(liveStreamID:  String(describing: retrievedShow["livestream_id"]!))
                             streamStarted.toggle()
@@ -45,11 +36,7 @@ struct ShowsPageButtons: View {
                         }
                     }
                     
-                    
-                    Button(action: {
-                        //                    if let myDictionary = UserDefaults.standard.object(forKey: "listings") {
-                        listingStarted.toggle()
-                    }) {
+                    Button(action: { listingStarted.toggle() }) {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(.black)
                             .frame(width: 70, height: 30)
@@ -58,7 +45,7 @@ struct ShowsPageButtons: View {
                                     Image(systemName: "tshirt.fill").font(Font.system(size: 8)).padding(.trailing, -5)
                                     Text("Listings").font(Font.system(size: 8)).fontWeight(.bold)
                                 }
-                                    .foregroundColor(.white)
+                                .foregroundColor(.white)
                             )
                     }
                     .navigationDestination(isPresented: $listingStarted) {
@@ -75,12 +62,12 @@ struct ShowsPageButtons: View {
                                         Image(systemName: "link").font(Font.system(size: 8)).padding(.trailing, -5)
                                         Text("Copy Link").font(Font.system(size: 8)).fontWeight(.bold)
                                     }
-                                        .foregroundColor(.white)
+                                    .foregroundColor(.white)
                                 )
                         }
                         
                         
-                        Button(action: { print(index) }) {
+                        Button(action: {}) {
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.white)
                                 .frame(width: 81.5, height: 26)
@@ -103,11 +90,10 @@ struct ShowsPageButtons: View {
                                         Image(systemName: "dollarsign.circle").font(Font.system(size: 9)).padding(.trailing, -5)
                                         Text("Sales").font(Font.system(size: 9)).fontWeight(.bold)
                                     }
-                                        .foregroundColor(.white)
+                                    .foregroundColor(.white)
                                 )
                         }
                         .navigationDestination(isPresented: $salesStarted) {
-//                            SalesPage(sales: readListing.creatorSales)
                             SalesPage(readListing: readListing, listingID: String(describing: retrievedShow["listings"]!))
                         }
                     }
@@ -120,10 +106,4 @@ struct ShowsPageButtons: View {
                 }
             }
         }
-}
-
-struct showsPageButtons_Previews: PreviewProvider {
-    static var previews: some View {
-        ShowsPageButtons()
-    }
 }
