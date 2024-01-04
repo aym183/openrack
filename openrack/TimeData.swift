@@ -39,5 +39,4 @@ class MiscData : ObservableObject {
             let substring = input.prefix(upTo: endIndex)
             return String(substring)
     }
-    
 }

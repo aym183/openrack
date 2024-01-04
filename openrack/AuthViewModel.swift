@@ -30,10 +30,8 @@ class AuthViewModel : ObservableObject {
             if error != nil {
                 print(error!.localizedDescription)
             } else {
-                print("Successful auth")
                 self.signedIn.toggle()
                 CreateDB().addUser(email: email, username: username, fullName: fullName)
-//                CreateDB().createStripeCustomer(name: fullName, email: email)
                 UserDefaults.standard.set(username, forKey: "username")
                 ReadDB().getUserDefaults()
                 ReadDB().getViewerLiveShows()
@@ -47,12 +45,9 @@ class AuthViewModel : ObservableObject {
                 print(error.localizedDescription)
             } else {
                     UserDefaults.standard.set(username, forKey: "username")
-                    print(email)
                     ReadDB().getUserDefaults()
-                    print("Successful auth")
                     self.signedIn.toggle()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        print("I'm here \(self.userName)")
                         ReadDB().getCreatorShows()
                         ReadDB().getViewerLiveShows()
                     }
@@ -68,29 +63,19 @@ class AuthViewModel : ObservableObject {
                     UserDefaults.standard.set(username, forKey: "username")
                     ReadDB().getUserDefaults()
                     CreateDB().addPhoneUser(phoneNumber: phoneNumber, username: username, fullName: fullName)
-                    print("Successful auth")
                     self.signedIn.toggle()
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-//                            print("I'm here \(self.userName)")
-//                            ReadDB().getCreatorShows()
-//                            ReadDB().getViewerLiveShows()
-//                    }
             }
         }
     }
     
     func signUpWithGoogle() {
-
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-                
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         GIDSignIn.sharedInstance.signIn(withPresenting: getRootViewController()) { result, error in
-                    
-            if let error = error { return }
+             if let error = error { return }
              guard let user = result?.user,
                    let idToken = user.idToken else { return }
-             
              let accessToken = user.accessToken
              let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: accessToken.tokenString)
         }

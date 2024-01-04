@@ -16,18 +16,13 @@ class UpdateDB : ObservableObject {
     func updateStatus(text: String, livestreamID: String) {
         let db = Firestore.firestore()
         let collectionRef = db.collection("shows")
-        
-        // Query for documents where "name" equals "X"
         collectionRef.whereField("livestream_id", isEqualTo: livestreamID).getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error getting documents on updateStatus: \(error)")
             } else {
                 guard let document = querySnapshot?.documents.first else {
-                    print("No documents found")
                     return
                 }
-                
-                // Update "Y" field to "Text" for each document where "name" equals "X"
                 let docRef = collectionRef.document(document.documentID)
                 docRef.updateData(["status": text])
             }
@@ -38,20 +33,14 @@ class UpdateDB : ObservableObject {
         let db = Firestore.firestore()
         let collectionRef = db.collection("users")
         @AppStorage("username") var userName: String = ""
-        
-        // Query for documents where "name" equals "X"
         collectionRef.whereField("username", isEqualTo: userName).getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error getting documents on updateUserDetails: \(error)")
             } else {
                 guard let document = querySnapshot?.documents.first else {
-                    print("No documents found")
                     return
                 }
-                
-                // Update "Y" field to "Text" for each document where "name" equals "X"
                 let docRef = collectionRef.document(document.documentID)
-                // Add phone number
                 docRef.updateData(["full_name": inputs["full_name"]])
                 ReadDB().getUserDefaults()
             }
@@ -62,18 +51,14 @@ class UpdateDB : ObservableObject {
         let db = Firestore.firestore()
         let collectionRef = db.collection("users")
         @AppStorage("username") var userName: String = ""
-        
-        // Query for documents where "name" equals "X"
         collectionRef.whereField("username", isEqualTo: userName).getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error getting documents on updateStripeCustomerID: \(error)")
             } else {
                 guard let document = querySnapshot?.documents.first else {
-                    print("No documents found")
                     return
                 }
                 
-                // Update "Y" field to "Text" for each document where "name" equals "X"
                 let docRef = collectionRef.document(document.documentID)
                 docRef.updateData(["stripe_customer_id": customerID])
                 UserDefaults.standard.set(String(describing: customerID), forKey: "stripe_customer_id")
@@ -85,18 +70,14 @@ class UpdateDB : ObservableObject {
         let db = Firestore.firestore()
         let collectionRef = db.collection("users")
         @AppStorage("username") var userName: String = ""
-        
-        // Query for documents where "name" equals "X"
         collectionRef.whereField("username", isEqualTo: userName).getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error getting documents on updateStripeCustomerID: \(error)")
             } else {
                 guard let document = querySnapshot?.documents.first else {
-                    print("No documents found")
                     return
                 }
                 
-                // Update "Y" field to "Text" for each document where "name" equals "X"
                 let docRef = collectionRef.document(document.documentID)
                 docRef.updateData(["stripe_payment_method": paymentMethodID])
                 UserDefaults.standard.set(String(describing: paymentMethodID), forKey: "stripe_payment_method")
@@ -108,18 +89,13 @@ class UpdateDB : ObservableObject {
         let db = Firestore.firestore()
         let collectionRef = db.collection("users")
         @AppStorage("username") var userName: String = ""
-        
-        // Query for documents where "name" equals "X"
         collectionRef.whereField("username", isEqualTo: userName).getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error getting documents on updateStripeCustomerID: \(error)")
             } else {
                 guard let document = querySnapshot?.documents.first else {
-                    print("No documents found")
                     return
                 }
-                
-                // Update "Y" field to "Text" for each document where "name" equals "X"
                 let docRef = collectionRef.document(document.documentID)
                 docRef.updateData(["card_brand": paymentDetails[0]])
                 docRef.updateData(["last_four": paymentDetails[1]])
@@ -133,18 +109,13 @@ class UpdateDB : ObservableObject {
         let ref = db.collection("listings")
         var docID = ref.document(docRef)
         var presentDateTime = miscData.getPresentDateTime()
-        
         var documentData = [String: Any]()
-//        for _ in 0..<count! {
         var fieldID = ref.document()
         documentData[fieldID.documentID] = ["name": listing["name"], "description": listing["description"], "quantity": listing["quantity"], "price": listing["price"], "type": listing["type"], "date_created": presentDateTime]
-//        , "category": listing["category"], "subcategory": listing["subcategory"]
-//        }
         docID.updateData(documentData) { error in
         if let error = error {
             print("Error adding listing: \(error.localizedDescription)")
         } else {
-            print("Document added successfully!")
             ReadDB().getListings()
         }
         }
@@ -156,7 +127,6 @@ class UpdateDB : ObservableObject {
         let ref = db.collection("sales")
         var documentData = [String: Any]()
         var docID = ref.document(listingID)
-//        for _ in 0..<count! {
         var fieldID = ref.document()
         
         documentData[fieldID.documentID] = [
@@ -171,7 +141,6 @@ class UpdateDB : ObservableObject {
             "country": address["country"],
             "purchased_at": miscData.getPresentDateTime()
         ]
-        
         
         DispatchQueue.global(qos: .background).async {
             docID.updateData(documentData) { error in
@@ -194,17 +163,13 @@ class UpdateDB : ObservableObject {
                 print("Error getting documents on updateStatus: \(error)")
             } else {
                 guard let document = querySnapshot?.documents.first else {
-                    print("No documents found")
                     return
                 }
-                
-                // Update "Y" field to "Text" for each document where "name" equals "X"
                 let docRef = collectionRef.document(document.documentID)
                 docRef.updateData(address)
                 ReadDB().getAddress()
             }
         }
-        
     }
     
     // ------------------------- Realtime Database ---------------------------------
@@ -212,7 +177,6 @@ class UpdateDB : ObservableObject {
     func updateListingSelected(listingID: String, listing: Listing) {
         
         let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
-        
         dbRef.updateChildValues(["title": listing.title, "price": listing.price == "0" ? "10" : listing.price, "is_sold": false, "type": listing.type, "current_bidder": "", "highest_bid": "", "timer": ""]) { error, ref in
             if let error = error {
                 print("Error updating name: \(error.localizedDescription)")
@@ -220,13 +184,11 @@ class UpdateDB : ObservableObject {
                 print("Realtime Listing Selected Updated")
             }
         }
-
     }
     
     func updateHighestBid(listingID: String, bid: String, bidder: String) {
         
         let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
-        
         dbRef.updateChildValues(["highest_bid": bid, "current_bidder": bidder]) { error, ref in
             if let error = error {
                 print("Error updating bid: \(error.localizedDescription)")
@@ -244,61 +206,35 @@ class UpdateDB : ObservableObject {
         let newCommentData = ["username": username, "comment": comment, "time_created": MiscData().getPresentDateTime()]
         let updateObj = [newCommentKey: newCommentData]
         var response: String = ""
-        
         dbRef.child("comments").updateChildValues(updateObj) { (error, _) in
           if let error = error {
-            print("Comment add failed: \(error.localizedDescription)")
             completion(nil)
           } else {
-            print("Comment added successfully")
             completion("Comment added successfully")
           }
         }
-        
-        
-//        dbRef.updateChildValues() { error, ref in
-//            if let error = error {
-//                print("Error updating comment: \(error.localizedDescription)")
-//            } else {
-//                print("Realtime Comment Updated")
-//            }
-//        }
     }
-    
     
     func updateTimer(listingID: String, start_time: String, viewer_side: Bool) {
 
-        print(workItem)
-        
         if workItem != nil {
             workItem?.cancel()
         }
-        
         let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
         let dbRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")
         var count = 0
-        
         let components = start_time.components(separatedBy: ":")
         let minutes = Int(components[0]) ?? 0
         let seconds = Int(components[1]) ?? 0
         let totalSeconds = minutes * 60 + seconds
         let newMinutes = totalSeconds / 60
         var newSeconds = totalSeconds % 60
-        
         if viewer_side {
             newSeconds += 5
         }
-        
         workItem = DispatchWorkItem {
-            print(newSeconds)
             while newSeconds >= 0 {
                 sleep(1)
-                
-//                if self.readListing.is_timer! {
-//                    self.readListing.is_timer! = false
-//                    break
-//                }
-                
                 if newSeconds < 10 {
                     dbRef.updateChildValues(["timer": "0\(newMinutes):0\(newSeconds)"]) { error, ref in
                         if let error = error {
@@ -312,19 +248,11 @@ class UpdateDB : ObservableObject {
                         }
                     }
                 }
-                
                 newSeconds -= 1
             }
         }
-        
-        
         DispatchQueue.global(qos: .background).async(execute: workItem!)
-        
-//        previousWorkItem = workItem
-        
-//        print(previousWorkItem)
     }
-
     
     func updateListingSold(listingID: String) {
         let showsRef = Database.database().reference().child("shows").child(listingID).child("selectedListing")

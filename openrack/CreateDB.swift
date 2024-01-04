@@ -12,7 +12,6 @@ class CreateDB : ObservableObject {
     var miscData = MiscData()
     var getUsername = ReadDB()
     
-    
     func addUser(email: String, username: String, fullName: String) {
         let db = Firestore.firestore()
         let ref = db.collection("users")
@@ -34,7 +33,6 @@ class CreateDB : ObservableObject {
                 print("User added")
                 UserDefaults.standard.set(username, forKey: "username")
             }
-            
         }
     }
     
@@ -58,7 +56,6 @@ class CreateDB : ObservableObject {
             } else {
                 print("Phone User added")
             }
-            
         }
     }
     
@@ -68,17 +65,13 @@ class CreateDB : ObservableObject {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-type")
         request.httpBody = try? JSONEncoder().encode(["name": name, "email": email])
-        
-        
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil, (response as? HTTPURLResponse)?.statusCode == 200
             else {
                 return
             }
-            
         }.resume()
     }
-    
     
     func addShow(name: String, description: String, date: String, livestream_id: String, playback_id: String, stream_key: String) {
         let db = Firestore.firestore()
@@ -86,7 +79,6 @@ class CreateDB : ObservableObject {
         let group = DispatchGroup()
         var docRef = ref.document().documentID
         @AppStorage("username") var userName: String = ""
-
         let data: [String: Any] = [
             "date_created": miscData.getPresentDateTime(),
             "date_scheduled": date,
@@ -100,7 +92,6 @@ class CreateDB : ObservableObject {
             "playback_id": playback_id,
             "stream_key": stream_key
         ]
-
         group.enter()
         DispatchQueue.global(qos: .background).async {
             ref.addDocument(data: data) { error in
@@ -111,11 +102,9 @@ class CreateDB : ObservableObject {
                     CreateDB().addcurrentListing(listingID: docRef)
                 }
             }
-
             group.leave()
         }
         group.wait()
-
         ReadDB().getCreatorShows()
         ReadDB().getViewerLiveShows()
         ReadDB().getViewerScheduledShows()
@@ -126,32 +115,26 @@ class CreateDB : ObservableObject {
     func addListings(listing: [String: String], docRef: String){
         let db = Firestore.firestore()
         let ref = db.collection("listings")
-//        let count = Int(listing[2])
         var docID = ref.document(docRef)
         var presentDateTime = miscData.getPresentDateTime()
-        
         var documentData = [String: Any]()
-//        for _ in 0..<count! {
         var fieldID = ref.document()
         documentData[fieldID.documentID] = ["name": listing["name"], "description": listing["description"], "quantity": listing["quantity"], "price": listing["price"], "type": listing["type"], "date_created": presentDateTime]
-//        "category": listing["category"], "subcategory": listing["subcategory"],
-//        }
         
         docID.setData(documentData) { error in
-        if let error = error {
-            print("Error adding listing: \(error.localizedDescription)")
-        } else {
-            print("Document added successfully!")
-            ReadDB().getListings()
+            if let error = error {
+                print("Error adding listing: \(error.localizedDescription)")
+            } else {
+                print("Document added successfully!")
+                ReadDB().getListings()
+            }
         }
-                }
     }
     
     func addUserOrders(item: String, purchase_price: String, buyer: String) {
         @AppStorage("username") var userName: String = ""
         let db = Firestore.firestore()
         let ref = db.collection("orders")
-        
         let data: [String: Any] = [
             "item": item,
             "order_total": "\(purchase_price) AED",
@@ -159,7 +142,6 @@ class CreateDB : ObservableObject {
             "purchased_at": miscData.getPresentDateTime(),
             "status": "Processing"
         ]
-        
         
         DispatchQueue.global(qos: .background).async {
             ref.addDocument(data: data) { error in
@@ -170,7 +152,6 @@ class CreateDB : ObservableObject {
                 }
             }
         }
-        
     }
     
     func addCreatorSales(item: String, purchase_price: String, seller: String, address: [String: String], listingID: String) {
@@ -179,11 +160,8 @@ class CreateDB : ObservableObject {
         let ref = db.collection("sales")
         var documentData = [String: Any]()
         var docID = ref.document(listingID)
-//        for _ in 0..<count! {
         var fieldID = ref.document()
         
-//        self.address = ["full_name": document.data()["full_name"], "house_number": document.data()["house_number"], "street": document.data()["street"] , "city": document.data()["city"], "country": document.data()["country"]] as? [String: String]
-//
         documentData[fieldID.documentID] = [
             "item": item,
             "order_total": "\(purchase_price) AED",
@@ -197,7 +175,6 @@ class CreateDB : ObservableObject {
             "purchased_at": miscData.getPresentDateTime()
         ]
         
-        
         DispatchQueue.global(qos: .background).async {
             docID.setData(documentData) { error in
                 if let error = error {
@@ -207,10 +184,7 @@ class CreateDB : ObservableObject {
                 }
             }
         }
-        
     }
-    
-    
     
     func createLiveStream(completion: @escaping (Result<[String], Error>) -> Void) {
             // Set up the request URL and parameters
@@ -222,7 +196,6 @@ class CreateDB : ObservableObject {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             var responseArray = Array<String>()
     
-            // Set up the request body
             let bodyData = """
                 {
                     "playback_policy": "public",
@@ -232,12 +205,9 @@ class CreateDB : ObservableObject {
                 }
                 """.data(using: .utf8)!
             request.httpBody = bodyData
-    
-            // Set up the authentication header
             let token = "\(muxTokenID):\(muxTokenSecret)".data(using: .utf8)!.base64EncodedString()
             request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
-    
-            // Make the API call
+
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error = error {
                     print("Error in createLiveStream: \(error.localizedDescription)")
@@ -247,24 +217,17 @@ class CreateDB : ObservableObject {
                 guard let data = data else {
                             completion(.failure(NSError(domain: "APIError", code: 1, userInfo: [NSLocalizedDescriptionKey: "No data returned from API"])))
                             return
-                        }
-//                if let data = data {
-                    do {
-                                // Convert the binary data into a String
-                                let jsonString = String(data: data, encoding: .utf8)
-                                
-                                // Deserialize the JSON into a Swift object
+                }
+                do {
+                        let jsonString = String(data: data, encoding: .utf8)
                         if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                            let data = json["data"] as? [String: Any] {
-                                // Access the values for id, playback_ids, and stream_key
                                 if let id = data["id"] as? String {
                                     responseArray.append(id)
                                 }
-                                
                                 if let playbackIds = data["playback_ids"] as? [[String: Any]], let playbackId = playbackIds.first, let playbackIdValue = playbackId["id"] as? String {
                                     responseArray.append(playbackIdValue)
                                 }
-                                
                                 if let streamKey = data["stream_key"] as? String {
                                     responseArray.append(streamKey)
                                 }
@@ -272,12 +235,9 @@ class CreateDB : ObservableObject {
                         } else {
                             completion(.failure(NSError(domain: "APIError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Invalid JSON response"])))
                         }
-                            
-                            } catch {
-                                print("Error parsing JSON response: \(error.localizedDescription)")
-                                completion(.failure(error))
-                            }
-//                }
+                } catch {
+                        completion(.failure(error))
+                }
             }.resume()
         }
     
@@ -294,6 +254,4 @@ class CreateDB : ObservableObject {
         showsRef.child("is_sold").setValue(false)
         showsRef.child("comments").setValue("")
     }
-    
-    
 }

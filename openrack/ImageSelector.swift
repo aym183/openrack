@@ -15,7 +15,6 @@ class ImageSelector : ObservableObject {
         else if category == "Vintage & Thrift Clothing" { return "tshirt.fill" }
         else if category == "Bags, Jewelry & Accessories" { return "bag.fill" }
         else if category == "Watches" { return "applewatch" }
-        
         return ""
     }
 }
